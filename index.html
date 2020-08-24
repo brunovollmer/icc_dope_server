@@ -29,7 +29,7 @@
             margin-right: auto;
             right: 0;
             left: 0;
-            bottom: -15px;
+            bottom: -5px;
             text-align: center;
         }
 
@@ -154,7 +154,7 @@
         <pre id="answer-sdp"></pre>
     </div>
 </div>
-    <a id="overlay-btn" class="btn btn-primary" style="align: center;">^</a>
+    <a id="overlay-btn" class="btn btn-primary" style="align: center;">Optionen</a>
 
 <script src="client.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -168,8 +168,19 @@
         $('#overlay-btn').hide();
     });
 
+    var optionsHidden = true;
+
     $('#overlay-btn').click(function() {
         $('#overlay').slideToggle();
+        console.log("test");
+        console.log($('#overlay').hasClass("collapse"));
+        if(optionsHidden){
+            $('#overlay-btn').text("Optionen verbergen");
+            optionsHidden = false;
+        } else {
+            $('#overlay-btn').text("Optionen");
+            optionsHidden = true
+        }
     });
 
     $('#start').click(function() {
