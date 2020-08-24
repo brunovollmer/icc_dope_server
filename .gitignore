@@ -169,4 +169,6 @@ dmypy.json
 # Ignore all local history of files
 .history
 
+.idea/*
+
 # End of https://www.toptal.com/developers/gitignore/api/python,linux,visualstudiocode
