@@ -141,6 +141,8 @@
         </div>
     </div>
 
+    <div style="height: 50px"></div>
+
     <a href="#debug" class="btn btn-info" data-toggle="collapse" style="align: center; display: none">degubg</a>
     <div id="debug" class="collapse">
         <h2>State</h2>
@@ -166,14 +168,16 @@
     $( document ).ready(function() {
         //start();
         $('#overlay-btn').hide();
+        window.setInterval(function() {
+            var elem = document.getElementById('data-channel');
+            elem.scrollTop = elem.scrollHeight;
+        }, 1000);
     });
 
     var optionsHidden = true;
 
     $('#overlay-btn').click(function() {
         $('#overlay').slideToggle();
-        console.log("test");
-        console.log($('#overlay').hasClass("collapse"));
         if(optionsHidden){
             $('#overlay-btn').text("Optionen verbergen");
             optionsHidden = false;
@@ -191,6 +195,7 @@
     $('#stop').click(function() {
         $('#start').show();
     });
+
 </script>
 </body>
 </html>
