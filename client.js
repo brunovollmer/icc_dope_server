@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $("#video_form").submit(function(e) {
+        $("#loader").css("display", "block");
+        $("#loading_overlay").css("display", "block");
         e.preventDefault();
         var form = $("#video_form")[0]
         var formData = new FormData(form);
@@ -11,9 +13,16 @@ $(document).ready(function() {
             data: formData,
             success: function(msg) {
                 console.log(msg);
+
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
             },
             error: function(msg) {
                 console.log('failure');
+
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
+                alert("FEHLER!")
             }
         });
     })

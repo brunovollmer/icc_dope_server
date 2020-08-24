@@ -6,6 +6,7 @@ import io
 import os
 import PIL
 import sys
+import json
 import ssl
 import uuid
 import cv2
@@ -20,6 +21,20 @@ from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder
 
 ROOT = os.path.dirname(__file__)
+sys.path.append(os.path.join(ROOT, '..', 'dope'))
+
+from util import resize_image
+from dope import DopeEstimator
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, np.float32):
+            return float(obj)
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        return json.JSONEncoder.default(self, obj)
 
 logger = logging.getLogger("pc")
 pcs = set()
@@ -64,15 +79,36 @@ async def image(request):
     post = await request.post()
     image = post.get("image")
 
+    filename = "tmp_data/{}.mp4".format(uuid.uuid4())
     if image:
-         with open("tmp_data/{}.mp4".format(uuid.uuid4()), 'wb') as fd:
-
+         with open(filename, 'wb') as fd:
              img_content = image.file.read()
              fd.write(img_content)
 
+    cap = cv2.VideoCapture(filename)
+    result = []
+
+    counter = 0
+    while(cap.isOpened() and counter < 5):
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # TODO half comp args? and model path args?
+        dope = DopeEstimator('../dope/models/DOPErealtime_v1_0_0.pth.tgz', use_half_comp=False)
+
+        # TODO which value for width or height?
+        frame = resize_image(frame, width=640)
+
+        result.append(dope.run(frame, visualize=False))
+        print("frame")
+
+        counter += 1
 
 
-    return web.Response(text="successful upload")
+
+    print("finished")
+    return web.json_response(json.dumps(result, cls=NumpyEncoder))
 
 
 async def offer(request):
