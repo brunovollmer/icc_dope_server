@@ -70,9 +70,12 @@ async def index(request):
     content = open(os.path.join(ROOT, "index.html"), "r").read()
     return web.Response(content_type="text/html", text=content)
 
+async def css(request):
+    content = open(os.path.join(ROOT, "css/style.css"), "r").read()
+    return web.Response(content_type="text/css", text=content)
 
 async def javascript(request):
-    content = open(os.path.join(ROOT, "client.js"), "r").read()
+    content = open(os.path.join(ROOT, "js/client.js"), "r").read()
     return web.Response(content_type="application/javascript", text=content)
 
 async def image(request):
@@ -202,6 +205,7 @@ def run_server(debug=False, port=8080):
     app.on_shutdown.append(on_shutdown)
     app.router.add_get("/", index)
     app.router.add_get("/client.js", javascript)
+    app.router.add_get("/style.css", css)
     app.router.add_post("/offer", offer)
     app.router.add_post("/image", image)
     web.run_app(app, access_log=None, port=port, ssl_context=ssl_context)
