@@ -64,6 +64,24 @@
     <div class="custom-control form-group">
         <h2>Options</h2>
     </div>
+
+
+
+    <div class="option form-group">
+        <div class="custom-control" style="margin-right: 15px;">
+            <form action="/image" method="POST" enctype="multipart/form-data" id="video_form">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <input type="submit" class="btn btn-primary" value="Hochladen">
+                    </div>
+                    <div class="custom-file">
+                        <input id="videoUpload" type="file" class="custom-file-input" name="image" accept="video/mp4">
+                        <label class="custom-file-label" for="videoUpload">Video</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="option form-group">
         <div class="custom-control">
             <div class="form-inline">
@@ -75,13 +93,6 @@
                     <option value='{"ordered": false, "maxPacketLifetime": 500}'>Unordered, 500ms lifetime</option>
                 </select>
             </div>
-<form action="/image" method="POST"
-      enctype="multipart/form-data" id="video_form">
-
-  <input type="file" name="image" accept="video/mp4">
-    <input type="submit" value="Submit">
-</form>
-
         </div>
     </div>
     <div class="option form-group">
