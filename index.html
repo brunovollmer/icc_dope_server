@@ -28,6 +28,13 @@
 </head>
 <body>
 
+<form action="/image" method="POST"
+      enctype="multipart/form-data" id="video_form">
+
+  <input type="file" name="image" accept="video/mp4">
+    <input type="submit" value="Submit">
+</form>
+
 <h2>Options</h2>
 <div class="option">
     <input id="use-datachannel" checked="checked" type="checkbox"/>
@@ -78,6 +85,15 @@
 <button id="start" onclick="start()">Start</button>
 <button id="stop" style="display: none" onclick="stop()">Stop</button>
 
+
+<div id="media" style="display: none">
+    <h2>Media</h2>
+
+    <audio id="audio" autoplay="true"></audio>
+    <video id="video" autoplay="true" playsinline="true" controls></video>
+</div>
+
+
 <h2>State</h2>
 <p>
     ICE gathering state: <span id="ice-gathering-state"></span>
@@ -89,13 +105,6 @@
     Signaling state: <span id="signaling-state"></span>
 </p>
 
-<div id="media" style="display: none">
-    <h2>Media</h2>
-
-    <audio id="audio" autoplay="true"></audio>
-    <video id="video" autoplay="true" playsinline="true"></video>
-</div>
-
 <h2>Data channel</h2>
 <pre id="data-channel" style="height: 200px;"></pre>
 
@@ -106,7 +115,10 @@
 
 <h3>Answer</h3>
 <pre id="answer-sdp"></pre>
-
+<script
+			  src="https://code.jquery.com/jquery-3.5.1.js"
+			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			  crossorigin="anonymous"></script>
 <script src="client.js"></script>
 </body>
 </html>
