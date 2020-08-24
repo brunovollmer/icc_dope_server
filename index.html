@@ -18,7 +18,6 @@
         /* Style the button and place it in the middle of the container/image */
         #overlay-btn {
             position: absolute;
-            background-color: #555;
             color: white;
             font-size: 16px;
             padding: 12px 24px;
@@ -35,7 +34,6 @@
         }
 
         #overlay-btn:hover {
-            background-color: lightgrey;
             bottom: 0;
         }
 
@@ -62,69 +60,86 @@
             </video>
         </div>
 
-<div  id="overlay" class="rounded-top">
-    <h2>Options</h2>
-    <div class="option">
+<div id="overlay" class="rounded-top">
+    <div class="custom-control form-group">
+        <h2>Options</h2>
+    </div>
+    <div class="option form-group">
         <div class="custom-control">
-            <input id="use-datachannel" checked="checked" type="checkbox"/>
-            <label for="use-datachannel">Use datachannel</label>
-            <select id="datachannel-parameters" class="form-control" style="width: 30%">
-                <option value='{"ordered": true}'>Ordered, reliable</option>
-                <option value='{"ordered": false, "maxRetransmits": 0}'>Unordered, no retransmissions</option>
-                <option value='{"ordered": false, "maxPacketLifetime": 500}'>Unordered, 500ms lifetime</option>
-            </select>
+            <div class="form-inline">
+                <input id="use-datachannel" checked="checked" type="checkbox"/>
+                <label for="use-datachannel">Use datachannel</label>&nbsp;
+                <select id="datachannel-parameters" class="form-control" style="width: 30%">
+                    <option value='{"ordered": true}'>Ordered, reliable</option>
+                    <option value='{"ordered": false, "maxRetransmits": 0}'>Unordered, no retransmissions</option>
+                    <option value='{"ordered": false, "maxPacketLifetime": 500}'>Unordered, 500ms lifetime</option>
+                </select>
+            </div>
+
         </div>
     </div>
-    <div class="option">
+    <div class="option form-group">
         <div class="custom-control">
-            <input id="use-audio" type="checkbox"/>
-            <label for="use-audio">Use audio</label>
-            <select id="audio-codec" class="form-control" style="width: 30%">
-                <option value="default" selected>Default codecs</option>
-                <option value="opus/48000/2">Opus</option>
-                <option value="PCMU/8000">PCMU</option>
-                <option value="PCMA/8000">PCMA</option>
-            </select>
+            <div class="form-inline">
+                <input id="use-audio" type="checkbox"/>
+                <label for="use-audio">Use audio</label>&nbsp;
+                <select id="audio-codec" class="form-control" style="width: 30%">
+                    <option value="default" selected>Default codecs</option>
+                    <option value="opus/48000/2">Opus</option>
+                    <option value="PCMU/8000">PCMU</option>
+                    <option value="PCMA/8000">PCMA</option>
+                </select>
+            </div>
         </div>
     </div>
-    <div class="option">
-        <div class="custom-control custom-checkbox">
-            <input id="use-video" checked="checked" type="checkbox"/>
-            <label for="use-video">Use video</label>
-            <select id="video-resolution" class="form-control" style="width: 30%">
-                <option value="" selected>Default resolution</option>
-                <option value="320x240">320x240</option>
-                <option value="640x480">640x480</option>
-                <option value="960x540">960x540</option>
-                <option value="1280x720">1280x720</option>
-            </select>
-            <select id="video-transform" class="form-control" style="width: 30%">
-                <option value="none" selected>No transform</option>
-                <option value="edges">Edge detection</option>
-                <option value="cartoon">Cartoon effect</option>
-                <option value="rotate">Rotate</option>
-            </select>
-            <select id="video-codec" class="form-control" style="width: 30%">
-                <option value="default" selected>Default codecs</option>
-                <option value="VP8/90000">VP8</option>
-                <option value="H264/90000">H264</option>
-            </select>
+    <div class="option form-group">
+        <div class="custom-control">
+            <div class="form-inline">
+                <input id="use-video" checked="checked" type="checkbox"/>
+                <label for="use-video">Use video</label>&nbsp;
+                <select id="video-resolution" class="form-control" style="width: 30%">
+                    <option value="" selected>Default resolution</option>
+                    <option value="320x240">320x240</option>
+                    <option value="640x480">640x480</option>
+                    <option value="960x540">960x540</option>
+                    <option value="1280x720">1280x720</option>
+                </select>&nbsp;
+                <select id="video-transform" class="form-control" style="width: 30%">
+                    <option value="none" selected>No transform</option>
+                    <option value="edges">Edge detection</option>
+                    <option value="cartoon">Cartoon effect</option>
+                    <option value="rotate">Rotate</option>
+                </select>&nbsp;
+                <select id="video-codec" class="form-control" style="width: 30%">
+                    <option value="default" selected>Default codecs</option>
+                    <option value="VP8/90000">VP8</option>
+                    <option value="H264/90000">H264</option>
+                </select>
+            </div>
         </div>
     </div>
-    <div class="option">
+    <div class="option form-group">
         <div class="custom-control custom-checkbox">
             <input id="use-stun" type="checkbox" />
             <label for="use-stun">Use STUN server</label>
         </div>
     </div>
 
-    <div class="custom-control">
-        <button id="start" onclick="start()" class="btn btn-info">Start</button>
-        <button id="stop" style="display: none" onclick="stop()" class="btn btn-info">Stop</button>
+    <div class="custom-control form-group" style="text-align: center">
+        <button id="start" onclick="start()" class="btn btn-info" style="width: 90%">Start</button>
+        <button id="stop" style="display: none; width: 90%" onclick="stop()" class="btn btn-info">Stop</button>
     </div>
 
-    <h2>Data channel</h2>
-    <pre id="data-channel" style="height: 200px;"></pre>
+    <div class="custom-control form-group" style="text-align: center">
+        <a href="#data" class="btn btn-info" data-toggle="collapse" style="width: 90%">Data</a>
+    </div>
+
+    <div class="custom-control form-group">
+        <div id="data" class="collapse">
+            <h2>Data channel</h2>
+            <pre id="data-channel" style="height: 200px;"></pre>
+        </div>
+    </div>
 
     <a href="#debug" class="btn btn-info" data-toggle="collapse" style="align: center; display: none">degubg</a>
     <div id="debug" class="collapse">
@@ -139,7 +154,7 @@
         <pre id="answer-sdp"></pre>
     </div>
 </div>
-    <a id="overlay-btn" href="#overlay" class="btn btn-info" style="align: center;">^</a>
+    <a id="overlay-btn" class="btn btn-primary" style="align: center;">^</a>
 
 <script src="client.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -160,6 +175,10 @@
     $('#start').click(function() {
         $('#overlay').slideToggle();
         $('#overlay-btn').show();
+    });
+
+    $('#stop').click(function() {
+        $('#start').show();
     });
 </script>
 </body>
