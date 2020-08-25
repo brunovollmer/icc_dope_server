@@ -18,12 +18,26 @@
 <body>
     <div id="media" style="width: 100%; height: 95vh">
         <audio id="audio" autoplay="true"></audio>
-        <video id="masterVideo" autoplay="true" playsinline="true"
-            style="float: left; width: 50%; height: 95vh; margin: auto; display: flex" controls>
-        </video>
-        <video id="video" autoplay="true" playsinline="true"
-            style="width: 50%; height: 95vh; margin: auto; display: flex" controls>
-        </video>
+        <div id="leftDiv">
+            <div id="leftVideo">
+                <video id="masterVideo" autoplay="true" playsinline="true"
+                       style="float: left; width: 50%; height: 95vh; margin: auto; display: flex" controls>
+                </video>
+            </div>
+            <div id="leftPlot" style="float: left; width: 50%; height: 95vh; margin: auto; display: none">
+                <span class="alert alert-warning" style="height: 95vh">LEFT TBD</span>
+            </div>
+        </div>
+        <div id="rightDiv">
+            <div id="rightVideo">
+                <video id="video" autoplay="true" playsinline="true"
+                       style="width: 50%; height: 95vh; margin: auto; display: flex" controls>
+                </video>
+            </div>
+            <div id="rightPlot" style="width: 50%; height: 95vh; margin: auto; display: none">
+                <span class="alert alert-warning" style="height: 95vh">RIGHT TBD</span>
+            </div>
+        </div>
     </div>
 
     <div id="loader"></div>
@@ -114,12 +128,13 @@
             </div>
 
             <div class="custom-control form-group" style="text-align: center">
-                <button id="start" onclick="start()" class="btn btn-info" style="width: 90%">Start</button>
-                <button id="stop" style="display: none; width: 90%" onclick="stop()" class="btn btn-info">Stop</button>
+                <button id="start" onclick="start()" class="btn btn-info" style="width: 40%">Start</button>
+                <button id="stop" style="display: none; width: 40%" onclick="stop()" class="btn btn-info">Stop</button>
+                <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
             </div>
 
             <div class="custom-control form-group" style="text-align: center">
-                <a href="#data" class="btn btn-info" data-toggle="collapse" style="width: 90%">Data</a>
+                <a href="#data" class="btn btn-info" data-toggle="collapse" style="width: 81%">Data</a>
             </div>
 
             <div class="custom-control form-group">
@@ -186,8 +201,15 @@
         $('#stop').click(function () {
             $('#start').show();
         });
+
+        $('#switch').click(function () {
+            $('#leftVideo').toggle();
+            $('#leftPlot').toggle();
+            $('#rightVideo').toggle();
+            $('#rightPlot').toggle();
+        });
     </script>
-    <script src="js/client.js"></script>
+    <script src="static/js/client.js"></script>
 </body>
 
 </html>
