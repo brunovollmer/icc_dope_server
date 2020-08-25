@@ -39,24 +39,21 @@ async def video(request):
     cap = cv2.VideoCapture(filename)
     result = []
 
-    counter = 0
-    while(cap.isOpened() and counter < 5):
+    while(cap.isOpened()):
         ret, frame = cap.read()
         if not ret:
             break
 
-        # TODO half comp args? and model path args?
-        dope = DopeEstimator('../dope/models/DOPErealtime_v1_0_0.pth.tgz', use_half_comp=False)
+        model_path = request.app['settings'].model_path
+        use_half_computation = request.app['settings'].use_half_computation
+        default_width = request.app['settings'].default_width
 
-        # TODO which value for width or height?
-        frame = resize_image(frame, width=640)
+        dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
+
+        frame = resize_image(frame, width=default_width)
 
         result.append(dope.run(frame, visualize=False))
         print("frame")
-
-        counter += 1
-
-
 
     print("finished")
     return web.json_response(json.dumps(result, cls=NumpyEncoder))
@@ -97,9 +94,7 @@ async def offer(request):
         log_info("Track %s received", track.kind)
 
         if track.kind == "video":
-            local_video = VideoTransformTrack(
-                track, transform=params["video_transform"]
-            )
+            local_video = VideoTransformTrack(track)
             pc.addTrack(local_video)
 
         @track.on("ended")

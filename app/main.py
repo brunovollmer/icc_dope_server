@@ -51,7 +51,11 @@ async def create_app(debug=False, port=8080):
     app.router.add_get("/test", test)
     app.router.add_get("/layout", layout_test)
 
-    dope_thread = DopeThread(input_queue, output_queue)
+    model_path = request.app['settings'].model_path
+    use_half_computation = request.app['settings'].use_half_computation
+    default_width = request.app['settings'].default_width
+
+    dope_thread = DopeThread(input_queue, output_queue, model_path, use_half_computation, default_width)
 
     #web.run_app(app, access_log=None, port=port, ssl_context=ssl_context)
 
