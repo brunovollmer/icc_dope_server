@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var master_results = [];
+
     window.setInterval(function () {
         var elem = document.getElementById('data-channel');
         elem.scrollTop = elem.scrollHeight;
@@ -53,6 +55,7 @@ $(document).ready(function() {
             contentType: false,
             data: formData,
             success: function(msg) {
+                master_results = msg;
                 console.log(msg);
 
                 $("#loader").css("display", "none");
