@@ -1,4 +1,6 @@
 # Custom rules
+sslcert.crt
+sslcert.key
 
 tmp_data/
 app/settings.yaml

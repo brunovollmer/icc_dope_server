@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import ssl
 import sys
 from pathlib import Path
 from queue import Queue
@@ -20,8 +21,8 @@ output_queue = Queue()
 pcs = set()
 logger = logging.getLogger("pc")
 
-from app.dope_thread import DopeThread
-from app.views import index, video, offer, test, layout_test
+from .dope_thread import DopeThread
+from .views import index, video, offer, test, layout_test
 
 async def on_shutdown(app):
     # close peer connections
@@ -30,14 +31,12 @@ async def on_shutdown(app):
     pcs.clear()
 
 
-async def create_app(debug=False, port=8080):
+async def create_app(debug=False):
 
     if debug:
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.INFO)
-
-    ssl_context = None
 
     settings = OmegaConf.load("app/settings.yaml")
 
@@ -62,7 +61,5 @@ async def create_app(debug=False, port=8080):
     default_width = app['settings'].default_width
 
     dope_thread = DopeThread(input_queue, output_queue, model_path, use_half_computation, default_width)
-
-    #web.run_app(app, access_log=None, port=port, ssl_context=ssl_context)
 
     return app
