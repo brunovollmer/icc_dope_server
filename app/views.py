@@ -14,8 +14,12 @@ from util import resize_image, NumpyEncoder
 from .web_rtc import VideoTransformTrack
 from .main import pcs, logger, output_queue
 
-@template('index.jinja')
+@template('index.html')
 async def index(request):
+    return {}
+
+@template('test.html')
+async def test(request):
     return {}
 
 async def video(request):

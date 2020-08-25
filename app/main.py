@@ -19,7 +19,7 @@ pcs = set()
 logger = logging.getLogger("pc")
 
 from app.dope_thread import DopeThread
-from app.views import index, video, offer
+from app.views import index, video, offer, test
 
 async def on_shutdown(app):
     # close peer connections
@@ -48,6 +48,7 @@ async def create_app(debug=False, port=8080):
     app.router.add_get("/", index)
     app.router.add_post("/offer", offer)
     app.router.add_post("/video", video)
+    app.router.add_get("/test", test)
 
     dope_thread = DopeThread(input_queue, output_queue)
 
