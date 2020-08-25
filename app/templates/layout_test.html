@@ -116,21 +116,15 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script lang="text/javascript">
-    var overlay = false;
 
     $(".footer").hover(function(){
-        console.log("show options");
+        console.log("Show Foot");
         $(".overlay").css("height", "15%");
-        overlay = true;
-    }, function(){
-        if(!overlay){
-            console.log("hide options");
-            $(".overlay").css("height", "0%");
-        }
     });
 
     $(".overlay").hover(function(){
     }, function(){
+        console.log("test");
         $(".overlay").css("height", "0%");
     });
 
