@@ -22,6 +22,10 @@ async def index(request):
 async def test(request):
     return {}
 
+@template('layout_test.html')
+async def layout_test(request):
+    return {}
+
 async def video(request):
     post = await request.post()
     video = post.get("video")
