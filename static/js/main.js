@@ -12,7 +12,7 @@ $(document).ready(function() {
         document.getElementById('media').style.display = 'block';
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
-        var canvas = document.getElementById("2d-canvas");
+        var canvas = document.getElementById("master_canvas");
         drawVideoOnCanvas(canvas, blobURL);
         //document.querySelector("video").src = blobURL;
     }
@@ -55,8 +55,8 @@ $(document).ready(function() {
             contentType: false,
             data: formData,
             success: function(msg) {
-                master_results = msg;
-                console.log(msg);
+                master_results = JSON.parse(msg);
+                console.log(master_results);
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");

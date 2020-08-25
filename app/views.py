@@ -40,7 +40,8 @@ async def video(request):
     cap = cv2.VideoCapture(filename)
     result = []
 
-    while(cap.isOpened()):
+    counter = 1
+    while(cap.isOpened() and counter < 2):
         ret, frame = cap.read()
         if not ret:
             break
@@ -55,6 +56,8 @@ async def video(request):
 
         result.append(dope.run(frame, visualize=False))
         print("frame")
+
+        counter += 1
 
     print("finished")
     return web.json_response(json.dumps(result, cls=NumpyEncoder))
