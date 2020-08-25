@@ -1,15 +1,11 @@
-from queue import Queue
 import threading
 import time
-import cv2
-import numpy as np
 import os
 import sys
 
 ROOT = os.path.dirname(__file__)
-sys.path.append(os.path.join(ROOT, '..', 'dope'))
+sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
 
-from server import run_server, input_queue, output_queue
 from dope import DopeEstimator
 
 class DopeThread(object):
@@ -36,8 +32,3 @@ class DopeThread(object):
 
             else:
                 time.sleep(self.interval)
-
-if __name__ == "__main__":
-
-    dope_thread = DopeThread(input_queue, output_queue)
-    run_server()
