@@ -22,9 +22,9 @@
     <div id="media" style="width: 100%; height: 95vh">
         <audio id="audio" autoplay="true"></audio>
         <div id="leftDiv">
-            <div id="leftVideo">
+            <div id="leftVideo" style="display: none">
                 <video id="masterVideo" autoplay="true" playsinline="true"
-                       style="float: left; width: 50%; height: 95vh; margin: auto; display: flex; display: none" controls>
+                       style="float: left; width: 50%; height: 95vh; margin: auto; display: flex;" controls>
                 </video>
             </div>
             <div id="leftPlot" style="float: left; width: 50%; height: 95vh; margin: auto; background-color: #ffffff; ">
@@ -32,12 +32,12 @@
             </div>
         </div>
         <div id="rightDiv">
-            <div id="rightVideo">
+            <div id="rightVideo" style="display: none">
                 <video id="video" autoplay="true" playsinline="true"
-                       style="width: 50%; height: 95vh; margin: auto; display: flex; display: none" controls>
+                       style="width: 50%; height: 95vh; margin: auto; display: flex;" controls>
                 </video>
             </div>
-            <div id="rightPlot" style="width: 50%; height: 95vh; margin: auto; ">
+            <div id="rightPlot" style="width: 50%; height: 95vh; margin: auto;">
                 <figure class="highcharts-figure">
                     <div id="container"></div>
                     <p class="highcharts-description">
