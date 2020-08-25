@@ -14,7 +14,7 @@ $(document).ready(function() {
     }
 
 
-    var optionsHidden = false;
+    var optionsHidden = true;
 
     $('#overlay-btn').click(function () {
         $('#overlay').slideToggle();
