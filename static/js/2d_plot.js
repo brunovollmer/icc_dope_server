@@ -2,7 +2,7 @@ canvas = document.getElementById('2d-canvas');
 leftDiv = $('#leftDiv');
 canvas.width = leftDiv.width();
 canvas.height = leftDiv.height();
-drawLineWithArrows(canvas,canvas.width/2,canvas.height/2,20,20,2,5,false,true);
+drawLineWithArrows(canvas,100,100,20,20,2,5,false,true);
 
 // x0,y0: the line's starting point
 // x1,y1: the line's ending point
@@ -40,6 +40,7 @@ function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowE
 function adjustCanvasSize() {
     canvas.width = leftDiv.width();
     canvas.height = leftDiv.height();
+    drawLineWithArrows(canvas,100,100,20,20,2,5,false,true);
 }
 
 $(window).on('resize', function(){
