@@ -41,6 +41,13 @@ body {
     transform: translateX(+20%);
 }
 
+.footer > .btn {
+    position: absolute;
+    bottom: 0;
+    background-color: #008CBA;
+    color: #ffffff;
+}
+
 h4 {
     color: white;
 }
