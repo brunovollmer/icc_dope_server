@@ -30,7 +30,7 @@
         }
 
         .footer{
-            height: 5%;
+            height: 15%;
             #background: #ff00ff;
             display: flex;
             flex-direction: column;
@@ -61,6 +61,30 @@
         .slide-btn:hover {
             opacity: 1;
         }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #008CBA;
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+        }
+
+        .text {
+            color: white;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
     </style>
 
     <title>Title</title>
@@ -84,15 +108,32 @@
     </div>
 </div>
 
+<div class="overlay">
+    <div class="text">Hello World</div>
+</div>
+
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script lang="text/javascript">
+    var overlay = false;
+
     $(".footer").hover(function(){
         console.log("show options");
+        $(".overlay").css("height", "15%");
+        overlay = true;
     }, function(){
-        console.log("hide options");
+        if(!overlay){
+            console.log("hide options");
+            $(".overlay").css("height", "0%");
+        }
     });
+
+    $(".overlay").hover(function(){
+    }, function(){
+        $(".overlay").css("height", "0%");
+    });
+
 
     //both divs are visible
     var slideStatus = 0;
