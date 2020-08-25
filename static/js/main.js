@@ -13,7 +13,7 @@ $(document).ready(function() {
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
         var canvas = document.getElementById("master_canvas");
-        drawVideoOnCanvas(canvas, blobURL);
+        drawVideoOnCanvas(canvas, blobURL, "master_video");
         //document.querySelector("video").src = blobURL;
     }
 
@@ -60,6 +60,8 @@ $(document).ready(function() {
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
+
+                $("#master_video").trigger('play');
             },
             error: function(msg) {
                 console.log('failure');

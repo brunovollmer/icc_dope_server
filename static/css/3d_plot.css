@@ -1,7 +1,7 @@
-canvas{
+/* #master_canvas{
   width: 800px;
   display: block;
-}
+} */
 
 .highcharts-figure, .highcharts-data-table table {
   min-width: 310px;
