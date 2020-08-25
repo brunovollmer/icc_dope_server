@@ -70,14 +70,6 @@ async def index(request):
     content = open(os.path.join(ROOT, "index.html"), "r").read()
     return web.Response(content_type="text/html", text=content)
 
-async def css(request):
-    content = open(os.path.join(ROOT, "css/style.css"), "r").read()
-    return web.Response(content_type="text/css", text=content)
-
-async def javascript(request):
-    content = open(os.path.join(ROOT, "js/client.js"), "r").read()
-    return web.Response(content_type="application/javascript", text=content)
-
 async def image(request):
     post = await request.post()
     image = post.get("image")
@@ -194,31 +186,15 @@ def run_server(debug=False, port=8080):
     else:
         logging.basicConfig(level=logging.INFO)
 
-    # if args.cert_file:
-    #     ssl_context = ssl.SSLContext()
-    #     ssl_context.load_cert_chain(args.cert_file, args.key_file)
-    # else:
-
     ssl_context = None
 
     app = web.Application(client_max_size=1028**4)
     app.on_shutdown.append(on_shutdown)
+
+    app.add_routes([web.static('/static', 'static')])
+
     app.router.add_get("/", index)
-    app.router.add_get("/client.js", javascript)
-    app.router.add_get("/style.css", css)
     app.router.add_post("/offer", offer)
     app.router.add_post("/image", image)
+
     web.run_app(app, access_log=None, port=port, ssl_context=ssl_context)
-
-
-# parser = argparse.ArgumentParser(
-#         description="WebRTC audio / video / data-channels demo"
-#     )
-#     parser.add_argument("--cert-file", help="SSL certificate file (for HTTPS)")
-#     parser.add_argument("--key-file", help="SSL key file (for HTTPS)")
-#     parser.add_argument(
-#         "--port", type=int, default=8080, help="Port for HTTP server (default: 8080)"
-#     )
-#     parser.add_argument("--verbose", "-v", action="count")
-#     parser.add_argument("--write-audio", help="Write received audio to a file")
-#     args = parser.parse_args()
