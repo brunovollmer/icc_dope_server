@@ -14,6 +14,18 @@
 <body>
 <div id="loader"></div>
 <div id="loading_overlay"></div>
+<div class="custom-control form-group" style="position: absolute; width: 100%; height: 300px; background-color: #BABABA;opacity: 70%; display: none;">
+    <div style="float: left;">
+        <button id="toggle-autoscroll">Autoscroll</button>
+    </div>
+    <div id="data" style="float: left">
+        <pre id="data-channel" style="height: 300px; width: 800px;"></pre>
+    </div>
+    <div>
+        <pre id="pose-log" style="height: 300px;"></pre>
+    </div>
+</div>
+
 
 <div id="media">
     <div class="main-wrapper">
@@ -140,12 +152,12 @@
                 <a href="#data" class="btn btn-info" data-toggle="collapse" style="width: 81%">Data</a>
             </div>
 
-            <div class="custom-control form-group" style="display: none;">
+            <!--<div class="custom-control form-group" style="display: none;">
                 <div id="data" class="collapse">
                     <h2>Data channel</h2>
                     <pre id="data-channel" style="height: 200px;"></pre>
                 </div>
-            </div>
+            </div>-->
 
             <div style="height: 50px; display: none;"></div>
 
@@ -179,6 +191,7 @@
 <script src="static/js/web_rtc.js"></script>
 <!--<script src="static/js/3d_plot.js"></script>-->
 <script src="static/js/2d_plot.js"></script>
+<script src="static/js/pose.js"></script>
 <script src="static/js/main.js"></script>
 
 

@@ -1,10 +1,18 @@
 $(document).ready(function() {
     var master_results = [];
 
-    window.setInterval(function () {
-        var elem = document.getElementById('data-channel');
-        elem.scrollTop = elem.scrollHeight;
-    }, 200);
+    var autoScroll = null;
+    $("#toggle-autoscroll").click(function() {
+        if(autoScroll) {
+            clearInterval(autoScroll);
+            autoScroll = null;
+        } else {
+            autoScroll = setInterval(function () {
+                var elem = document.getElementById('data-channel');
+                elem.scrollTop = elem.scrollHeight;
+            }, 200);
+        }
+    });
 
     // preview of uploaded video
     document.querySelector("input[type=file]").onchange = function(event) {

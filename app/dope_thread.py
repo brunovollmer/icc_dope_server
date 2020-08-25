@@ -32,7 +32,7 @@ class DopeThread(object):
 
                 img = resize_image(img, width=self.default_width)
 
-                results = self.dope.run(img, visualize=False)
+                results, _ = self.dope.run(img, visualize=False)
 
                 self.output_queue.put(results)
 

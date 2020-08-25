@@ -84,7 +84,8 @@ async def offer(request):
             if isinstance(message, str) and message.startswith("ping"):
                 channel.send("pong" + message[4:])
                 if not output_queue.empty():
-                    channel.send("shape: {}".format(output_queue.get()))
+                    response = {"shape": output_queue.get()}
+                    channel.send(json.dumps(response, cls=NumpyEncoder))
 
     @pc.on("iceconnectionstatechange")
     async def on_iceconnectionstatechange():
