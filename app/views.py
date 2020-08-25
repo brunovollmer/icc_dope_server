@@ -30,7 +30,8 @@ async def video(request):
     post = await request.post()
     video = post.get("video")
 
-    filename = "tmp_data/{}.mp4".format(uuid.uuid4())
+    video_id = uuid.uuid4()
+    filename = "tmp_data/{}.mp4".format(video_id)
     if video:
          with open(filename, 'wb') as fd:
              video_content = video.file.read()
@@ -56,10 +57,13 @@ async def video(request):
 
         counter += 1
 
-
-
     print("finished")
-    return web.json_response(json.dumps(result, cls=NumpyEncoder))
+
+    serialized_results = json.dumps(result, cls=NumpyEncoder)
+    with open(f"tmp_data/{video_id}.json") as f:
+        f.write(serialized_results)
+
+    return web.json_response(serialized_results)
 
 
 async def offer(request):
