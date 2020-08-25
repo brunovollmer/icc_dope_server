@@ -11,7 +11,7 @@ $(document).ready(function() {
       let file = event.target.files[0];
       let blobURL = URL.createObjectURL(file);
       document.querySelector("video").src = blobURL;
-    }
+    };
 
 
     var optionsHidden = true;
@@ -25,11 +25,6 @@ $(document).ready(function() {
             $('#overlay-btn').text("Optionen");
             optionsHidden = true
         }
-    });
-
-    $('#start').click(function () {
-        $('#overlay').slideToggle();
-        $('#overlay-btn').show();
     });
 
     $('#stop').click(function () {
@@ -69,5 +64,59 @@ $(document).ready(function() {
                 alert("FEHLER!")
             }
         });
-    })
-})
+    });
+
+    //used to set the height of the options overlay
+    var overlayHeight = $("#overlay").get(0).scrollHeight;
+    $(".footer").hover(function(){
+        $(".overlay").css("height", overlayHeight + "px");
+    });
+
+    $(".overlay").hover(function(){
+    }, function(){
+        $(".overlay").css("height", "0%");
+    });
+
+
+    //both divs are visible
+    var slideStatus = 0;
+    var leftDiv =  $('#leftDiv');
+    var rightDiv =  $('#rightDiv');
+    var slideLeft = $('#slideLeft');
+    var slideRight = $('#slideRight');
+    var slideDiv = $('#viewToggle');
+
+    slideLeft.click(function () {
+        if(slideStatus === 0){
+            //set right div to fullscreen
+            leftDiv.hide();
+            slideLeft.hide();
+            slideDiv.css("right", "100%");
+            slideStatus = -1;
+        } else if(slideStatus === 1){
+            //set both divs to visible
+            rightDiv.show();
+            slideRight.show();
+            slideDiv.css("left", "0%");
+            slideStatus = 0;
+        }
+        adjustCanvasSize();
+    });
+
+    slideRight.click(function () {
+        if(slideStatus === 0){
+            //set right div to fullscreen
+            rightDiv.hide();
+            slideRight.hide();
+            slideDiv.css("left", "95%");
+            slideStatus = 1;
+        } else if(slideStatus === -1){
+            //set both divs to visible
+            leftDiv.show();
+            slideDiv.css("right", "0%");
+            slideLeft.show();
+            slideStatus = 0;
+        }
+        adjustCanvasSize();
+    });
+});

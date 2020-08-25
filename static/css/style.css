@@ -7,37 +7,81 @@ body {
 }
 
 /* Style the button and place it in the middle of the container/image */
-#overlay-btn {
+.left {
+    background: grey;
+}
+
+.right {
+    background: black;
+}
+
+.main-wrapper {
+    height: 100vh;
+}
+
+.section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer{
+    height: 15%;
+    #background: #ff00ff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
     position: absolute;
+    width: 50%;
+    -ms-transform: translateX(+50%);
+    transform: translateX(+50%);
+}
+
+.footer > .btn {
+    position: absolute;
+    bottom: 0;
+    background-color: #008CBA;
+    color: #ffffff;
+}
+
+h2 {
     color: white;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
-    right: 0;
+}
+
+.slide-div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
     left: 0;
-    bottom: -5px;
-    text-align: center;
+    right: 0;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
-#overlay-btn:hover {
-    bottom: 0;
+.slide-btn {
+    opacity: 0.4;
 }
 
-#overlay {
-    background-color: #555555;
+.slide-btn:hover {
+    opacity: 1;
+}
+
+.overlay {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
     right: 0;
-    opacity: 0.95;
+    background-color: #008CBA;
+    overflow: hidden;
+    width: 50%;
+    height: 0;
+    transition: .5s ease;
+    -ms-transform: translateX(+50%);
+    transform: translateX(+50%);
 }
 
 #loading_overlay {

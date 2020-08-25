@@ -27,6 +27,8 @@ class DopeThread(object):
         while True:
             if not self.input_queue.empty():
                 img = self.input_queue.get()
+                while not self.input_queue.empty():
+                    img = self.input_queue.get()
 
                 img = resize_image(img, width=self.default_width)
 

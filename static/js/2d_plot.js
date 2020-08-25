@@ -1,14 +1,8 @@
-// Usage:
 canvas = document.getElementById('2d-canvas');
-console.log(canvas.width);
-console.log(canvas.height);
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-console.log(canvas.width);
-console.log(canvas.height);
-console.log($('#leftDiv').width());
-console.log($('#leftDiv').height());
-drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
+leftDiv = $('#leftDiv');
+canvas.width = leftDiv.width();
+canvas.height = leftDiv.height();
+drawLineWithArrows(canvas,canvas.width/2,canvas.height/2,20,20,2,5,false,true);
 
 // x0,y0: the line's starting point
 // x1,y1: the line's ending point
@@ -16,7 +10,6 @@ drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
 // height: the distance the arrowhead extends backward from the endpoint
 // arrowStart: true/false directing to draw arrowhead at the line's starting point
 // arrowEnd: true/false directing to draw arrowhead at the line's ending point
-
 function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowEnd){
     ctx = canvas.getContext('2d');
     var dx=x1-x0;
@@ -43,3 +36,12 @@ function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowE
     ctx.stroke();
     ctx.setTransform(1,0,0,1,0,0);
 }
+
+function adjustCanvasSize() {
+    canvas.width = leftDiv.width();
+    canvas.height = leftDiv.height();
+}
+
+$(window).on('resize', function(){
+    adjustCanvasSize();
+});
