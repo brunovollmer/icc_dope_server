@@ -8,10 +8,12 @@ $(document).ready(function() {
     document.querySelector("input[type=file]").onchange = function(event) {
         console.log("test");
         document.getElementById('media').style.display = 'block';
-      let file = event.target.files[0];
-      let blobURL = URL.createObjectURL(file);
-      document.querySelector("video").src = blobURL;
-    };
+        let file = event.target.files[0];
+        let blobURL = URL.createObjectURL(file);
+        var canvas = document.getElementById("2d-canvas");
+        drawVideoOnCanvas(canvas, blobURL);
+        //document.querySelector("video").src = blobURL;
+    }
 
 
     var optionsHidden = true;

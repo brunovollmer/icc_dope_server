@@ -148,9 +148,6 @@ for (let i = 0; i < test_poses_3d.length; i++) {
     pose.push(create_point(pose[SHOULDER_LEFT], pose[SHOULDER_RIGHT]))
 }
 
-
-
-
 Highcharts.setOptions({
     colors: Highcharts.getOptions().colors.map(function (color) {
         return {
