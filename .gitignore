@@ -1,6 +1,7 @@
 # Custom rules
 
 tmp_data/
+app/settings.yaml
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,linux,visualstudiocode
