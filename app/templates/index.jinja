@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <link rel="stylesheet" href="static/css/style.css">
 
@@ -16,6 +15,9 @@
 </head>
 
 <body>
+    <div id="loader"></div>
+    <div id="loading_overlay"></div>
+
     <div id="media" style="width: 100%; height: 95vh">
         <audio id="audio" autoplay="true"></audio>
         <div id="leftDiv">
@@ -40,16 +42,10 @@
         </div>
     </div>
 
-    <div id="loader"></div>
-    <div id="loading_overlay"></div>
-
     <div id="overlay" class="rounded-top">
         <div class="custom-control form-group">
             <h2>Options</h2>
         </div>
-
-
-
         <div class="option form-group">
             <div class="custom-control" style="margin-right: 15px;">
                 <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
@@ -162,55 +158,15 @@
     </div>
     <a id="overlay-btn" class="btn btn-primary" style="align: center;">Optionen verbergen</a>
 
-
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-    </script>
-    <script lang="text/javascript">
-        $(document).ready(function () {
-            window.setInterval(function () {
-                var elem = document.getElementById('data-channel');
-                elem.scrollTop = elem.scrollHeight;
-            }, 200);
-        });
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-        var optionsHidden = false;
-
-        $('#overlay-btn').click(function () {
-            $('#overlay').slideToggle();
-            if (optionsHidden) {
-                $('#overlay-btn').text("Optionen verbergen");
-                optionsHidden = false;
-            } else {
-                $('#overlay-btn').text("Optionen");
-                optionsHidden = true
-            }
-        });
-
-        $('#start').click(function () {
-            $('#overlay').slideToggle();
-            $('#overlay-btn').show();
-        });
-
-        $('#stop').click(function () {
-            $('#start').show();
-        });
-
-        $('#switch').click(function () {
-            $('#leftVideo').toggle();
-            $('#leftPlot').toggle();
-            $('#rightVideo').toggle();
-            $('#rightPlot').toggle();
-        });
-    </script>
-    <script src="static/js/client.js"></script>
+    <script src="static/js/web_rtc.js"></script>
+    <script src="static/js/3d_plot.js"></script>
     <script src="static/js/2d_plot.js"></script>
+    <script src="static/js/main.js"></script>
 </body>
 
 </html>
