@@ -36,6 +36,9 @@ body {
     align-items: center;
     bottom: 0;
     position: absolute;
+    width: 70%;
+    -ms-transform: translateX(+20%);
+    transform: translateX(+20%);
 }
 
 h4 {
