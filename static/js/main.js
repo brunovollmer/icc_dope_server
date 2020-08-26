@@ -72,7 +72,7 @@ $(document).ready(function() {
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
 
-                playVideo();
+                startVideo();
             },
             error: function(msg) {
                 console.log('failure');

@@ -1,4 +1,3 @@
-var masterVideo = null;
 var masterPoseList = null;
 
 var userPose = null;
@@ -43,13 +42,18 @@ updateUserPose = function(newPose) {
 
 }
 
-updateMasterPose = function(masterVideo) {
-    if(masterPoseList === null || masterPoseList.length == 0) return;
-    fraction = masterVideo.currentTime / masterVideo.duration;
-    masterPose = masterPoseList[Math.round(fraction)]
-}
+getCurrentMasterPose = function (video) {
+    if(masterPoseList === null || masterPoseList.length === 0){
+        console.log("Empty master pose list")
+        return null;
+    }
 
-getCurrentMasterPose = function () {
-    //console.log("getCurrentMasterPose:", masterPose[0])
-    return masterPose[0];
+    fraction = video.currentTime / video.duration;
+    masterPose = masterPoseList[Math.round(fraction * masterPoseList.length)]
+
+    if(masterPose && masterPose.length > 0){
+        return masterPose[0];
+    } else {
+        return null;
+    }
 }

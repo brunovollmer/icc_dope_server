@@ -1,9 +1,21 @@
 var video;
 var context;
 var canvas;
+var videoInterval = null;
 
-function playVideo() {
+function startVideo() {
     video.play();
+    if(videoInterval == null) {
+        videoInterval = setInterval(videoLoop, 1000 / 30);
+    }
+}
+
+function stopVideo() {
+    video.stop();
+    if(videoInterval != null) {
+        clearInterval(videoInterval);
+        videoInterval = null;
+    }
 }
 
 function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
@@ -12,10 +24,9 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
 
     canvas = canvasElem;
 
-    leftDiv = $('#leftDiv');
+    leftDiv = $('#leftVideo');
     canvas.width = leftDiv.width();
     canvas.height = leftDiv.height();
-
 
     context = canvas.getContext("2d");
 
@@ -26,11 +37,18 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
     video.addEventListener('loadeddata', function() {
         console.log("loadeddata");
         //video.play();
-        setTimeout(videoLoop, 1000 / 30);
-
+        //startVideo();
     });
+    video.addEventListener("click", function() {
+        console.log("toggling video");
+        if(videoInterval) {
+            stopVideo();
+        } else {
+            startVideo();
+        }
+    })
 
-    context.drawImage(video, 0, 0);
+    //context.drawImage(video, 0, 0);
 }
 
 
@@ -41,14 +59,16 @@ function videoLoop() {
 
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
-        draw2dPose(canvas, getCurrentMasterPose()["body"][0]["pose2d"])
+        var pose = getCurrentMasterPose(video)
+        if(pose) {
+            draw2dPose(canvas, pose["body"][0]["pose2d"])
+        }
         // drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
     }
-    setTimeout(videoLoop, 1000 / 30);
 }
 
 function draw2dPose(canvas, pose){
-    console.log("Pose:", pose)
+    //console.log("Pose:", pose)
 
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];

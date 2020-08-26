@@ -30,6 +30,12 @@ async def video(request):
     post = await request.post()
     video = post.get("video")
 
+    tmpfile = "tmp_data/0004.mp4.json"
+    if os.path.exists(tmpfile):
+        print("Responded with cached poses")
+        response = open(tmpfile).read()
+        return web.json_response(response)
+
     video_id = uuid.uuid4()
     filename = "tmp_data/{}.mp4".format(video_id)
     if video:
@@ -41,7 +47,7 @@ async def video(request):
     result = []
 
     counter = 1
-    while(cap.isOpened() and counter < 2):
+    while(cap.isOpened()):
         ret, frame = cap.read()
         if not ret:
             break
@@ -60,7 +66,16 @@ async def video(request):
         counter += 1
     cap.release()
 
-    return web.json_response(json.dumps(result, cls=NumpyEncoder))
+    try:
+        os.remove(filename)
+    except Exception as e:
+        print(f"Could not delete {filename} due to exception:")
+        print(e)
+
+    response = json.dumps(result, cls=NumpyEncoder)
+    with open("tmp_data/poses.json", "w") as f:
+        f.write(response)
+    return web.json_response(response)
 
 
 async def offer(request):
