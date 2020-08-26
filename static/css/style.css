@@ -3,7 +3,7 @@ body {
 }
 
 #media {
-    background-color: #000000;
+    #background-color: #000000;
 }
 
 /* Style the button and place it in the middle of the container/image */
@@ -12,7 +12,7 @@ body {
 }
 
 .right {
-    background: black;
+    #background: black;
 }
 
 .main-wrapper {

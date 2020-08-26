@@ -320,4 +320,8 @@ var slider = $("#slider").slider({
     value: 0
 }).on('slide', renderPose).data('slider');
 
+function adjustPlotSize() {
+    chart.setSize(null, null);
+}
+
 renderPose(null)

@@ -48,6 +48,7 @@ $(document).ready(function() {
         $('#leftPlot').toggle();
         $('#rightVideo').toggle();
         $('#rightPlot').toggle();
+        adjustPlotSize();
     });
 
     $("#video_form").submit(function(e) {
@@ -102,6 +103,7 @@ $(document).ready(function() {
     var slideDiv = $('#viewToggle');
 
     slideLeft.click(function () {
+        console.log("click-l");
         if(slideStatus === 0){
             //set right div to fullscreen
             leftDiv.hide();
@@ -115,10 +117,12 @@ $(document).ready(function() {
             slideDiv.css("left", "0%");
             slideStatus = 0;
         }
-        adjustCanvasSize();
+        //adjustCanvasSize();
+        adjustPlotSize();
     });
 
     slideRight.click(function () {
+        console.log("click-r");
         if(slideStatus === 0){
             //set right div to fullscreen
             rightDiv.hide();
@@ -132,6 +136,7 @@ $(document).ready(function() {
             slideLeft.show();
             slideStatus = 0;
         }
-        adjustCanvasSize();
+        //adjustCanvasSize();
+        adjustPlotSize();
     });
 });
