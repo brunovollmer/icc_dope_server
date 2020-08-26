@@ -1,5 +1,3 @@
-const num_points = 15;
-
 var masterVideo = null;
 var masterPoseList = null;
 

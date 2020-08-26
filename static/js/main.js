@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var master_results = [];
+
+    create_3d_plot('container', '#slider', test_poses_3d)
 
     var autoScroll = null;
     $("#toggle-autoscroll").click(function() {
