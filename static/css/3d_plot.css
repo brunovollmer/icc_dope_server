@@ -13,6 +13,18 @@
 	background: #BABABA;
 }
 
+#slider {
+  width: 95%;
+}
+
+#animationSliderDiv {
+  width: 100%;
+}
+
+#slider_value_text {
+  color: #ffffff;
+}
+
 .highcharts-data-table table {
   font-family: Verdana, sans-serif;
   border-collapse: collapse;
