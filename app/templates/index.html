@@ -54,12 +54,6 @@
                     <figure class="highcharts-figure">
                         <div id="container"></div>
                     </figure>
-
-                    <div class="d-flex justify-content-center">
-                        <input id="slider" data-slider-id='slider' type="text" />
-                        <span id="slider_value_text">Current Timestep: <span id="slider_value">0</span></span>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -157,6 +151,13 @@
                 <button id="start" onclick="start()" class="btn btn-info" style="width: 40%">Start</button>
                 <button id="stop" style="display: none; width: 40%" onclick="stop()" class="btn btn-info">Stop</button>
                 <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
+            </div>
+
+            <div class="custom-control form-group d-flex justify-content-center">
+                <div class="row w-100">
+                    <div><span id="slider_value_text" style="margin-right: 1em; color: #ffffff;">Animation: <span id="slider_value">0</span></span></div>
+                    <div style="width: 100%;"><input id="slider" style="width: 95%" data-slider-id='slider' type="text"/></div>
+                </div>
             </div>
 
             <div class="custom-control form-group" style="text-align: center; display: none;">
