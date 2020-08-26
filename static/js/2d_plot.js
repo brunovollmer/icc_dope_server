@@ -84,5 +84,5 @@ function adjustCanvasSize() {
 }
 
 $(window).on('resize', function(){
-    adjustCanvasSize();
+    //adjustCanvasSize();
 });

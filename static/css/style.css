@@ -15,6 +15,10 @@ body {
     #background: black;
 }
 
+#rightPlot {
+    width: 100%;
+}
+
 .main-wrapper {
     height: 100vh;
 }

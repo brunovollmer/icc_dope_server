@@ -103,7 +103,6 @@ $(document).ready(function() {
     var slideDiv = $('#viewToggle');
 
     slideLeft.click(function () {
-        console.log("click-l");
         if(slideStatus === 0){
             //set right div to fullscreen
             leftDiv.hide();
@@ -122,7 +121,6 @@ $(document).ready(function() {
     });
 
     slideRight.click(function () {
-        console.log("click-r");
         if(slideStatus === 0){
             //set right div to fullscreen
             rightDiv.hide();
