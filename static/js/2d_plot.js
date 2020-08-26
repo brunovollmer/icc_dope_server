@@ -43,15 +43,12 @@ function videoLoop() {
     setTimeout(videoLoop, 1000 / 30);
 }
 
-
-
 // // x0,y0: the line's starting point
 // // x1,y1: the line's ending point
 // // width: the distance the arrowhead perpendicularly extends away from the line
 // // height: the distance the arrowhead extends backward from the endpoint
 // // arrowStart: true/false directing to draw arrowhead at the line's starting point
 // // arrowEnd: true/false directing to draw arrowhead at the line's ending point
-
 function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowEnd){
     ctx = canvas.getContext('2d');
     var dx=x1-x0;
@@ -82,6 +79,7 @@ function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowE
 function adjustCanvasSize() {
     canvas.width = leftDiv.width();
     canvas.height = leftDiv.height();
+    drawLineWithArrows(canvas,100,100,20,20,2,5,false,true);
 }
 
 $(window).on('resize', function(){
