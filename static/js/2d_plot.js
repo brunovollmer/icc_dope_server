@@ -21,7 +21,9 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
 
     video.addEventListener('loadeddata', function() {
         console.log("loadeddata");
+        video.play();
         setTimeout(videoLoop, 1000 / 30);
+
     });
 
     context.drawImage(video, 0, 0);
@@ -29,21 +31,46 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
 
 
 function videoLoop() {
-    console.log(video);
     if (video && !video.paused && !video.ended) {
         var vRatio = (canvas.height / video.videoHeight) * video.videoWidth;
 
-        console.log(vRatio);
         context.drawImage(video, 0, 0, vRatio, canvas.height);
-        drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
+
+        draw2dPose(canvas, )
+        // drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
 
     }
-
-    console.log("hallo")
     setTimeout(videoLoop, 1000 / 30);
 }
 
+function draw2dPose(canvas, pose){
+    for (let i = 0; i < connections.length; i++) {
+        const c = connections[i];
+        console.log(c);
+    }
+}
 
+
+function drawLine(canvas, x0, y0, x1, y1, c='black'){
+    var ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = c;
+    ctx.stroke();
+}
+
+function drawPoint(canvas, x0, y0, r, c='black'){
+    var ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(x0, y0, r, 0, 2 * Math.PI, false);
+    ctx.fillStyle = c;
+    ctx.fill();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = c;
+    ctx.stroke();
+}
 
 // // x0,y0: the line's starting point
 // // x1,y1: the line's ending point

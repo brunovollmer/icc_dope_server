@@ -6,17 +6,6 @@ $(document).ready(function() {
         elem.scrollTop = elem.scrollHeight;
     }, 200);
 
-    // preview of uploaded video
-    document.querySelector("input[type=file]").onchange = function(event) {
-        console.log("test");
-        document.getElementById('media').style.display = 'block';
-        let file = event.target.files[0];
-        let blobURL = URL.createObjectURL(file);
-        var canvas = document.getElementById("master_canvas");
-        drawVideoOnCanvas(canvas, blobURL, "master_video");
-        //document.querySelector("video").src = blobURL;
-    }
-
 
     var optionsHidden = true;
 
@@ -56,12 +45,21 @@ $(document).ready(function() {
             data: formData,
             success: function(msg) {
                 master_results = JSON.parse(msg);
-                console.log(master_results);
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
 
-                $("#master_video").trigger('play');
+
+                 // // preview of uploaded video
+    // document.querySelector("input[type=file]").onchange = function(event) {
+    //     document.getElementById('media').style.display = 'block';
+    //     let file = event.target.files[0];
+    //     let blobURL = URL.createObjectURL(file);
+    //     var canvas = document.getElementById("master_canvas");
+    //     drawVideoOnCanvas(canvas, blobURL, "master_video");
+    //     //document.querySelector("video").src = blobURL;
+    // }
+
             },
             error: function(msg) {
                 console.log('failure');
