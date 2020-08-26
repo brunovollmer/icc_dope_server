@@ -13,7 +13,7 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
     canvas = canvasElem;
 
     leftDiv = $('#leftDiv');
-    canvas.width = leftDiv.width();
+    //canvas.width = leftDiv.width();
     // canvas.height = leftDiv.height();
 
 
@@ -40,16 +40,26 @@ function videoLoop() {
 
         context.drawImage(video, 0, 0, vRatio, canvas.height);
 
-        //draw2dPose(canvas, )
+        draw2dPose(canvas, getCurrentMasterPose()["body"][0]["pose2d"])
         // drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
     }
     setTimeout(videoLoop, 1000 / 30);
 }
 
 function draw2dPose(canvas, pose){
+    console.log("Pose:", pose)
+
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];
-        console.log(c);
+
+        var p1 = pose[c["start"]];
+        var p2 = pose[c["end"]];
+
+        p1 = [p1[0] * canvas.width, p1[1] * canvas.height];
+        p2 = [p2[0] * canvas.width, p2[1] * canvas.height];
+        drawLine(canvas, p1[0], p1[1], p2[0], p2[1], c.color);
+        drawPoint(canvas, p1[0], p1[1], 5);
+        drawPoint(canvas, p2[0], p2[1], 5);
     }
 }
 

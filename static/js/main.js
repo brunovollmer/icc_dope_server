@@ -65,7 +65,7 @@ $(document).ready(function() {
             success: function(msg) {
                 master_results = JSON.parse(msg);
 
-                //updateMasterPoseList(master_results)
+                updateMasterPoseList(master_results)
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
