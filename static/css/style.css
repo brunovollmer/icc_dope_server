@@ -3,7 +3,7 @@ body {
 }
 
 #media {
-    background-color: #000000;
+    #background-color: #000000;
 }
 
 canvas {
@@ -16,7 +16,11 @@ canvas {
 }
 
 .right {
-    background: black;
+    #background: black;
+}
+
+#rightPlot {
+    width: 100%;
 }
 
 .main-wrapper {

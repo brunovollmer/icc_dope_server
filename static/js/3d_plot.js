@@ -56,8 +56,8 @@ test_poses_3d = [
 
 for (let i = 0; i < test_poses_3d.length; i++) {
     const pose = test_poses_3d[i];
-    //pose.push(create_point(pose[HIP_LEFT], pose[HIP_RIGHT]))
-    //pose.push(create_point(pose[SHOULDER_LEFT], pose[SHOULDER_RIGHT]))
+    pose.push(create_point(pose[HIP_LEFT], pose[HIP_RIGHT]))
+    pose.push(create_point(pose[SHOULDER_LEFT], pose[SHOULDER_RIGHT]))
 }
 
 Highcharts.setOptions({
@@ -231,5 +231,9 @@ var slider = $("#slider").slider({
     max: test_poses_3d.length - 1,
     value: 0
 }).on('slide', renderPose).data('slider');
+
+function adjustPlotSize() {
+    chart.setSize(null, null);
+}
 
 renderPose(null)

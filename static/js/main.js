@@ -47,6 +47,7 @@ $(document).ready(function() {
         $('#leftPlot').toggle();
         $('#rightVideo').toggle();
         $('#rightPlot').toggle();
+        adjustPlotSize();
     });
 
     $("#video_form").submit(function(e) {
@@ -116,7 +117,8 @@ $(document).ready(function() {
             slideDiv.css("left", "0%");
             slideStatus = 0;
         }
-        adjustCanvasSize();
+        //adjustCanvasSize();
+        adjustPlotSize();
     });
 
     slideRight.click(function () {
@@ -133,6 +135,7 @@ $(document).ready(function() {
             slideLeft.show();
             slideStatus = 0;
         }
-        adjustCanvasSize();
+        //adjustCanvasSize();
+        adjustPlotSize();
     });
 });

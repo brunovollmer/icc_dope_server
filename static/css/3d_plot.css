@@ -13,10 +13,6 @@
 	background: #BABABA;
 }
 
-#container {
-  height: 400px;
-}
-
 .highcharts-data-table table {
   font-family: Verdana, sans-serif;
   border-collapse: collapse;
