@@ -2,6 +2,10 @@ var video;
 var context;
 var canvas;
 
+function playVideo() {
+    video.play();
+}
+
 function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
     // var width = canvas.width();
     // console.log(width);
@@ -21,7 +25,7 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
 
     video.addEventListener('loadeddata', function() {
         console.log("loadeddata");
-        video.play();
+        //video.play();
         setTimeout(videoLoop, 1000 / 30);
 
     });
@@ -36,9 +40,8 @@ function videoLoop() {
 
         context.drawImage(video, 0, 0, vRatio, canvas.height);
 
-        draw2dPose(canvas, )
+        //draw2dPose(canvas, )
         // drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
-
     }
     setTimeout(videoLoop, 1000 / 30);
 }

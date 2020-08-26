@@ -6,9 +6,15 @@ var masterPoseList = null;
 var userPose = null;
 var masterPose = null;
 
+var log = document.getElementById("pose-log")
+
+loadMasterPoseList = function(poseList) {
+    masterPoseList = poseList
+    log.textContent += "Master video loaded, " + masterPoseList.length + "frames"
+}
+
 updateUserPose = function(newPose) {
     userPose = newPose;
-    log = document.getElementById("pose-log")
     log.textContent += "\nNew pose:\n"
     log.textContent += JSON.stringify(newPose)
 

@@ -14,6 +14,16 @@ $(document).ready(function() {
         }
     });
 
+    // preview of uploaded video
+    document.querySelector("input[type=file]").onchange = function(event) {
+        document.getElementById('media').style.display = 'block';
+        let file = event.target.files[0];
+        let blobURL = URL.createObjectURL(file);
+        var canvas = document.getElementById("master_canvas");
+        drawVideoOnCanvas(canvas, blobURL, "master_video");
+        //document.querySelector("video").src = blobURL;
+    }
+
 
     var optionsHidden = true;
 
@@ -40,6 +50,7 @@ $(document).ready(function() {
     });
 
     $("#video_form").submit(function(e) {
+        console.log("SUBMIT")
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         e.preventDefault();
@@ -54,20 +65,12 @@ $(document).ready(function() {
             success: function(msg) {
                 master_results = JSON.parse(msg);
 
+                //updateMasterPoseList(master_results)
+
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
 
-
-                 // // preview of uploaded video
-    // document.querySelector("input[type=file]").onchange = function(event) {
-    //     document.getElementById('media').style.display = 'block';
-    //     let file = event.target.files[0];
-    //     let blobURL = URL.createObjectURL(file);
-    //     var canvas = document.getElementById("master_canvas");
-    //     drawVideoOnCanvas(canvas, blobURL, "master_video");
-    //     //document.querySelector("video").src = blobURL;
-    // }
-
+                playVideo();
             },
             error: function(msg) {
                 console.log('failure');

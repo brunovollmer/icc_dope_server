@@ -58,8 +58,8 @@ async def video(request):
         print("frame")
 
         counter += 1
+    cap.release()
 
-    print("finished")
     return web.json_response(json.dumps(result, cls=NumpyEncoder))
 
 
