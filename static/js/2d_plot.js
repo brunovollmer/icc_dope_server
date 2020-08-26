@@ -13,8 +13,8 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
     canvas = canvasElem;
 
     leftDiv = $('#leftDiv');
-    //canvas.width = leftDiv.width();
-    // canvas.height = leftDiv.height();
+    canvas.width = leftDiv.width();
+    canvas.height = leftDiv.height();
 
 
     context = canvas.getContext("2d");
@@ -36,9 +36,10 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
 
 function videoLoop() {
     if (video && !video.paused && !video.ended) {
-        var vRatio = (canvas.height / video.videoHeight) * video.videoWidth;
+        context.canvas.width = video.videoWidth;
+        context.canvas.height = video.videoHeight;
 
-        context.drawImage(video, 0, 0, vRatio, canvas.height);
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
         draw2dPose(canvas, getCurrentMasterPose()["body"][0]["pose2d"])
         // drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
