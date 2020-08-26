@@ -77,6 +77,7 @@ function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowE
 }
 
 function adjustCanvasSize() {
+    leftDiv = $("#leftDiv");
     canvas.width = leftDiv.width();
     canvas.height = leftDiv.height();
     drawLineWithArrows(canvas,100,100,20,20,2,5,false,true);
