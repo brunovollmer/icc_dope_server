@@ -11,7 +11,6 @@ var pc = null;
 // data channel
 var dc = null, dcInterval = null;
 
-
 function createPeerConnection() {
     var config = {
         sdpSemantics: 'unified-plan'
@@ -139,9 +138,22 @@ function start() {
         dc.onmessage = function(evt) {
             dataChannelLog.textContent += '< ' + evt.data + '\n';
 
+            if(dataChannelLog.textContent.length > 200000) {
+                dataChannelLog.textContent = dataChannelLog.textContent.slice(100000)
+            }
+
             if (evt.data.substring(0, 4) === 'pong') {
                 var elapsed_ms = current_stamp() - parseInt(evt.data.substring(5), 10);
                 dataChannelLog.textContent += ' RTT ' + elapsed_ms + ' ms\n';
+            } else {
+                data = JSON.parse(evt.data);
+                log = document.getElementById("pose-log");
+                if(data.shape.body.length > 0) {
+                    log.textContent = JSON.stringify(data.shape.body[0]);
+                    updateUserPose(data.shape.body[0])
+                } else {
+                    log.textContent = "No body found!";
+                }
             }
         };
     }
