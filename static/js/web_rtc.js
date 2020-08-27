@@ -158,11 +158,9 @@ function start() {
                 dataChannelLog.textContent += ' RTT ' + elapsed_ms + ' ms\n';
             } else {
                 data = JSON.parse(evt.data);
-                log = document.getElementById("pose-log");
+                //log.logPose(data.shape);
                 if(data.shape.body.length > 0) {
                     updateUserPose(data.shape)
-                } else {
-                    log.textContent = "No body found!";
                 }
             }
         };

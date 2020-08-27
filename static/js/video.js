@@ -40,7 +40,9 @@ class VideoCanvas {
                 _self._context.canvas.height = _self._video.clientHeight;
 
                 var currentPose = _self._poseCallback(_self._video);
-                _self.drawPose2D(currentPose["body"][0]["pose2d"]);
+                if(currentPose) {
+                    _self.drawPose2D(currentPose["body"][0]["pose2d"]);
+                }
             }, 1000/30);
         }
     }

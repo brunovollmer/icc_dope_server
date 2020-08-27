@@ -46,6 +46,7 @@ async def video(request):
     cap = cv2.VideoCapture(filename)
     result = []
 
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     counter = 1
     while(cap.isOpened()):
         ret, frame = cap.read()
@@ -61,7 +62,7 @@ async def video(request):
         frame = resize_image(frame, width=default_width)
 
         result.append(dope.run(frame, visualize=False))
-        print("frame")
+        print(f"frame {counter} of {total_frames}")
 
         counter += 1
     cap.release()

@@ -3,7 +3,7 @@ var masterPoseList = null;
 var userPose = null;
 var masterPose = null;
 
-var log = document.getElementById("pose-log")
+//var log = document.getElementById("pose-log")
 
 function create_point2d(p1, p2) {
     return [(p1[0] + p2[0])/2, (p1[1] + p2[1])/2]
@@ -28,7 +28,7 @@ updateMasterPoseList = function(poseList) {
         pose3d.push(create_point3d(pose3d[HIP_LEFT], pose3d[HIP_RIGHT]));
         pose3d.push(create_point3d(pose3d[SHOULDER_LEFT], pose3d[SHOULDER_RIGHT]));
     });
-    log.textContent += "Master video loaded, " + masterPoseList.length + "frames"
+    //log.textContent += "Master video loaded, " + masterPoseList.length + "frames"
     console.log(masterPoseList)
     console.log(masterPoseList[0][0]["body"].length)
     masterPose = masterPoseList[0]
@@ -37,6 +37,7 @@ updateMasterPoseList = function(poseList) {
 
 updateUserPose = function(newPose) {
     userPose = newPose;
+    /*
     log.textContent = "New user pose:\n";
     if(userPose.body.length > 0) {
         log.textContent += userPose.body.length + " bodies, ";
@@ -55,6 +56,7 @@ updateUserPose = function(newPose) {
     }
     log.textContent += "Body 2d:\n";
     log.textContent += JSON.stringify(userPose.body[0].pose2d)
+    */
     //log.textContent += JSON.stringify(newPose);
 }
 

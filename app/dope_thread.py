@@ -45,7 +45,7 @@ class DopeThread(object):
                 results, result_img = self.dope.run(img, visualize=self.debug)
 
                 if self.debug:
-                    print(os.path.join(self.debug_folder), "{:05d}.png".format(self.counter))
+                    #print(os.path.join(self.debug_folder), "{:05d}.png".format(self.counter))
                     cv2.imwrite(os.path.join(self.debug_folder, "{:05d}.png".format(self.counter)), result_img)
 
                 self.output_queue.put(results)
