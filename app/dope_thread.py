@@ -1,7 +1,10 @@
 import threading
 import time
+import cv2
 import os
 import sys
+import datetime
+
 
 ROOT = os.path.dirname(__file__)
 sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
@@ -11,13 +14,19 @@ from util import resize_image
 
 class DopeThread(object):
 
-    def __init__(self, input_queue, output_queue, model_path, use_half_computation, default_width, interval=1):
+    def __init__(self, input_queue, output_queue, model_path, use_half_computation, default_width, debug, interval=1):
         self.interval = interval
         self.input_queue = input_queue
         self.output_queue = output_queue
         self.default_width = default_width
 
+        self.debug_folder = os.path.join(ROOT, "..", "tmp_data", str(datetime.datetime.now()))
+        os.makedirs(self.debug_folder)
+        self.debug = debug
+
         self.dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
+
+        self.counter = 0
 
         thread = threading.Thread(target=self.run, args=())
         thread.daemon = True
@@ -32,9 +41,16 @@ class DopeThread(object):
 
                 img = resize_image(img, width=self.default_width)
 
-                results, _ = self.dope.run(img, visualize=False)
+                results, result_img = self.dope.run(img, visualize=self.debug)
+
+                if self.debug:
+                    print(os.path.join(self.debug_folder), "{:05d}.png".format(self.counter))
+                    print(result_img.shape)
+                    cv2.imwrite(os.path.join(self.debug_folder, "{:05d}.png".format(self.counter)), result_img)
 
                 self.output_queue.put(results)
+
+                self.counter += 1
 
             else:
                 time.sleep(self.interval)

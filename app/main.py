@@ -59,7 +59,8 @@ async def create_app(debug=False):
     model_path = app['settings'].model_path
     use_half_computation = app['settings'].use_half_computation
     default_width = app['settings'].default_width
+    dope_debug = app['settings'].dope_debug
 
-    dope_thread = DopeThread(input_queue, output_queue, model_path, use_half_computation, default_width)
+    dope_thread = DopeThread(input_queue, output_queue, model_path, use_half_computation, default_width, dope_debug)
 
     return app
