@@ -41,11 +41,12 @@ class DopeThread(object):
 
                 img = resize_image(img, width=self.default_width)
 
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
                 results, result_img = self.dope.run(img, visualize=self.debug)
 
                 if self.debug:
                     print(os.path.join(self.debug_folder), "{:05d}.png".format(self.counter))
-                    print(result_img.shape)
                     cv2.imwrite(os.path.join(self.debug_folder, "{:05d}.png".format(self.counter)), result_img)
 
                 self.output_queue.put(results)
