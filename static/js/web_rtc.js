@@ -25,16 +25,19 @@ function createPeerConnection() {
 
     // register some listeners to help debugging
     pc.addEventListener('icegatheringstatechange', function() {
+        console.log("icegatheringstatechange event: ", pc.iceGatheringState);
         iceGatheringLog.textContent += ' -> ' + pc.iceGatheringState;
     }, false);
     iceGatheringLog.textContent = pc.iceGatheringState;
 
     pc.addEventListener('iceconnectionstatechange', function() {
+        console.log("iceconnectionstatechange event: ", pc.iceConnectionState);
         iceConnectionLog.textContent += ' -> ' + pc.iceConnectionState;
     }, false);
     iceConnectionLog.textContent = pc.iceConnectionState;
 
     pc.addEventListener('signalingstatechange', function() {
+        console.log("signalingstatechange event: ", pc.signalingState);
         signalingLog.textContent += ' -> ' + pc.signalingState;
     }, false);
     signalingLog.textContent = pc.signalingState;
