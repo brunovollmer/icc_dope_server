@@ -36,8 +36,15 @@ class VideoCanvas {
         if(!this._videoInterval) {
             var _self = this;
             this._videoInterval = setInterval(function() {
-                _self._context.canvas.width = _self._video.clientWidth;
-                _self._context.canvas.height = _self._video.clientHeight;
+                var ratio = _self._video.videoHeight / _self._video.videoWidth;
+                if(_self._video.videoHeight < _self._video.videoWidth){
+                    _self._context.canvas.width = _self._video.clientWidth;
+                    _self._context.canvas.height = _self._video.clientWidth*ratio;
+                } else {
+                    ratio = _self._video.videoWidth / _self._video.videoHeight;
+                    _self._context.canvas.width = _self._video.clientHeight/ratio;
+                    _self._context.canvas.height = _self._video.clientHeight;
+                }
 
                 var currentPose = _self._poseCallback(_self._video);
                 if(currentPose) {
