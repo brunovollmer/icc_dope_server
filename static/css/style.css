@@ -6,8 +6,20 @@ body {
     #background-color: #000000;
 }
 
+video {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 canvas {
-    width: 800px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 /* Style the button and place it in the middle of the container/image */

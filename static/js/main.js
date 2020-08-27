@@ -18,10 +18,17 @@ $(document).ready(function() {
     // preview of uploaded video
     document.querySelector("input[type=file]").onchange = function(event) {
         document.getElementById('media').style.display = 'block';
+
+        masterVideo = document.getElementById("masterVideo");
+
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
-        var canvas = document.getElementById("master_canvas");
-        drawVideoOnCanvas(canvas, blobURL, "master_video");
+        masterVideo.src = blobURL;
+
+        masterVideoCanvas = new VideoCanvas(masterVideo);
+
+        //var canvas = document.getElementById("master_canvas");
+        //drawVideoOnCanvas(canvas, blobURL, "master_video");
         //document.querySelector("video").src = blobURL;
     }
 
@@ -53,6 +60,16 @@ $(document).ready(function() {
         showFooter(true);
     });
 
+    $("#userVideo").on('canplay', function() {
+        userVideoCanvas = new VideoCanvas(this);
+    });
+    $("#masterVideo").on("canplay", function() {
+        masterVideoCanvas = new VideoCanvas(this);
+    });
+    $("#feedbackVideo").on("canplay", function() {
+        feedbackVideoCanvas = new VideoCanvas(this);
+    });
+
     $("#video_form").submit(function(e) {
         console.log("SUBMIT")
         $("#loader").css("display", "block");
@@ -74,7 +91,10 @@ $(document).ready(function() {
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
 
-                startVideo();
+                if(masterVideoCanvas) {
+                    console.log("Starting master video")
+                    masterVideoCanvas.startVideo();
+                }
             },
             error: function(msg) {
                 console.log('failure');

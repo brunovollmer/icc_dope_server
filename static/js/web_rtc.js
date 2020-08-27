@@ -40,10 +40,12 @@ function createPeerConnection() {
 
     // connect audio / video
     pc.addEventListener('track', function(evt) {
-        if (evt.track.kind == 'video')
-            document.getElementById('video').srcObject = evt.streams[0];
-        else
+        if (evt.track.kind == 'video') {
+            userVideo = document.getElementById('userVideo');
+            userVideo.srcObject = evt.streams[0];
+        } else {
             document.getElementById('audio').srcObject = evt.streams[0];
+        }
     });
 
     return pc;
