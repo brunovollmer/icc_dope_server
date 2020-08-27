@@ -3,7 +3,6 @@ import time
 import cv2
 import os
 import sys
-import datetime
 
 
 ROOT = os.path.dirname(__file__)
@@ -20,7 +19,7 @@ class DopeThread(object):
         self.output_queue = output_queue
         self.default_width = default_width
 
-        self.debug_folder = os.path.join(ROOT, "..", "tmp_data", str(datetime.datetime.now()))
+        self.debug_folder = os.path.join(ROOT, "..", "tmp_data", str(time.time()))
         os.makedirs(self.debug_folder)
         self.debug = debug
 
