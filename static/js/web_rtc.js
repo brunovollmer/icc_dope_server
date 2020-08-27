@@ -17,7 +17,8 @@ function createPeerConnection() {
         sdpSemantics: 'unified-plan'
     };
 
-    if (document.getElementById('use-stun').checked) {
+    //if (document.getElementById('use-stun').checked) {
+    if (True){
         config.iceServers = [{urls: ['stun:stun.l.google.com:19302']}];
     }
 
