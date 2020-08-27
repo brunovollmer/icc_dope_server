@@ -98,8 +98,11 @@ async def offer(request):
         def on_message(message):
             if isinstance(message, str) and message.startswith("ping"):
                 channel.send("pong" + message[4:])
+            if isinstance(message, str) and message.startswith("pose"):
                 if not output_queue.empty():
                     response = {"shape": output_queue.get()}
+                    while not output_queue.empty():
+                        response = {"shape": output_queue.get()}
                     channel.send(json.dumps(response, cls=NumpyEncoder))
 
     @pc.on("iceconnectionstatechange")
@@ -120,6 +123,7 @@ async def offer(request):
         @track.on("ended")
         async def on_ended():
             log_info("Track %s ended", track.kind)
+
 
     # handle offer
     await pc.setRemoteDescription(offer)

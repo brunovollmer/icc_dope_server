@@ -51,6 +51,19 @@ function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
     //context.drawImage(video, 0, 0);
 }
 
+function userLoop() {
+    if(userVideo && !userVideo.paused && !userVideo.ended) {
+        context.canvas.width = video.videoWidth;
+        context.canvas.height = video.videoHeight;
+
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+        var pose = getCurrentMasterPose(video)
+        if(pose) {
+            draw2dPose(canvas, pose["body"][0]["pose2d"])
+        }
+    }
+}
 
 function videoLoop() {
     if (video && !video.paused && !video.ended) {
