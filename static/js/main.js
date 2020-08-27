@@ -60,14 +60,17 @@ $(document).ready(function() {
         showFooter(true);
     });
 
-    $("#userVideo").on('canplay', function() {
-        userVideoCanvas = new VideoCanvas(this);
+    $("#userVideo").on('play', function() {
+        console.log("Registrering user video canvas")
+        userVideoCanvas = new VideoCanvas(this, "user", getCurrentUserPose);
+        //TODO: start pose drawing only
+        userVideoCanvas.startDrawing();
     });
     $("#masterVideo").on("canplay", function() {
-        masterVideoCanvas = new VideoCanvas(this);
+        masterVideoCanvas = new VideoCanvas(this, "master", getCurrentMasterPose);
     });
     $("#feedbackVideo").on("canplay", function() {
-        feedbackVideoCanvas = new VideoCanvas(this);
+        feedbackVideoCanvas = new VideoCanvas(this, "feedback", getCurrentFeedbackPose);
     });
 
     $("#video_form").submit(function(e) {

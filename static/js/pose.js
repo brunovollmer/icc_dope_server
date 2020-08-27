@@ -37,9 +37,30 @@ updateMasterPoseList = function(poseList) {
 
 updateUserPose = function(newPose) {
     userPose = newPose;
-    log.textContent += "\nNew pose:\n"
-    log.textContent += JSON.stringify(newPose)
+    log.textContent = "New user pose:\n";
+    if(userPose.body.length > 0) {
+        log.textContent += userPose.body.length + " bodies, ";
+    } else {
+        log.textContent += "no bodies, ";
+    }
+    if(userPose.face.length > 0) {
+        log.textContent += userPose.face.length + " faces, ";
+    } else {
+        log.textContent += "no faces, ";
+    }
+    if(userPose.hand.length > 0) {
+        log.textContent += userPose.hand.length + " hands\n";
+    } else {
+        log.textContent += "no hands\n";
+    }
+    log.textContent += "Body 2d:\n";
+    log.textContent += JSON.stringify(userPose.body[0].pose2d)
+    //log.textContent += JSON.stringify(newPose);
+}
 
+getCurrentUserPose = function (video) {
+    console.log(userPose);
+    return userPose;
 }
 
 getCurrentMasterPose = function (video) {
@@ -56,4 +77,8 @@ getCurrentMasterPose = function (video) {
     } else {
         return null;
     }
+}
+
+getCurrentFeedbackPose = function (video) {
+    return null;
 }

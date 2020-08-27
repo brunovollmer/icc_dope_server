@@ -10,6 +10,7 @@ var pc = null;
 
 // data channel
 var dc = null, dcInterval = null;
+var poseInterval = null;
 
 function createPeerConnection() {
     var config = {
@@ -127,6 +128,7 @@ function start() {
         dc = pc.createDataChannel('chat', parameters);
         dc.onclose = function() {
             clearInterval(dcInterval);
+            clearInterval(poseInterval);
             dataChannelLog.textContent += '- close\n';
         };
         dc.onopen = function() {
@@ -136,6 +138,9 @@ function start() {
                 dataChannelLog.textContent += '> ' + message + '\n';
                 dc.send(message);
             }, 1000);
+            poseInterval = setInterval(function() {
+                dc.send("pose");
+            })
         };
         dc.onmessage = function(evt) {
             dataChannelLog.textContent += '< ' + evt.data + '\n';
@@ -151,8 +156,7 @@ function start() {
                 data = JSON.parse(evt.data);
                 log = document.getElementById("pose-log");
                 if(data.shape.body.length > 0) {
-                    log.textContent = JSON.stringify(data.shape.body[0]);
-                    updateUserPose(data.shape.body[0])
+                    updateUserPose(data.shape)
                 } else {
                     log.textContent = "No body found!";
                 }
