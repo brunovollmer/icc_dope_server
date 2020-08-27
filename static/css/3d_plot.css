@@ -17,8 +17,12 @@
   width: 95%;
 }
 
-#animationSliderDiv {
+#animationSlider {
   width: 100%;
+}
+
+#animationSliderDiv {
+  margin-left: 1em;
 }
 
 #slider_value_text {

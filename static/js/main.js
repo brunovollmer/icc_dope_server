@@ -48,7 +48,9 @@ $(document).ready(function() {
         $('#leftPlot').toggle();
         $('#rightVideo').toggle();
         $('#rightPlot').toggle();
+        $('#animationSliderDiv').toggle();
         adjustPlotSize();
+        showFooter(true);
     });
 
     $("#video_form").submit(function(e) {
@@ -85,15 +87,23 @@ $(document).ready(function() {
     });
 
     //used to set the height of the options overlay
-    var overlayHeight = $("#overlay").get(0).scrollHeight;
     $(".footer").hover(function(){
-        $(".overlay").css("height", overlayHeight + "px");
+        showFooter(true);
     });
 
     $(".overlay").hover(function(){
     }, function(){
-        $(".overlay").css("height", "0%");
+        showFooter(false);
     });
+
+    function showFooter($show) {
+        if($show){
+            overlayHeight = $("#overlay").get(0).scrollHeight;
+            $(".overlay").css("height", overlayHeight + "px");
+        } else {
+            $(".overlay").css("height", "0%");
+        }
+    }
 
 
     //both divs are visible
