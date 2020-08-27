@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="static/img/logo.jpeg">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet"
@@ -17,7 +18,7 @@
 <body>
 <div id="loader"></div>
 <div id="loading_overlay"></div>
-<div class="custom-control form-group" style="position: absolute; width: 100%; height: 300px; background-color: #BABABA;opacity: 70%; display: none;">
+<div class="custom-control form-group" style="position: absolute; width: 100%; height: 300px; background-color: #BABABA;opacity: 0.7; display: none;">
     <div style="float: left;">
         <button id="toggle-autoscroll">Autoscroll</button>
     </div>
@@ -34,32 +35,26 @@
     <div class="main-wrapper">
         <div class="row no-gutters h-100">
             <div id="leftDiv" class="section left col w-50">
-                <div id="leftVideo" style="display: none;">
-                    <canvas id="master_canvas"></canvas>
-                    <!--<video id="masterVideo" autoplay="true" playsinline="true" controls
+                <div id="leftVideo">
+                    <video id="masterVideo" autoplay="true" playsinline="true" controls
                            style="width: 100%; display: flex;">
-                    </video> -->
+                    </video>
+                    <!--<canvas id="master_canvas"></canvas>-->
                 </div>
-                <div id="leftPlot">
+                <div id="leftPlot" style="display: none;">
                     <canvas id="2d-canvas"></canvas>
                 </div>
             </div>
             <div id="rightDiv" class="section right col w-50">
-                <div id="rightVideo" style="display: none;">
+                <div id="rightVideo">
                     <video id="video" autoplay="true" playsinline="true" controls
                            style="width: 100%; display: flex;">
                     </video>
                 </div>
-                <div id="rightPlot">
+                <div id="rightPlot" style="display: none;">
                     <figure class="highcharts-figure">
                         <div id="container"></div>
                     </figure>
-
-                    <div class="d-flex justify-content-center">
-                        <input id="slider" data-slider-id='slider' type="text" />
-                        <span id="slider_value_text">Current Timestep: <span id="slider_value">0</span></span>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -73,7 +68,7 @@
     </div>
 </div>
 
-<div class="overlay rounded-top">
+<div class="overlay rounded-bottom">
     <div id="overlay" class="rounded-top">
         <br>
         <div class="option form-group">
@@ -157,6 +152,13 @@
                 <button id="start" onclick="start()" class="btn btn-info" style="width: 40%">Start</button>
                 <button id="stop" style="display: none; width: 40%" onclick="stop()" class="btn btn-info">Stop</button>
                 <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
+            </div>
+
+            <div id="animationSliderDiv" class="custom-control form-group justify-content-center" style="display: none;">
+                <div class="row w-100">
+                    <div><span id="slider_value_text">Animation: <span id="slider_value">0</span></span></div>
+                    <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
+                </div>
             </div>
 
             <div class="custom-control form-group" style="text-align: center; display: none;">

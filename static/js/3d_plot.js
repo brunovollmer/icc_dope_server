@@ -138,6 +138,8 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
         value: 0
     }).on('slide', function(event){
         renderPose(event, poses_3d)
+    }).on('change', function(event){
+        renderPose(event, poses_3d)
     }).data('slider');
 
 
@@ -149,7 +151,9 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
 var renderPose = function (slideEvt, poses) {
     var timestep = slider.getValue();
     if (slideEvt != null) {
-        $("#slider_value").text(slideEvt.value);
+        //$("#slider_value").text(slideEvt.value);
+        $("#slider_value").text(slider.getValue());
+
     }
 
     while (chart.series.length > 0) {
