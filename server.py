@@ -30,8 +30,9 @@ if __name__ == "__main__":
    model_path = app['settings'].model_path
    use_half_computation = app['settings'].use_half_computation
    default_width = app['settings'].default_width
+   dope_debug = app['settings'].dope_debug
 
-   dope_thread = DopeThread(input_queue, output_queue, model_path, use_half_computation, default_width)
+   dope_thread = DopeThread(input_queue, output_queue, model_path, use_half_computation, default_width, dope_debug)
 
    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
    ssl_context.check_hostname = False
