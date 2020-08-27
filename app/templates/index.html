@@ -27,7 +27,8 @@
                     <video id="masterVideo" controls></video>
                 </div>
                 <div id="leftPlot" style="display: none;">
-                    <canvas id="2d-canvas"></canvas>
+                    <video id="userPlotVideo" controls></video>
+                    <!--<canvas id="2d-canvas"></canvas>-->
                 </div>
             </div>
             <div id="rightDiv" class="section right col w-50">
@@ -137,6 +138,10 @@
                 <button id="stop" style="display: none; width: 40%" onclick="stop()" class="btn btn-info">Stop</button>
                 <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
             </div>
+            <div class="custom-control form-group" style="text-align: center;">
+                <button id="record" class="btn btn-info" style="width: 81%">Start recording</button>
+                <button id="recordStop" style="display: none; width: 81%" class="btn btn-info">Stop recording</button>
+            </div>
 
             <div id="animationSliderDiv" class="custom-control form-group justify-content-center" style="display: none;">
                 <div class="row w-100">
@@ -212,6 +217,10 @@
 <script src="static/js/pose.js"></script>
 <script src="static/js/video.js"></script>
 <script src="static/js/main.js"></script>
+
+
+
+<script src="static/js/record.js"></script>
 
 
 </body>
