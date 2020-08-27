@@ -18,7 +18,7 @@ function createPeerConnection() {
     };
 
     //if (document.getElementById('use-stun').checked) {
-    if (True){
+    if (true){
         config.iceServers = [{urls: ['stun:stun.l.google.com:19302']}];
     }
 
