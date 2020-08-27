@@ -41,13 +41,13 @@ canvas {
 }
 
 .footer{
-    height: 15%;
+    height: 38px;
     #background: #ff00ff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    bottom: 0;
+    top: 0;
     position: absolute;
     width: 50%;
     -ms-transform: translateX(+50%);
@@ -85,7 +85,7 @@ h2 {
 
 .overlay {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
     background-color: #008CBA;
