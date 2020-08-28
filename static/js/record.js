@@ -49,9 +49,9 @@ function startRecording() {
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
         _recordedUserBlob = blob;
         chunks = [];
-        //var videoURL = URL.createObjectURL(blob);
-        //var video = document.getElementById('feedbackVideo');
-        //video.src = videoURL;
+        var videoURL = URL.createObjectURL(blob);
+        var video = document.getElementById('feedbackVideo');
+        video.src = videoURL;
         //_recordedUserVideo = URL.createObjectURL(blob);
         console.log("[record.js] URL:", _recordedUserVideo);
 
