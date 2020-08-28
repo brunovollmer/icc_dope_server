@@ -43,14 +43,20 @@ async def user_video(request):
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     counter = 1
 
+    model_path = request.app['settings'].model_path
+    use_half_computation = request.app['settings'].use_half_computation
+    default_width = request.app['settings'].default_width
+
+    dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
+
     while(cap.isOpened()):
         ret, frame = cap.read()
         if not ret:
             break
 
-        frame = resize_image(frame, width=self.default_width)
+        frame = resize_image(frame, width=default_width)
 
-        user_results.append(self.dope.run(frame, visualize=False))
+        user_results.append(dope.run(frame, visualize=False))
         print(f"frame {counter} of {total_frames}")
 
         counter += 1
