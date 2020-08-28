@@ -18,6 +18,9 @@
 <body>
 <div id="loader"></div>
 <div id="loading_overlay"></div>
+<div id="countdown">
+    <span id="countdown_value">0</span>
+</div>
 
 <div id="media">
     <div class="main-wrapper">
@@ -33,7 +36,7 @@
 
             <div id="rightDiv" class="section right col w-50">
                 <div id="rightVideo">
-                    <video id="userVideo"></video>
+                    <video autoplay="true" id="userVideo"></video>
                 </div>
                 <div id="rightPlot" style="display: none;">
                     <figure class="highcharts-figure">
@@ -76,13 +79,13 @@
                 </form>
             </div>
 
-            <div class="col" style="text-align: center;">
-                <button id="record" class="btn btn-info">Start recording</button>
-                <button id="recordStop" style="display: none;" class="btn btn-info">Stop recording</button>
+            <div class="col">
+                <button id="record" class="btn btn-info" style="display: none">Start</button>
+                <button id="recordStop" style="display: none;" class="btn btn-info">Fertig</button>
             </div>
 
-            <div class="col" style="text-align: center;">
-                <button id="switch" class="btn btn-info">Switch</button>
+            <div class="col">
+                <button id="switch" class="btn btn-info" style="display: none">Switch</button>
             </div>
         </div>
 
@@ -228,7 +231,9 @@
 <script src="static/js/2d_plot.js"></script>
 <script src="static/js/log.js"></script>
 <script src="static/js/pose.js"></script>
-<script src="static/js/web_rtc.js"></script>
+<!--
+<script src="static/js/web_rtc.js"></script>-->
+
 <script src="static/js/video.js"></script>
 <script src="static/js/feedback.js"></script>
 
