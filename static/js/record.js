@@ -11,10 +11,10 @@ function startRecording() {
         console.log("[record.js] No master video available");
         return;
     }
-    if(!hasMasterPoseList()) {
+    /*if(!hasMasterPoseList()) {
         console.log("[record.js] No master pose list, upload video first!");
         return;
-    }
+    }*/
     if(!userVideoCanvas) {
         console.log("[record.js] User video stream not available. Start WebRTC first!");
         return;
@@ -45,9 +45,6 @@ function startRecording() {
     console.log("[record.js] Recorder: Start recording");
     _mediaRecorder.start();
     startPoseCapture();
-
-    $('#record').toggle();
-    $('#recordStop').toggle();
 }
 
 function stopRecording() {
@@ -56,7 +53,4 @@ function stopRecording() {
         _mediaRecorder.stop();
     }
     stopPoseCatpure();
-
-    $('#recordStop').toggle();
-    $('#record').toggle();
 }

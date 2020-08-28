@@ -120,6 +120,22 @@ h2 {
     animation: spin 2s linear infinite;
 }
 
+#countdown {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#countdown_value {
+    font-size: 100px;
+    color: #ffffff;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
 @-webkit-keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);

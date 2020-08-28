@@ -57,14 +57,14 @@ $(document).ready(function() {
             success: function(msg) {
                 master_results = JSON.parse(msg);
 
-                updateMasterPoseList(master_results)
+                updateMasterPoseList(master_results);
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
 
                 if(masterVideoCanvas) {
-                    console.log("[main.js] Drawing master poses")
-                    masterVideoCanvas.startDrawing();
+                    //console.log("[main.js] Drawing master poses")
+                    //masterVideoCanvas.startDrawing();
                 }
             },
             error: function(msg) {
@@ -125,26 +125,52 @@ $(document).ready(function() {
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+        //TODO Callback for Background rendering of MasterVideo
+
+        $("#record").show();
     });
 
     // Video capturing start/stop buttons
     console.log("[main.js] Registering callbacks");
     $('#record').on("click", function() {
-        startWebRTC();
-        setTimeout(function() {
-            masterVideoCanvas.startVideo();
-            userVideoCanvas.startVideo();
-            userVideoCanvas.startDrawing();
-            startRecording();
+        $("#record").hide();
+        //startWebRTC();
+        $("#countdown").css("display", "block");
+        var counter = 5;
+        $("#countdown_value").text(counter);
+
+
+        var interval = setInterval(function(){
+            counter--;
+            $("#countdown_value").text(counter);
+            console.log("[main.js] Recording starting in: " + counter + "s");
+            if(counter <=0){ finishCounter();}
         }, 1000);
+
+        var finishCounter = function(){
+            masterVideoCanvas.startVideo();
+            //userVideoCanvas.startVideo();
+            startRecording();
+            clearInterval(interval);
+            $("#countdown").css("display", "none");
+            interval = null;
+            $("#recordStop").show();
+        };
+
+
+
     });
     $('#recordStop').on("click", function() {
+        $("#recordStop").hide();
         stopRecording();
-        stopWebRTC();
+        //stopWebRTC();
         masterVideoCanvas.stopVideo();
         userVideoCanvas.stopVideo();
-        masterVideoCanvas.stopDrawing();
-        userVideoCanvas.stopDrawing();
+        $("#record").show();
+        $("#switch").show();
+        //masterVideoCanvas.stopDrawing();
+        //userVideoCanvas.stopDrawing();
     });
 
     // Switch between master & use video in feedback view
@@ -163,5 +189,17 @@ $(document).ready(function() {
         updateData();
     }
 
+
+    var video = document.querySelector("#userVideo");
+
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (err0r) {
+                console.log("Something went wrong!");
+            });
+    }
 
 });
