@@ -56,8 +56,6 @@ function stopRecording() {
         _mediaRecorder.stop();
     }
     stopPoseCatpure();
-    masterVideoCanvas.stopVideo();
-    userVideoCanvas.stopVideo();
 
     $('#recordStop').toggle();
     $('#record').toggle();

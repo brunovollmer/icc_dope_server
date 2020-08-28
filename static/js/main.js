@@ -15,7 +15,7 @@ $(document).ready(function() {
         masterBlob = blobURL;
         masterVideo.src = blobURL;
 
-        masterVideoCanvas = new VideoCanvas(masterVideo);
+        masterVideoCanvas = new VideoCanvas(masterVideo, "master", getCurrentMasterPose);
     }
 
     $('#switch').click(function () {
@@ -30,15 +30,16 @@ $(document).ready(function() {
     });
 
     let uv = document.getElementById("userVideo");
+    console.log("[main.js] Registering user video canvas");
+    userVideoCanvas = new VideoCanvas(uv, "user", getCurrentUserPose);
+    /*
     uv.oncanplay = function() {
-        console.log("[main.js] Registering user video canvas")
-        userVideoCanvas = new VideoCanvas(uv, "user", getCurrentUserPose);
+        if(!userVideoCanvas) {
+
+        }
     }
-    let mv = document.getElementById("masterVideo");
-    mv.oncanplay = function() {
-        console.log("[main.js] Registering master video canvas")
-        masterVideoCanvas = new VideoCanvas(mv, "master", getCurrentMasterPose);
-    }
+    
+     */
 
     $("#video_form").submit(function(e) {
         console.log("[main.js] Uploading master video")
@@ -135,11 +136,14 @@ $(document).ready(function() {
             userVideoCanvas.startVideo();
             userVideoCanvas.startDrawing();
             startRecording();
-        }, 2000);
+        }, 1000);
     });
     $('#recordStop').on("click", function() {
         stopRecording();
         stopWebRTC();
+        masterVideoCanvas.stopVideo();
+        userVideoCanvas.stopVideo();
+        masterVideoCanvas.stopDrawing();
         userVideoCanvas.stopDrawing();
     });
 
