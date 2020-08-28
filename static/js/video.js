@@ -4,7 +4,7 @@ var feedbackVideoCanvas;
 
 class VideoCanvas {
     constructor(video, baseId, poseCallback) {
-        canvas = document.getElementById(baseId + "_canvas");
+        var canvas = document.getElementById(baseId + "_canvas");
         if(canvas) {
             this._canvas = canvas;
         } else {
@@ -49,6 +49,8 @@ class VideoCanvas {
                 var currentPose = _self._poseCallback(_self._video);
                 if(currentPose) {
                     _self.drawPose2D(currentPose["body"][0]["pose2d"]);
+                } else {
+                    _self._context.clearRect(0, 0, _self._canvas.width, _self._canvas.height);
                 }
             }, 1000/30);
         }
@@ -63,18 +65,7 @@ class VideoCanvas {
 
     drawPose2D(pose) {
         if(pose) {
-            for (let i = 0; i < connections.length; i++) {
-                const c = connections[i];
-
-                var p1 = pose[c["start"]];
-                var p2 = pose[c["end"]];
-
-                p1 = [p1[0] * this._canvas.width, p1[1] * this._canvas.height];
-                p2 = [p2[0] * this._canvas.width, p2[1] * this._canvas.height];
-                drawLine(this._canvas, p1[0], p1[1], p2[0], p2[1], c.color);
-                drawPoint(this._canvas, p1[0], p1[1], 5);
-                drawPoint(this._canvas, p2[0], p2[1], 5);
-            }
+            draw2dPose(this._canvas, pose);
         }
     }
 }

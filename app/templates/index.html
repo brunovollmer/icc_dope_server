@@ -28,9 +28,9 @@
                 </div>
                 <div id="leftPlot" style="display: none;">
                     <video id="userPlotVideo" controls></video>
-                    <!--<canvas id="2d-canvas"></canvas>-->
                 </div>
             </div>
+
             <div id="rightDiv" class="section right col w-50">
                 <div id="rightVideo">
                     <video id="userVideo" controls></video>
@@ -42,19 +42,28 @@
                 </div>
             </div>
         </div>
+
         <div id="viewToggle" class="text-center slide-div">
             <button id="slideLeft" class="btn btn-primary slide-btn"><</button>
             <button id="slideRight" class="btn btn-primary slide-btn">></button>
         </div>
+
         <div class="footer">
             <button class="btn">Optionen</button>
         </div>
-        <button id="logging-toggle" class="btn btn-primary btn-toggle" style="position: absolute; left: 20px; top: 20px; z-index: 10000;">Log</button>
+
+        <button
+            id="logging-toggle"
+            class="btn btn-primary btn-toggle"
+            style="position: absolute; left: 20px; top: 20px; z-index: 10000;"
+        >
+            Log
+        </button>
     </div>
 </div>
 
 <div class="overlay rounded-bottom">
-    <div id="overlay" class="rounded-top">
+    <div id="overlay" class="rounded-top pb-2">
         <br>
         <div class="option form-group">
             <div class="custom-control" style="margin-right: 15px;">
@@ -72,7 +81,8 @@
                 </form>
             </div>
         </div>
-        <div class="option form-group">
+
+        <div class="option form-group"> <!-- Webrtc config stuff-->
             <div class="custom-control" style="display: none;">
                 <div class="form-inline">
                     <input id="use-datachannel" checked="checked" type="checkbox" />
@@ -132,53 +142,28 @@
                     <label for="use-stun">Use STUN server</label>
                 </div>
             </div>
+        </div> <!-- End webrtc config stuff -->
 
-            <div class="custom-control form-group" style="text-align: center;">
-                <button id="start" onclick="start()" class="btn btn-info" style="width: 40%">Start</button>
-                <button id="stop" style="display: none; width: 40%" onclick="stop()" class="btn btn-info">Stop</button>
-                <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
+        <div class="custom-control form-group" style="text-align: center;">
+            <button id="start" onclick="start()" class="btn btn-info" style="width: 40%">Start</button>
+            <button id="stop" style="display: none; width: 40%" onclick="stop()" class="btn btn-info">Stop</button>
+            <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
+        </div>
+        <div class="custom-control form-group" style="text-align: center;">
+            <button id="record" class="btn btn-info" style="width: 81%">Start recording</button>
+            <button id="recordStop" style="display: none; width: 81%" class="btn btn-info">Stop recording</button>
+        </div>
+
+        <div id="animationSliderDiv" class="custom-control form-group justify-content-center" style="display: none;">
+            <div class="row w-100">
+                <div><span id="slider_value_text">Animation: <span id="slider_value">0</span></span></div>
+                <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
             </div>
-            <div class="custom-control form-group" style="text-align: center;">
-                <button id="record" class="btn btn-info" style="width: 81%">Start recording</button>
-                <button id="recordStop" style="display: none; width: 81%" class="btn btn-info">Stop recording</button>
-            </div>
-
-            <div id="animationSliderDiv" class="custom-control form-group justify-content-center" style="display: none;">
-                <div class="row w-100">
-                    <div><span id="slider_value_text">Animation: <span id="slider_value">0</span></span></div>
-                    <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
-                </div>
-            </div>
-
-            <div class="custom-control form-group" style="text-align: center; display: none;">
-                <a href="#data" class="btn btn-info" data-toggle="collapse" style="width: 81%">Data</a>
-            </div>
-
-            <!--<div class="custom-control form-group" style="display: none;">
-                <div id="data" class="collapse">
-                    <h2>Data channel</h2>
-                    <pre id="data-channel" style="height: 200px;"></pre>
-                </div>
-            </div>-->
-
-            <div style="height: 50px; display: none;"></div>
-
-            <a href="#debug" class="btn btn-info" data-toggle="collapse" style="align: center; display: none">degubg</a>
-            <!--<div id="debug" class="collapse">
-                <h2>State</h2>
-                ICE gathering state: <span id="ice-gathering-state"></span>
-                ICE connection state: <span id="ice-connection-state"></span>
-                Signaling state: <span id="signaling-state"></span>
-                <h3>Offer</h3>
-                <pre id="offer-sdp"></pre>
-
-                <h3>Answer</h3>
-                <pre id="answer-sdp"></pre>
-            </div>-->
         </div>
     </div>
 </div>
 
+<!-- Logging/Status panel -->
 <div
         id="logging-container"
         class="container-fluid"
@@ -226,12 +211,14 @@
         crossorigin="anonymous"></script>
 
 <script src="static/js/constants.js"></script>
-<script src="static/js/log.js"></script>
-<script src="static/js/web_rtc.js"></script>
 <script src="static/js/3d_plot.js"></script>
 <script src="static/js/2d_plot.js"></script>
+<script src="static/js/log.js"></script>
 <script src="static/js/pose.js"></script>
+<script src="static/js/web_rtc.js"></script>
 <script src="static/js/video.js"></script>
+
+<script src="static/js/pose_recording.js"></script>
 <script src="static/js/main.js"></script>
 
 

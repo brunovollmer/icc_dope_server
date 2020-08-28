@@ -1,5 +1,5 @@
-var chart;
-var slider;
+var _chart;
+var _slider;
 
 function create_3d_plot(container_id, slider_id, poses_3d) {
 
@@ -20,7 +20,7 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
     });
 
     // Set up the chart
-    chart = new Highcharts.Chart({
+    _chart = new Highcharts.Chart({
         chart: {
             renderTo: container_id,
             margin: 100,
@@ -89,20 +89,20 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
     // Add mouse and touch events for rotation
     (function (H) {
         function dragStart(eStart) {
-            eStart = chart.pointer.normalize(eStart);
+            eStart = _chart.pointer.normalize(eStart);
 
             var posX = eStart.chartX,
                 posY = eStart.chartY,
-                alpha = chart.options.chart.options3d.alpha,
-                beta = chart.options.chart.options3d.beta,
+                alpha = _chart.options.chart.options3d.alpha,
+                beta = _chart.options.chart.options3d.beta,
                 sensitivity = 5, // lower is more sensitive
                 handlers = [];
 
             function drag(e) {
                 // Get e.chartX and e.chartY
-                e = chart.pointer.normalize(e);
+                e = _chart.pointer.normalize(e);
 
-                chart.update({
+                _chart.update({
                     chart: {
                         options3d: {
                             alpha: alpha + (e.chartY - posY) / sensitivity,
@@ -128,11 +128,11 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
             handlers.push(H.addEvent(document, 'mouseup', unbindAll));
             handlers.push(H.addEvent(document, 'touchend', unbindAll));
         }
-        H.addEvent(chart.container, 'mousedown', dragStart);
-        H.addEvent(chart.container, 'touchstart', dragStart);
+        H.addEvent(_chart.container, 'mousedown', dragStart);
+        H.addEvent(_chart.container, 'touchstart', dragStart);
     }(Highcharts));
 
-    slider = $(slider_id).slider({
+    _slider = $(slider_id).slider({
         min: 0,
         max: poses_3d.length - 1,
         value: 0
@@ -148,16 +148,16 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
 }
 
 
-var renderPose = function (slideEvt, poses) {
-    var timestep = slider.getValue();
+function renderPose(slideEvt, poses) {
+    var timestep = _slider.getValue();
     if (slideEvt != null) {
         //$("#slider_value").text(slideEvt.value);
-        $("#slider_value").text(slider.getValue());
+        $("#slider_value").text(_slider.getValue());
 
     }
 
-    while (chart.series.length > 0) {
-        chart.series[0].remove(true);
+    while (_chart.series.length > 0) {
+        _chart.series[0].remove(true);
     }
 
 
@@ -179,14 +179,14 @@ var renderPose = function (slideEvt, poses) {
             data: [poses[timestep][c['start']], poses[timestep][c['end']]]
         }
 
-        chart.addSeries(c_series, false);
+        _chart.addSeries(c_series, false);
     }
 
-    chart.redraw();
+    _chart.redraw();
 
 };
 
 
 function adjustPlotSize() {
-    chart.setSize(null, null);
+    _chart.setSize(null, null);
 }

@@ -68,4 +68,4 @@ class Log {
     }
 }
 
-log = new Log();
+var log = new Log();
