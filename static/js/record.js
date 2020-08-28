@@ -83,8 +83,8 @@ function stopRecording() {
                 console.log("[record.js] Uploading user video with id:", _master_id);
             },
             success: function(msg) {
-                master_results = JSON.parse(msg);
-
+                master_results = msg;
+                console.log("[main.js]: Master Video response: ", msg);
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
             },
