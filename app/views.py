@@ -30,12 +30,14 @@ async def user_video(request):
     with open(master_results_path) as json_file:
         master_results = json.load(json_file)
 
-    filename = "tmp_data/{}_user.mp4".format(master_video_id)
+    filename = os.path.join("tmp_data", "{}_user.mp4".format(master_video_id))
 
     if user_video:
         with open(filename, 'wb') as fd:
              video_content = user_video.file.read()
              fd.write(video_content)
+
+
 
     cap = cv2.VideoCapture(filename)
     user_results = []
