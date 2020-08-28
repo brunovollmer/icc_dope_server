@@ -1,87 +1,5 @@
-var video;
-var context;
-var canvas;
-var videoInterval = null;
-
-function startVideo() {
-    video.play();
-    if(videoInterval == null) {
-        videoInterval = setInterval(videoLoop, 1000 / 30);
-    }
-}
-
-function stopVideo() {
-    video.stop();
-    if(videoInterval != null) {
-        clearInterval(videoInterval);
-        videoInterval = null;
-    }
-}
-
-function drawVideoOnCanvas(canvasElem, videoSrc, videoId) {
-    // var width = canvas.width();
-    // console.log(width);
-
-    canvas = canvasElem;
-
-    leftDiv = $('#leftVideo');
-    canvas.width = leftDiv.width();
-    canvas.height = leftDiv.height();
-
-    context = canvas.getContext("2d");
-
-    video = document.createElement("video");
-    video.src = videoSrc;
-    video.id = videoId
-
-    video.addEventListener('loadeddata', function() {
-        console.log("loadeddata");
-        //video.play();
-        //startVideo();
-    });
-    video.addEventListener("click", function() {
-        console.log("toggling video");
-        if(videoInterval) {
-            stopVideo();
-        } else {
-            startVideo();
-        }
-    })
-
-    //context.drawImage(video, 0, 0);
-}
-
-function userLoop() {
-    if(userVideo && !userVideo.paused && !userVideo.ended) {
-        context.canvas.width = video.videoWidth;
-        context.canvas.height = video.videoHeight;
-
-        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-        var pose = getCurrentMasterPose(video)
-        if(pose) {
-            draw2dPose(canvas, pose["body"][0]["pose2d"])
-        }
-    }
-}
-
-function videoLoop() {
-    if (video && !video.paused && !video.ended) {
-        context.canvas.width = video.videoWidth;
-        context.canvas.height = video.videoHeight;
-
-        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-        var pose = getCurrentMasterPose(video)
-        if(pose) {
-            draw2dPose(canvas, pose["body"][0]["pose2d"])
-        }
-        // drawLineWithArrows(canvas,0,0,50,50,2,5,false,true);
-    }
-}
-
 function draw2dPose(canvas, pose){
-    //console.log("Pose:", pose)
+    //console.log("[2d_plot.js] Pose:", pose)
 
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];
@@ -96,7 +14,6 @@ function draw2dPose(canvas, pose){
         drawPoint(canvas, p2[0], p2[1], 5);
     }
 }
-
 
 function drawLine(canvas, x0, y0, x1, y1, c='black'){
     var ctx = canvas.getContext("2d");
@@ -151,14 +68,3 @@ function drawLineWithArrows(canvas, x0,y0,x1,y1,aWidth,aLength,arrowStart,arrowE
     ctx.stroke();
     ctx.setTransform(1,0,0,1,0,0);
 }
-
-function adjustCanvasSize() {
-    leftDiv = $("#leftDiv");
-    canvas.width = leftDiv.width();
-    canvas.height = leftDiv.height();
-    drawLineWithArrows(canvas,100,100,20,20,2,5,false,true);
-}
-
-$(window).on('resize', function(){
-    //adjustCanvasSize();
-});

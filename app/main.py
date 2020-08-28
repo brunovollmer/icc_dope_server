@@ -12,6 +12,14 @@ from aiohttp import web
 
 from omegaconf import OmegaConf
 
+default_config = """
+default_width: 500
+use_half_computation: False
+model_path: ../dope/models/DOPErealtime_v1_0_0.pth.tgz
+dope_debug: False
+use_turn: False
+"""
+
 ROOT = os.path.dirname(__file__)
 THIS_DIR = Path(__file__).parent
 sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
@@ -38,7 +46,9 @@ async def create_app(debug=False):
     else:
         logging.basicConfig(level=logging.INFO)
 
+    default_settings = OmegaConf.create(default_config)
     settings = OmegaConf.load("app/settings.yaml")
+    settings = OmegaConf.merge(default_settings, settings)
 
     app = web.Application(client_max_size=1028**4)
     app.on_shutdown.append(on_shutdown)

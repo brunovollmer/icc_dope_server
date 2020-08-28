@@ -4,24 +4,11 @@ $(document).ready(function() {
 
     // create_3d_plot('container', '#slider', test_poses_3d)
 
-    var autoScroll = null;
-    $("#toggle-autoscroll").click(function() {
-        if(autoScroll) {
-            clearInterval(autoScroll);
-            autoScroll = null;
-        } else {
-            autoScroll = setInterval(function () {
-                var elem = document.getElementById('data-channel');
-                elem.scrollTop = elem.scrollHeight;
-            }, 200);
-        }
-    });
-
     // preview of uploaded video
     document.querySelector("input[type=file]").onchange = function(event) {
         document.getElementById('media').style.display = 'block';
 
-        masterVideo = document.getElementById("masterVideo");
+        var masterVideo = document.getElementById("masterVideo");
 
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
@@ -29,26 +16,9 @@ $(document).ready(function() {
         masterVideo.src = blobURL;
 
         masterVideoCanvas = new VideoCanvas(masterVideo);
-
-        //var canvas = document.getElementById("master_canvas");
-        //drawVideoOnCanvas(canvas, blobURL, "master_video");
-        //document.querySelector("video").src = blobURL;
     }
 
-
-    var optionsHidden = true;
-
-    $('#overlay-btn').click(function () {
-        $('#overlay').slideToggle();
-        if (optionsHidden) {
-            $('#overlay-btn').text("Optionen verbergen");
-            optionsHidden = false;
-        } else {
-            $('#overlay-btn').text("Optionen");
-            optionsHidden = true
-        }
-    });
-
+    // TODO: magic??? where is other part?
     $('#stop').click(function () {
         $('#start').show();
     });
@@ -65,10 +35,9 @@ $(document).ready(function() {
     });
 
     $("#userVideo").on('play', function() {
-        console.log("Registrering user video canvas")
+        console.log("[main.js] Registering user video canvas")
         userVideoCanvas = new VideoCanvas(this, "user", getCurrentUserPose);
-        //TODO: start pose drawing only
-        userVideoCanvas.startDrawing();
+        userVideoCanvas.startVideo();
     });
     $("#masterVideo").on("canplay", function() {
         masterVideoCanvas = new VideoCanvas(this, "master", getCurrentMasterPose);
@@ -76,7 +45,7 @@ $(document).ready(function() {
 
 
     $("#video_form").submit(function(e) {
-        console.log("SUBMIT")
+        console.log("[main.js] Uploading master video")
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         e.preventDefault();
@@ -97,26 +66,29 @@ $(document).ready(function() {
                 $("#loading_overlay").css("display", "none");
 
                 if(masterVideoCanvas) {
-                    console.log("Starting master video")
+                    console.log("[main.js] Starting master video")
                     masterVideoCanvas.startVideo();
                 }
             },
             error: function(msg) {
-                console.log('failure');
+                console.log('[main.js] ajax video upload failure');
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
-                alert("FEHLER!")
+                alert("Video upload failed")
             }
         });
     });
 
+    // TODO: class overlay vs. id overlay ?!?!?!
     //used to set the height of the options overlay
     $(".footer").hover(function(){
         showFooter(true);
     });
 
-    $(".overlay").hover(function(){
+    var overlay = $(".overlay");
+
+    overlay.hover(function(){
     }, function(){
         showFooter(false);
     });
@@ -124,9 +96,9 @@ $(document).ready(function() {
     function showFooter($show) {
         if($show){
             overlayHeight = $("#overlay").get(0).scrollHeight;
-            $(".overlay").css("height", overlayHeight + "px");
+            overlay.css("height", overlayHeight + "px");
         } else {
-            $(".overlay").css("height", "0%");
+            overlay.css("height", "0%");
         }
     }
 
@@ -175,6 +147,7 @@ $(document).ready(function() {
         adjustPlotSize();
     });
 
+    // Show file name after selection
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);

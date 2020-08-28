@@ -1,3 +1,6 @@
+// Callback to execute when receiving pose from server
+// updateUserPose from pose.js
+var rtcPoseCallback = updateUserPose;
 
 // get DOM elements
 var dataChannelLog = document.getElementById('data-channel'),
@@ -17,6 +20,7 @@ function createPeerConnection() {
         sdpSemantics: 'unified-plan'
     };
 
+    //TODO: fix?
     //if (document.getElementById('use-stun').checked) {
     if (true){
         config.iceServers = [{urls: ['stun:stun.l.google.com:19302']}];
@@ -26,19 +30,19 @@ function createPeerConnection() {
 
     // register some listeners to help debugging
     pc.addEventListener('icegatheringstatechange', function() {
-        console.log("icegatheringstatechange event: ", pc.iceGatheringState);
+        console.log("[RTC-Conf] icegatheringstatechange event: ", pc.iceGatheringState);
         iceGatheringLog.textContent += ' -> ' + pc.iceGatheringState;
     }, false);
     iceGatheringLog.textContent = pc.iceGatheringState;
 
     pc.addEventListener('iceconnectionstatechange', function() {
-        console.log("iceconnectionstatechange event: ", pc.iceConnectionState);
+        console.log("[RTC-Conf] iceconnectionstatechange event: ", pc.iceConnectionState);
         iceConnectionLog.textContent += ' -> ' + pc.iceConnectionState;
     }, false);
     iceConnectionLog.textContent = pc.iceConnectionState;
 
     pc.addEventListener('signalingstatechange', function() {
-        console.log("signalingstatechange event: ", pc.signalingState);
+        console.log("[RTC-Conf] signalingstatechange event: ", pc.signalingState);
         signalingLog.textContent += ' -> ' + pc.signalingState;
     }, false);
     signalingLog.textContent = pc.signalingState;
@@ -149,18 +153,16 @@ function start() {
         dc.onmessage = function(evt) {
             dataChannelLog.textContent += '< ' + evt.data + '\n';
 
-            if(dataChannelLog.textContent.length > 200000) {
-                dataChannelLog.textContent = dataChannelLog.textContent.slice(100000)
-            }
-
             if (evt.data.substring(0, 4) === 'pong') {
                 var elapsed_ms = current_stamp() - parseInt(evt.data.substring(5), 10);
                 dataChannelLog.textContent += ' RTT ' + elapsed_ms + ' ms\n';
             } else {
                 data = JSON.parse(evt.data);
                 //log.logPose(data.shape);
-                if(data.results.body.length > 0) {
-                    updateUserPose(data.results)
+                if(!data.results || !data.results.body) {
+                    console.log("[RTC] Server did not return valid body", data);
+                } else if(data.results.body.length > 0) {
+                    rtcPoseCallback(data.results);
                 }
             }
         };

@@ -1,4 +1,4 @@
-var chart;
+var _chart;
 
 function create_3d_plot(container_id) {
 
@@ -19,7 +19,7 @@ function create_3d_plot(container_id) {
     });
 
     // Set up the chart
-    chart = new Highcharts.Chart({
+    _chart = new Highcharts.Chart({
         chart: {
             renderTo: container_id,
             margin: 100,
@@ -88,20 +88,20 @@ function create_3d_plot(container_id) {
     // Add mouse and touch events for rotation
     (function (H) {
         function dragStart(eStart) {
-            eStart = chart.pointer.normalize(eStart);
+            eStart = _chart.pointer.normalize(eStart);
 
             var posX = eStart.chartX,
                 posY = eStart.chartY,
-                alpha = chart.options.chart.options3d.alpha,
-                beta = chart.options.chart.options3d.beta,
+                alpha = _chart.options.chart.options3d.alpha,
+                beta = _chart.options.chart.options3d.beta,
                 sensitivity = 5, // lower is more sensitive
                 handlers = [];
 
             function drag(e) {
                 // Get e.chartX and e.chartY
-                e = chart.pointer.normalize(e);
+                e = _chart.pointer.normalize(e);
 
-                chart.update({
+                _chart.update({
                     chart: {
                         options3d: {
                             alpha: alpha + (e.chartY - posY) / sensitivity,
@@ -127,8 +127,8 @@ function create_3d_plot(container_id) {
             handlers.push(H.addEvent(document, 'mouseup', unbindAll));
             handlers.push(H.addEvent(document, 'touchend', unbindAll));
         }
-        H.addEvent(chart.container, 'mousedown', dragStart);
-        H.addEvent(chart.container, 'touchstart', dragStart);
+        H.addEvent(_chart.container, 'mousedown', dragStart);
+        H.addEvent(_chart.container, 'touchstart', dragStart);
     }(Highcharts));
 
 }
@@ -136,8 +136,8 @@ function create_3d_plot(container_id) {
 
 var render3DPose = function (pose) {
 
-    while (chart.series.length > 0) {
-        chart.series[0].remove(true);
+    while (_chart.series.length > 0) {
+        _chart.series[0].remove(true);
     }
 
     for (let i = 0; i < connections.length; i++) {
@@ -158,14 +158,14 @@ var render3DPose = function (pose) {
             data: [pose[c['start']], pose[c['end']]]
         }
 
-        chart.addSeries(c_series, false);
+        _chart.addSeries(c_series, false);
     }
 
-    chart.redraw();
+    _chart.redraw();
 
 };
 
 
 function adjustPlotSize() {
-    chart.setSize(null, null);
+    _chart.setSize(null, null);
 }
