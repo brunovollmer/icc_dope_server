@@ -38,7 +38,7 @@ $(document).ready(function() {
 
         }
     }
-    
+
      */
 
     $("#video_form").submit(function(e) {
@@ -50,22 +50,23 @@ $(document).ready(function() {
         var formData = new FormData(form);
         $.ajax({
             type: "POST",
-            url: "/video",
+            url: "/master_video",
             processData: false,
             contentType: false,
             data: formData,
             success: function(msg) {
-                master_results = JSON.parse(msg);
+                console.log(msg)
+                // master_results = JSON.parse(msg);
 
-                updateMasterPoseList(master_results)
+                // updateMasterPoseList(master_results)
 
-                $("#loader").css("display", "none");
-                $("#loading_overlay").css("display", "none");
+                // $("#loader").css("display", "none");
+                // $("#loading_overlay").css("display", "none");
 
-                if(masterVideoCanvas) {
-                    console.log("[main.js] Drawing master poses")
-                    masterVideoCanvas.startDrawing();
-                }
+                // if(masterVideoCanvas) {
+                //     console.log("[main.js] Drawing master poses")
+                //     masterVideoCanvas.startDrawing();
+                // }
             },
             error: function(msg) {
                 console.log('[main.js] ajax video upload failure');
