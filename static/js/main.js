@@ -41,45 +41,6 @@ $(document).ready(function() {
 
      */
 
-    $("#video_form").submit(function(e) {
-        $("#loader").css("display", "block");
-        $("#loading_overlay").css("display", "block");
-        e.preventDefault();
-        var form = $("#video_form")[0];
-        var formData = new FormData(form);
-        $.ajax({
-            type: "POST",
-            url: "/master_video",
-            processData: false,
-            contentType: false,
-            data: formData,
-            beforeSend: function(){
-                console.log("[main.js] Uploading master video with data:", formData);
-            },
-            success: function(msg) {
-                console.log("[main.js]: Master Video response: ", msg);
-                setMasterId(msg["id"]);
-
-                //updateMasterPoseList(master_results);
-
-                $("#loader").css("display", "none");
-                $("#loading_overlay").css("display", "none");
-
-                if(masterVideoCanvas) {
-                    //console.log("[main.js] Drawing master poses")
-                    //masterVideoCanvas.startDrawing();
-                }
-            },
-            error: function(msg) {
-                console.log('[main.js] ajax video upload failure');
-
-                $("#loader").css("display", "none");
-                $("#loading_overlay").css("display", "none");
-                alert("Video upload failed")
-            }
-        });
-    });
-
     //both divs are visible
     var slideStatus = 0;
     var leftDiv =  $('#leftDiv');
@@ -130,6 +91,41 @@ $(document).ready(function() {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 
         //TODO Callback for Background rendering of MasterVideo
+        $("#loader").css("display", "block");
+        $("#loading_overlay").css("display", "block");
+        var form = $("#video_form")[0];
+        var formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: "/master_video",
+            processData: false,
+            contentType: false,
+            data: formData,
+            beforeSend: function(){
+                console.log("[main.js] Uploading master video with data:", formData);
+            },
+            success: function(msg) {
+                console.log("[main.js]: Master Video response: ", msg);
+                setMasterId(msg["id"]);
+
+                //updateMasterPoseList(master_results);
+
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
+
+                if(masterVideoCanvas) {
+                    //console.log("[main.js] Drawing master poses")
+                    //masterVideoCanvas.startDrawing();
+                }
+            },
+            error: function(msg) {
+                console.log('[main.js] ajax video upload failure');
+
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
+                alert("Video upload failed")
+            }
+        });
 
         $("#record").show();
     });
