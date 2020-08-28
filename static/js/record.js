@@ -79,7 +79,11 @@ function startRecording() {
                     console.log("[record.js] Uploading user video with id:", _master_id);
                 },
                 success: function(msg) {
-                    master_results = msg;
+                    data = JSON.parse(msg);
+                    updateMasterPoseList(data.master_results);
+                    updateUserPoseList(data.user_results);
+                    updateComparisonScores(data.scores);
+
                     console.log("[main.js]: Master Video response: ", msg);
                     $("#loader").css("display", "none");
                     $("#loading_overlay").css("display", "none");

@@ -1,4 +1,5 @@
 var _masterPoseList = null;
+var _userPoseList = null;
 
 var _userPose = null;
 var _masterPose = null;
@@ -14,6 +15,17 @@ function updateMasterPoseList(poseList) {
         return true;
     } else {
         console.log("[pose.js] Master pose list is null/empty");
+        return false;
+    }
+}
+
+function updateUserPoseList(poseList) {
+    if(poseList && poseList.length > 0) {
+        _userPoseList = poseList;
+        _userPose = _userPoseList[0];
+        return true;
+    } else {
+        console.log("[pose.js] User pose list is null/empty");
         return false;
     }
 }
