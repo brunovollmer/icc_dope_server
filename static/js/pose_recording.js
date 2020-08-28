@@ -1,50 +1,41 @@
-var recordedSequence = null;
+var recordedSequence = [];
+var _captureInterval = null;
+var _startTime = 0;
 
 function startPoseCapture() {
-
+    recordedSequence = [];
+    _startTime = getUserTimestamp();
+    if(!_captureInterval) {
+        _captureInterval = setInterval(function() {
+            capture();
+        }, 1000/30);
+    }
 }
 
 function stopPoseCatpure() {
-
+    _startTime = 0;
+    if(_captureInterval) {
+        clearInterval(_captureInterval);
+        _captureInterval = null;
+    }
+    console.log(
+        "[pose_recording.js] Recorded sequence of length "
+        + recordedSequence.length
+    );
 }
 
-class PoseSnapshotSequence {
-    constructor(masterVideo, userVideo) {
-        this._masterVideo = masterVideo;
-        this._userVideo = userVideo;
-        this._snapshots = [];
-        this._captureInterval = null;
-    }
-
-    startCapture() {
-        if(!this._captureInterval) {
-            var _self = this;
-            this._captureInterval = setInterval(function() {
-                _self.capture();
-            }, 1000/30);
-        }
-    }
-
-    stopCapture() {
-        if(this._captureInterval) {
-            clearInterval(this._captureInterval);
-            this._captureInterval = null;
-        }
-        console.log(
-            "[pose_recording.js] Recorded sequence of length "
-            + this._snapshots.length
-            + ", total sequences "
-            + recordedSequences.length
-        );
-    }
-
-    capture() {
-        this._snapshots.push({
-            currentUserPose: getCurrentUserPose(this._userVideo),
-            currentUserTimestamp: this._userVideo.currentTime,
-            currentMasterPose: getCurrentMasterPose(this._masterVideo),
-            currentMasterTimestamp: this._masterVideo.currentTime
-        });
-        console.log("[pose_recording.js] " + this._snapshots.length);
-    }
+function capture() {
+    recordedSequence.push({
+        userPose: getCurrentUserPose(getUserVideo()),
+        userTimestamp: getUserTimestamp() - _startTime,
+        masterPose: getCurrentMasterPose(getMasterVideo()),
+        masterTimestamp: getMasterTimestamp()
+    });
+    console.log("[pose_recording.js] user: "
+        + getUserTimestamp()
+        + " - master: "
+        + getMasterTimestamp()
+        + " - #"
+        + recordedSequence.length
+    );
 }

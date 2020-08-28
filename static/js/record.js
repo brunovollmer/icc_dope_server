@@ -1,6 +1,15 @@
 var _mediaRecorder = null;
+var _recordedUserBlob = null;
+
+function getRecordedUserBlob() {
+    return URL.createObjectURL(_recordedUserBlob);
+}
 
 function startRecording() {
+    if(!masterVideoCanvas) {
+        console.log("[record.js] No master video available");
+        return;
+    }
     if(!hasMasterPoseList()) {
         console.log("[record.js] No master pose list, upload video first!");
         return;
@@ -24,14 +33,17 @@ function startRecording() {
     _mediaRecorder.onstop = function(e) {
         console.log("[record.js] Recorder: Finalizing recording");
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
+        _recordedUserBlob = blob;
         chunks = [];
-        var videoURL = URL.createObjectURL(blob);
-        var video = document.getElementById('userPlotVideo');
-        video.src = videoURL;
+        //var videoURL = URL.createObjectURL(blob);
+        //var video = document.getElementById('feedbackVideo');
+        //video.src = videoURL;
         console.log("[record.js] Recorder: Video ready");
     };
 
     console.log("[record.js] Recorder: Start recording");
+    masterVideoCanvas.startVideo();
+    userVideoCanvas.startVideo();
     _mediaRecorder.start();
     startPoseCapture();
 
@@ -41,8 +53,12 @@ function startRecording() {
 
 function stopRecording() {
     console.log("[record.js] Recorder: Stop recording");
-    _mediaRecorder.stop();
+    if(_mediaRecorder) {
+        _mediaRecorder.stop();
+    }
     stopPoseCatpure();
+    masterVideoCanvas.stopVideo();
+    userVideoCanvas.stopVideo();
 
     $('#recordStop').toggle();
     $('#record').toggle();

@@ -114,9 +114,7 @@ function negotiate() {
     });
 }
 
-function start() {
-    document.getElementById('start').style.display = 'none';
-
+function startWebRTC() {
     pc = createPeerConnection();
 
     var time_start = null;
@@ -201,13 +199,9 @@ function start() {
     } else {
         negotiate();
     }
-
-    document.getElementById('stop').style.display = 'inline-block';
 }
 
-function stop() {
-    document.getElementById('stop').style.display = 'none';
-
+function stopWebRTC() {
     // close data channel
     if (dc) {
         dc.close();

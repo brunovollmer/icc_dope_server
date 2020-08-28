@@ -20,19 +20,19 @@ function updateData() {
 
     if (showMaster){
         feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['masterTimestamp']);
-        render3DPose(poseSequence[timeStep]['masterPose']['body']['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body']['pose2d']);
+        render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
+        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body'][0]['pose2d']);
     }else{
         feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['userTimestamp']);
-        render3DPose(poseSequence[timeStep]['userPose']['body']['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body']['pose2d']);
+        render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
+        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
     }
 
 
 }
 
 function visualizeFeedback(blobMaster, blobUser, data) {
-    data = [{'masterTimestamp': 0, 'masterPose': {'body': {'pose3d': test_poses_3d[0], 'pose2d': test_poses_2d[0]}}}, {'masterTimestamp': 1, 'masterPose': {'body': {'pose3d': test_poses_3d[1], 'pose2d': test_poses_2d[1]}}}]
+    //data = [{'masterTimestamp': 0, 'masterPose': {'body': {'pose3d': test_poses_3d[0], 'pose2d': test_poses_2d[0]}}}, {'masterTimestamp': 1, 'masterPose': {'body': {'pose3d': test_poses_3d[1], 'pose2d': test_poses_2d[1]}}}]
 
     poseSequence = data;
 
@@ -54,14 +54,13 @@ function visualizeFeedback(blobMaster, blobUser, data) {
 
     feedbackVideoCanvas = new VideoCanvas(video, "feedback", getCurrentFeedbackPose);
 
-
     create_3d_plot('container');
 
     if (showMaster){
-        render3DPose(poseSequence[timeStep]['masterPose']['body']['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body']['pose2d']);
+        render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
+        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body'][0]['pose2d']);
     }else{
-        render3DPose(poseSequence[timeStep]['userPose']['body']['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body']['pose2d']);
+        render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
+        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
     }
 }

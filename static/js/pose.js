@@ -36,8 +36,10 @@ function getCurrentMasterPose(video) {
         return null;
     }
 
-    fraction = video.currentTime / video.duration;
-    _masterPose = _masterPoseList[Math.round(fraction * _masterPoseList.length)]
+    var fraction = video.currentTime / video.duration;
+    var index = Math.round(fraction * _masterPoseList.length);
+    if(index >= _masterPoseList.length) index = _masterPoseList.length - 1;
+    _masterPose = _masterPoseList[index];
 
     return _masterPose[0];
 }

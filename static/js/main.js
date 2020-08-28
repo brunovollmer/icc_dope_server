@@ -18,11 +18,6 @@ $(document).ready(function() {
         masterVideoCanvas = new VideoCanvas(masterVideo);
     }
 
-    // TODO: magic??? where is other part?
-    $('#stop').click(function () {
-        $('#start').show();
-    });
-
     $('#switch').click(function () {
         $('#leftVideo').toggle();
         $('#leftPlot').toggle();
@@ -30,14 +25,14 @@ $(document).ready(function() {
         $('#rightPlot').toggle();
         $('#animationSliderDiv').toggle();
         //adjustPlotSize();
-        visualizeFeedback(masterBlob, "", "");
+
+        visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
         showFooter(true);
     });
 
-    $("#userVideo").on('play', function() {
+    $("#userVideo").on('canplay', function() {
         console.log("[main.js] Registering user video canvas")
         userVideoCanvas = new VideoCanvas(this, "user", getCurrentUserPose);
-        userVideoCanvas.startVideo();
     });
     $("#masterVideo").on("canplay", function() {
         masterVideoCanvas = new VideoCanvas(this, "master", getCurrentMasterPose);
@@ -66,8 +61,8 @@ $(document).ready(function() {
                 $("#loading_overlay").css("display", "none");
 
                 if(masterVideoCanvas) {
-                    console.log("[main.js] Starting master video")
-                    masterVideoCanvas.startVideo();
+                    console.log("[main.js] Drawing master poses")
+                    masterVideoCanvas.startDrawing();
                 }
             },
             error: function(msg) {
@@ -155,6 +150,16 @@ $(document).ready(function() {
 
     // Video capturing start/stop buttons
     console.log("[main.js] Registering callbacks");
-    $('#record').on("click", startRecording);
-    $('#recordStop').on("click", stopRecording);
+    $('#record').on("click", function() {
+        startWebRTC();
+        var uv = document.getElementById("userVideo");
+        uv.oncanplay = function() {
+            startRecording();
+            uv.oncanplay = null;
+        }
+    });
+    $('#recordStop').on("click", function() {
+        stopRecording();
+        stopWebRTC();
+    });
 });
