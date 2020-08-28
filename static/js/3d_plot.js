@@ -166,5 +166,7 @@ var render3DPose = function (pose) {
 
 
 function adjustPlotSize() {
-    _chart.setSize(null, null);
+    if(_chart){
+        _chart.setSize(null, null);
+    }
 }
