@@ -29,7 +29,7 @@ async def user_video(request):
     with open(master_results_path) as json_file:
         master_results = json.load(json_file)
 
-    filename = "tmp_data/{}_user.mp4".format(video_id)
+    filename = "tmp_data/{}_user.mp4".format(master_video_id)
 
     if user_video:
         with open(filename, 'wb') as fd:
@@ -56,7 +56,7 @@ async def user_video(request):
     cap.release()
 
     response = json.dumps(user_results, cls=NumpyEncoder)
-    with open(os.join("tmp_data", "{}_user.json".format(video_id)), "w") as f:
+    with open(os.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
 
     return web.json_response({"test": "test"})
