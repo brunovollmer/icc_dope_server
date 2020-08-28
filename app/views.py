@@ -2,6 +2,7 @@ import os
 import uuid
 import cv2
 import json
+import time
 import asyncio
 
 from aiohttp_jinja2 import template
@@ -21,6 +22,9 @@ async def user_video(request):
     master_video_id = post.get("video_id")
 
     master_results_path = os.path.join(request.app['settings'].tmp_data_path, "{}.json".format(master_video_id))
+
+    while not os.path.isfile(master_results_path):
+        time.sleep(1)
 
     with open(master_results_path) as json_file:
         master_results = json.load(json_file)
