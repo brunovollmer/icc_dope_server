@@ -142,6 +142,16 @@ $(document).ready(function() {
     // Switch between master & use video in feedback view
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
-        showMaster = radio.checked;
+        showMaster = true;
+        updateData();
     }
+
+    // Switch between master & use video in feedback view
+    let radio2 = document.getElementById("userRadioButton");
+    radio2.onclick = function(_) {
+        showMaster = false;
+        updateData();
+    }
+
+
 });
