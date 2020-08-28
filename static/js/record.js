@@ -52,10 +52,7 @@ function startRecording() {
         //var videoURL = URL.createObjectURL(blob);
         //var video = document.getElementById('feedbackVideo');
         //video.src = videoURL;
-        _recordedUserVideo = URL.createObjectURL(blob);
-        var videoURL = URL.createObjectURL(blob);
-        var video = document.getElementById('feedbackVideo');
-        video.file = videoURL;
+        //_recordedUserVideo = URL.createObjectURL(blob);
         console.log("[record.js] URL:", _recordedUserVideo);
 
         //_master_id = 1;
@@ -67,7 +64,7 @@ function startRecording() {
 
             var formData = new FormData();
             formData.append("video_id", _master_id);
-            formData.append("video", video);
+            formData.append("video", blob);
 
             /*var form = $("#user_video_form")[0];
             var formData = new FormData(form);*/
