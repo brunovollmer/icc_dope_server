@@ -6,7 +6,7 @@ var slider;
 var _userBlobURL = null;
 var _masterBlobURL = null;
 
-function setFeedbackVideoSource() {
+function updateFeedbackVideoSource() {
     if (showMaster){
         _feedbackVideo.src = _masterBlobURL;
     } else {
@@ -26,7 +26,7 @@ function updateData() {
     timeStep = slider.getValue();
     $("#slider_value").text(slider.getValue());
 
-    setFeedbackVideoSource();
+    //setFeedbackVideoSource();
 
     feedbackVideoCanvas.clearCanvas();
 
@@ -60,7 +60,7 @@ function visualizeFeedback(blobMaster, blobUser, data) {
     _userBlobURL = blobUser;
     _masterBlobURL = blobMaster;
 
-    setFeedbackVideoSource();
+    updateFeedbackVideoSource();
 
     slider = $("#slider").slider({
         min: 0,

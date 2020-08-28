@@ -147,6 +147,7 @@ $(document).ready(function() {
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
         showMaster = true;
+        updateFeedbackVideoSource();
         updateData();
     }
 
@@ -154,6 +155,7 @@ $(document).ready(function() {
     let radio2 = document.getElementById("userRadioButton");
     radio2.onclick = function(_) {
         showMaster = false;
+        updateFeedbackVideoSource();
         updateData();
     }
 
