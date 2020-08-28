@@ -31,11 +31,4 @@ function capture() {
         masterPose: getCurrentMasterPose(getMasterVideo()),
         masterTimestamp: getMasterTimestamp()
     });
-    console.log("[pose_recording.js] user: "
-        + getUserTimestamp()
-        + " - master: "
-        + getMasterTimestamp()
-        + " - #"
-        + recordedSequence.length
-    );
 }

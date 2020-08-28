@@ -35,14 +35,12 @@ function updateData() {
 
         if (poseSequence[timeStep].masterPose){
             render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
-            feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body'][0]['pose2d']);
         }
     }else{
         feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['userTimestamp']);
 
         if (poseSequence[timeStep].userPose) {
             render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
-            feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
         }
     }
 }
@@ -73,14 +71,17 @@ function visualizeFeedback(blobMaster, blobUser, data) {
     }).data('slider');
 
     feedbackVideoCanvas = new VideoCanvas(_feedbackVideo, "feedback", getCurrentFeedbackPose);
+    feedbackVideoCanvas.startDrawing();
 
     create_3d_plot('container');
 
     if (showMaster){
-        render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body'][0]['pose2d']);
+        if(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']) {
+            render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
+        }
     }else{
-        render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
+        if(poseSequence[timeStep]['userPose']['body'][0]['pose3d']) {
+            render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
+        }
     }
 }
