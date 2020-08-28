@@ -1,5 +1,13 @@
 var recordedSequence = null;
 
+function startPoseCapture() {
+
+}
+
+function stopPoseCatpure() {
+
+}
+
 class PoseSnapshotSequence {
     constructor(masterVideo, userVideo) {
         this._masterVideo = masterVideo;

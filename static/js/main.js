@@ -152,4 +152,9 @@ $(document).ready(function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
+    // Video capturing start/stop buttons
+    console.log("[main.js] Registering callbacks");
+    $('#record').on("click", startRecording);
+    $('#recordStop').on("click", stopRecording);
 });
