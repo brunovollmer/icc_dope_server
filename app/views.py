@@ -106,7 +106,8 @@ async def offer(request):
 
                     data['timestamps'].append({'time': time.time(), 'event': 'exit output queue'})
 
-                    format_debug_times(data['timestamps'])
+                    if request.app['settings'].dope_debug:
+                        format_debug_times(data['timestamps'])
 
                     response = {"results": data['results']}
 
