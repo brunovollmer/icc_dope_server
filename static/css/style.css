@@ -46,25 +46,12 @@ canvas {
     align-items: center;
 }
 
-.footer{
-    height: 38px;
-    #background: #ff00ff;
+.header{
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
     top: 0;
     position: absolute;
-    width: 50%;
-    -ms-transform: translateX(+50%);
-    transform: translateX(+50%);
-}
-
-.footer > .btn {
-    position: absolute;
-    bottom: 0;
-    background-color: #008CBA;
-    color: #ffffff;
+    width: 100%;
 }
 
 h2 {

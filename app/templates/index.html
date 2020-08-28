@@ -48,10 +48,6 @@
             <button id="slideRight" class="btn btn-primary slide-btn">></button>
         </div>
 
-        <div class="footer">
-            <button class="btn">Optionen</button>
-        </div>
-
         <button
             id="logging-toggle"
             class="btn btn-primary btn-toggle"
@@ -62,26 +58,53 @@
     </div>
 </div>
 
-<div class="overlay rounded-bottom">
-    <div id="overlay" class="rounded-top pb-2">
-        <br>
-        <div class="option form-group">
-            <div class="custom-control" style="margin-right: 15px;">
-                <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <input type="submit" class="btn btn-primary" value="Hochladen">
-                        </div>
-                        <div class="custom-file">
-                            <input id="videoUpload" type="file" class="custom-file-input" name="video"
-                                   accept="video/mp4">
-                            <label class="custom-file-label" for="videoUpload">Master-Video</label>
-                        </div>
-                    </div>
-                </form>
+<div class="header mx-auto">
+    <div class="m-1">
+        <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <input type="submit" class="btn btn-primary" value="Hochladen">
+                </div>
+                <div class="custom-file">
+                    <input id="videoUpload" type="file" class="custom-file-input" name="video"
+                           accept="video/mp4">
+                    <label class="custom-file-label" for="videoUpload">Master-Video</label>
+                </div>
             </div>
+        </form>
+    </div>
+
+
+    <div class="m-1" style="text-align: center;">
+        <button id="record" class="btn btn-info">Start recording</button>
+        <button id="recordStop" style="display: none;" class="btn btn-info">Stop recording</button>
+    </div>
+
+    <div class="m-1" style="text-align: center;">
+        <button id="switch" class="btn btn-info">Switch</button>
+    </div>
+</div>
+
+<div class="header" style="top: 38px">
+    <div id="animationSliderDiv" class="justify-content-center" style="display: none;">
+        <div class="row w-100">
+            <div><span id="slider_value_text">Timestamp: <span id="slider_value">0</span></span></div>
+            <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
+        </div>
+        <div class="row w-100">
+            <label class="radio-inline"><input type="radio" name="optradio" id="masterRadioButton" checked>Master</label>
+            <label class="radio-inline"><input type="radio" name="optradio">User</label>
         </div>
 
+    </div>
+</div>
+
+<!--<div class="footer">
+            <button class="btn">Optionen</button>
+        </div>-->
+
+<div class="overlay rounded-bottom" style="display: none;">
+    <div id="overlay" class="rounded-top pb-2">
         <div class="option form-group"> <!-- Webrtc config stuff-->
             <div class="custom-control" style="display: none;">
                 <div class="form-inline">
@@ -143,27 +166,6 @@
                 </div>
             </div>
         </div> <!-- End webrtc config stuff -->
-
-        <div class="custom-control form-group" style="text-align: center;">
-            <button id="switch" class="btn btn-info" style="width: 40%">Switch</button>
-        </div>
-        <div class="custom-control form-group" style="text-align: center;">
-            <button id="record" class="btn btn-info" style="width: 81%">Start recording</button>
-            <button id="recordStop" style="display: none; width: 81%" class="btn btn-info">Stop recording</button>
-        </div>
-
-            <div id="animationSliderDiv" class="custom-control form-group justify-content-center" style="display: none;">
-                <div class="row w-100">
-                    <div><span id="slider_value_text">Timestamp: <span id="slider_value">0</span></span></div>
-                    <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
-                </div>
-                <div class="row w-100">
-                     <label class="radio-inline"><input type="radio" name="optradio" id="masterRadioButton" checked>Master</label>
-                    <label class="radio-inline"><input type="radio" name="optradio">User</label>
-                </div>
-
-            </div>
-        </div>
     </div>
 </div>
 
