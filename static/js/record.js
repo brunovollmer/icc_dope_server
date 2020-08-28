@@ -2,6 +2,7 @@ var _mediaRecorder = null;
 var _recordedUserBlob = null;
 
 function getRecordedUserBlob() {
+    if(!_recordedUserBlob) return "";
     return URL.createObjectURL(_recordedUserBlob);
 }
 

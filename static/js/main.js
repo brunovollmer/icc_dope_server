@@ -139,4 +139,10 @@ $(document).ready(function() {
         stopRecording();
         stopWebRTC();
     });
+
+    // Switch between master & use video in feedback view
+    let radio = document.getElementById("masterRadioButton");
+    radio.onclick = function(_) {
+        showMaster = radio.checked;
+    }
 });

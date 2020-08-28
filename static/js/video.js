@@ -65,7 +65,7 @@ class VideoCanvas {
     }
 
     stopVideo() {
-        this._video.stop();
+        this._video.pause();
         this.stopDrawing();
     }
 
@@ -112,6 +112,19 @@ class VideoCanvas {
         if(pose) {
             this.resizeCanvas();
             draw2dPose(this._canvas, pose);
+        }
+    }
+
+    drawArrowBetweenPoses(fromPose, toPose) {
+        console.log("[video.js] Draw arrow from ", fromPose, "to", toPose);
+        for(let j = 0; j < num_points; j++) {
+            let p0 = fromPose[j];
+            let x0 = p0[0];
+            let y0 = p0[1];
+            let p1 = toPose[j];
+            let x1 = p1[0];
+            let y1 = p1[1];
+            drawLineWithArrows(this._canvas, x0, y0, x1, y1, 5, 5, false, true);
         }
     }
 

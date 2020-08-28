@@ -1,8 +1,18 @@
 var showMaster = document.getElementById('masterRadioButton').checked;
 var poseSequence;
 var timeStep = 0;
-var video = document.getElementById('feedbackVideo');
+var _feedbackVideo = document.getElementById('feedbackVideo');
 var slider;
+var _userBlobURL = null;
+var _masterBlobURL = null;
+
+function setFeedbackVideoSource() {
+    if (showMaster){
+        _feedbackVideo.src = _masterBlobURL;
+    } else {
+        _feedbackVideo.src = _userBlobURL;
+    }
+}
 
 function getCurrentFeedbackPose() {
     if (showMaster){
@@ -16,6 +26,8 @@ function updateData() {
     timeStep = slider.getValue();
     $("#slider_value").text(slider.getValue());
 
+    setFeedbackVideoSource();
+
     feedbackVideoCanvas.clearCanvas();
 
     if (showMaster){
@@ -28,19 +40,26 @@ function updateData() {
         feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
     }
 
+    feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
 
+    feedbackVideoCanvas.drawArrowBetweenPoses(
+        poseSequence[timeStep]['userPose']['body'][0]['pose2d'],
+        poseSequence[timeStep]['masterPose']['body'][0]['pose2d']
+    );
 }
 
 function visualizeFeedback(blobMaster, blobUser, data) {
     //data = [{'masterTimestamp': 0, 'masterPose': {'body': {'pose3d': test_poses_3d[0], 'pose2d': test_poses_2d[0]}}}, {'masterTimestamp': 1, 'masterPose': {'body': {'pose3d': test_poses_3d[1], 'pose2d': test_poses_2d[1]}}}]
+    if(!data || data.length === 0) {
+        console.log("[feedback.js] No pose sequence given!");
+        return;
+    }
 
     poseSequence = data;
+    _userBlobURL = blobUser;
+    _masterBlobURL = blobMaster;
 
-    if (showMaster){
-        video.src = blobMaster;
-    } else {
-        video.src = blobUser;
-    }
+    setFeedbackVideoSource();
 
     slider = $("#slider").slider({
         min: 0,
@@ -52,7 +71,7 @@ function visualizeFeedback(blobMaster, blobUser, data) {
         updateData();
     }).data('slider');
 
-    feedbackVideoCanvas = new VideoCanvas(video, "feedback", getCurrentFeedbackPose);
+    feedbackVideoCanvas = new VideoCanvas(_feedbackVideo, "feedback", getCurrentFeedbackPose);
 
     create_3d_plot('container');
 
