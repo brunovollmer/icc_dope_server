@@ -8,6 +8,7 @@ from aiohttp_jinja2 import template
 from aiohttp import web
 
 from dope import DopeEstimator
+from dope.compare import compare_poses
 from .main import input_queue
 
 @template('index.html')
@@ -24,7 +25,7 @@ async def user_video(request):
     with open(master_results_path) as json_file:
         master_results = json.load(json_file)
 
-    filename = "tmp_data/{}_user.mp4".format(video_id)
+    filename = "tmp_data/{}_user.mp4".format(master_video_id)
 
     if user_video:
         with open(filename, 'wb') as fd:
@@ -42,7 +43,7 @@ async def user_video(request):
         if not ret:
             break
 
-        frame = resize_image(frame, width=self.default_width)
+        frame = resize_image(frame, width=request.app["settings"].default_width)
 
         user_results.append(self.dope.run(frame, visualize=False))
         print(f"frame {counter} of {total_frames}")
@@ -51,10 +52,20 @@ async def user_video(request):
     cap.release()
 
     response = json.dumps(user_results, cls=NumpyEncoder)
-    with open(os.join("tmp_data", "{}_user.json".format(video_id)), "w") as f:
+    with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
 
-    return web.json_response({"test": "test"})
+    master_poses = master_results
+    user_poses = user_results
+    scores = compare_poses(master_poses, user_poses)
+
+    results = {
+        "master_results": master_results,
+        "user_results": user_results,
+        "scores": scores
+    }
+
+    return web.json_response(json.dumps(results, cls=NumpyEncoder))
 
 async def master_video(request):
     post = await request.post()
