@@ -75,11 +75,11 @@ function stopRecording() {
             processData: false,
             contentType: false,
             data: {
-                master_id: _master_id,
-                user_video: getRecordedUserBlob()
+                video_id: _master_id,
+                video: getRecordedUserBlob()
             },
             beforeSend: function(){
-                console.log("[record.js] Uploading user video");
+                console.log("[record.js] Uploading user video with id:", _master_id);
             },
             success: function(msg) {
                 master_results = JSON.parse(msg);

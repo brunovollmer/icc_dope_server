@@ -3,6 +3,7 @@ import time
 import cv2
 import os
 import sys
+import json
 
 ROOT = os.path.dirname(__file__)
 sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
@@ -57,7 +58,7 @@ class DopeThread(object):
                 cap.release()
 
                 response = json.dumps(result, cls=NumpyEncoder)
-                with open(os.join("tmp_data", "{}.json".format(video_id)), "w") as f:
+                with open(os.path.join("tmp_data", "{}.json".format(video_id)), "w") as f:
                     f.write(response)
 
                 print("finished")

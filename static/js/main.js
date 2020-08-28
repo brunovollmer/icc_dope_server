@@ -54,17 +54,16 @@ $(document).ready(function() {
             contentType: false,
             data: formData,
             beforeSend: function(){
-                console.log("[main.js] Uploading master video");
+                console.log("[main.js] Uploading master video with data:", formData);
             },
             success: function(msg) {
-                master_results = JSON.parse(msg);
-                master_id = master_results["video_id"];
-                setMasterId(master_id);
+                console.log("[main.js]: Master Video response: ", msg);
+                setMasterId(msg["id"]);
 
                 //updateMasterPoseList(master_results);
 
-                // $("#loader").css("display", "none");
-                // $("#loading_overlay").css("display", "none");
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
 
                 if(masterVideoCanvas) {
                     //console.log("[main.js] Drawing master poses")
@@ -141,7 +140,8 @@ $(document).ready(function() {
         $("#record").hide();
         //startWebRTC();
         $("#countdown").css("display", "block");
-        var counter = 5;
+        //var counter = 5;
+        var counter = 1;
         $("#loader").css("display", "block");
         $("#countdown_value").text(counter);
 
