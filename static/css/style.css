@@ -114,8 +114,8 @@ h2 {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }
@@ -125,7 +125,7 @@ h2 {
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index: 2;
+    z-index: 3;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }

@@ -138,6 +138,7 @@ $(document).ready(function() {
         //startWebRTC();
         $("#countdown").css("display", "block");
         var counter = 5;
+        $("#loader").css("display", "block");
         $("#countdown_value").text(counter);
 
 
@@ -155,6 +156,7 @@ $(document).ready(function() {
             clearInterval(interval);
             $("#countdown").css("display", "none");
             interval = null;
+            $("#loader").css("display", "none");
             $("#recordStop").show();
         };
 
