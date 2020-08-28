@@ -68,7 +68,14 @@ async def user_video(request):
     with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
 
-    return web.json_response({"test": "test"})
+    scores = compare_poses(master_results, user_results)
+
+    response = {
+        "master_results": master_results,
+        "user_results": user_results,
+        "scores": scores
+    }
+    return web.json_response(json.dumps(response, cls=NumpyEncoder))
 
 async def master_video(request):
     post = await request.post()

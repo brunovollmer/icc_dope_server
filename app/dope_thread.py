@@ -4,6 +4,7 @@ import cv2
 import os
 import sys
 import json
+import shutil
 
 ROOT = os.path.dirname(__file__)
 sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
@@ -37,6 +38,10 @@ class DopeThread(object):
                 video_id = data['video_id']
                 filename = data['filename']
 
+                tmpfile = "tmp_data/0004.mp4.json"
+                if os.path.isfile(tmpfile):
+                    shutil.copy(tmpfile, f"tmp_data/{video_id}.json")
+                    continue
 
                 cap = cv2.VideoCapture(filename)
                 result = []
