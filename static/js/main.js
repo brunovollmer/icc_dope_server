@@ -75,29 +75,6 @@ $(document).ready(function() {
         });
     });
 
-    // TODO: class overlay vs. id overlay ?!?!?!
-    //used to set the height of the options overlay
-    $(".footer").hover(function(){
-        showFooter(true);
-    });
-
-    var overlay = $(".overlay");
-
-    overlay.hover(function(){
-    }, function(){
-        showFooter(false);
-    });
-
-    function showFooter($show) {
-        if($show){
-            overlayHeight = $("#overlay").get(0).scrollHeight;
-            overlay.css("height", overlayHeight + "px");
-        } else {
-            overlay.css("height", "0%");
-        }
-    }
-
-
     //both divs are visible
     var slideStatus = 0;
     var leftDiv =  $('#leftDiv');
