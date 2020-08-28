@@ -10,7 +10,7 @@ from aiohttp_jinja2 import template
 from aiohttp import web
 
 from dope import DopeEstimator
-from util import resize_image, NumpyEncoder
+from util import resize_image, NumpyEncoder, format_debug_times
 
 from .web_rtc import VideoTransformTrack
 from .main import pcs, logger, output_queue
@@ -104,9 +104,9 @@ async def offer(request):
                 if not output_queue.empty():
                     data = output_queue.get()
 
-                    data['timestamps'].append({'exit output queue': time.time()})
+                    data['timestamps'].append({'time': time.time(), 'event': 'exit output queue'})
 
-                    print(data['timestamps'])
+                    format_debug_times(data['timestamps'])
 
                     response = {"results": data['results']}
 
