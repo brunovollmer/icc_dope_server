@@ -159,8 +159,8 @@ function start() {
             } else {
                 data = JSON.parse(evt.data);
                 //log.logPose(data.shape);
-                if(data.shape.body.length > 0) {
-                    updateUserPose(data.shape)
+                if(data.results.body.length > 0) {
+                    updateUserPose(data.results)
                 }
             }
         };

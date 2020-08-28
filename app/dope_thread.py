@@ -34,7 +34,11 @@ class DopeThread(object):
     def run(self):
         while True:
             if not self.input_queue.empty():
-                img = self.input_queue.get()
+                data = self.input_queue.get()
+                data['timestamps'].append({'exit input queue': time.time()})
+
+                img = data['img']
+
                 while not self.input_queue.empty():
                     img = self.input_queue.get()
 
@@ -42,13 +46,21 @@ class DopeThread(object):
 
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+                data['timestamps'].append({'start dope': time.time()})
+
                 results, result_img = self.dope.run(img, visualize=self.debug)
+
+                data['timestamps'].append({'end dope': time.time()})
 
                 if self.debug:
                     #print(os.path.join(self.debug_folder), "{:05d}.png".format(self.counter))
                     cv2.imwrite(os.path.join(self.debug_folder, "{:05d}.png".format(self.counter)), result_img)
 
-                self.output_queue.put(results)
+                data['timestamps'].append({'entry output queue': time.time()})
+
+                data['results'] = results
+
+                self.output_queue.put(data)
 
                 self.counter += 1
 

@@ -1,5 +1,6 @@
 import cv2
 import uuid
+import time
 import json
 import os
 import sys
@@ -101,9 +102,16 @@ async def offer(request):
                 channel.send("pong" + message[4:])
             if isinstance(message, str) and message.startswith("pose"):
                 if not output_queue.empty():
-                    response = {"shape": output_queue.get()}
+                    data = output_queue.get()
+
+                    data['timestamps'].append({'exit output queue': time.time()})
+
+                    print(data['timestamps'])
+
+                    response = {"results": data['results']}
+
                     while not output_queue.empty():
-                        response = {"shape": output_queue.get()}
+                        response = {"results": output_queue.get()}
                     channel.send(json.dumps(response, cls=NumpyEncoder))
 
     @pc.on("iceconnectionstatechange")
