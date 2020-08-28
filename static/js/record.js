@@ -69,15 +69,16 @@ function stopRecording() {
             $("#loading_overlay").css("display", "none");
         } else {
 
+        var formData = new FormData();
+        formData.append("video_id", _master_id);
+        formData.append("video", getRecordedUserBlob());
+
         $.ajax({
             type: "POST",
             url: "/user_video",
             processData: false,
             contentType: false,
-            data: {
-                video_id: _master_id,
-                video: getRecordedUserBlob()
-            },
+            data: formData,
             beforeSend: function(){
                 console.log("[record.js] Uploading user video with id:", _master_id);
             },
