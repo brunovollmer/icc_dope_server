@@ -57,7 +57,7 @@ async def user_video(request):
     cap.release()
 
     response = json.dumps(user_results, cls=NumpyEncoder)
-    with open(os.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
+    with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
 
     return web.json_response({"test": "test"})
