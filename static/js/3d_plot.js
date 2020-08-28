@@ -1,7 +1,6 @@
 var chart;
-var slider;
 
-function create_3d_plot(container_id, slider_id, poses_3d) {
+function create_3d_plot(container_id) {
 
     Highcharts.setOptions({
         colors: Highcharts.getOptions().colors.map(function (color) {
@@ -132,34 +131,14 @@ function create_3d_plot(container_id, slider_id, poses_3d) {
         H.addEvent(chart.container, 'touchstart', dragStart);
     }(Highcharts));
 
-    slider = $(slider_id).slider({
-        min: 0,
-        max: poses_3d.length - 1,
-        value: 0
-    }).on('slide', function(event){
-        renderPose(event, poses_3d)
-    }).on('change', function(event){
-        renderPose(event, poses_3d)
-    }).data('slider');
-
-
-    renderPose(null, poses_3d)
-
 }
 
 
-var renderPose = function (slideEvt, poses) {
-    var timestep = slider.getValue();
-    if (slideEvt != null) {
-        //$("#slider_value").text(slideEvt.value);
-        $("#slider_value").text(slider.getValue());
-
-    }
+var render3DPose = function (pose) {
 
     while (chart.series.length > 0) {
         chart.series[0].remove(true);
     }
-
 
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];
@@ -176,7 +155,7 @@ var renderPose = function (slideEvt, poses) {
             },
             lineWidth: 2,
             lineColor: c['color'],
-            data: [poses[timestep][c['start']], poses[timestep][c['end']]]
+            data: [pose[c['start']], pose[c['end']]]
         }
 
         chart.addSeries(c_series, false);

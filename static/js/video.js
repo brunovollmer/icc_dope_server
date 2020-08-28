@@ -32,6 +32,10 @@ class VideoCanvas {
         this.stopDrawing();
     }
 
+    setVideoCurrentTime(timestamp) {
+        this._video.currentTime = timestamp;
+    }
+
     startDrawing() {
         if(!this._videoInterval) {
             var _self = this;
@@ -76,5 +80,9 @@ class VideoCanvas {
                 drawPoint(this._canvas, p2[0], p2[1], 5);
             }
         }
+    }
+
+    clearCanvas() {
+        this._context.clearRect(0, 0, this._context.canvas.width, this._context.canvas.height);
     }
 }

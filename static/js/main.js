@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
-    create_3d_plot('container', '#slider', test_poses_3d)
+    var masterBlob;
+
+    // create_3d_plot('container', '#slider', test_poses_3d)
 
     var autoScroll = null;
     $("#toggle-autoscroll").click(function() {
@@ -23,6 +25,7 @@ $(document).ready(function() {
 
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
+        masterBlob = blobURL;
         masterVideo.src = blobURL;
 
         masterVideoCanvas = new VideoCanvas(masterVideo);
@@ -56,7 +59,8 @@ $(document).ready(function() {
         $('#rightVideo').toggle();
         $('#rightPlot').toggle();
         $('#animationSliderDiv').toggle();
-        adjustPlotSize();
+        //adjustPlotSize();
+        visualizeFeedback(masterBlob, "", "");
         showFooter(true);
     });
 
@@ -69,9 +73,7 @@ $(document).ready(function() {
     $("#masterVideo").on("canplay", function() {
         masterVideoCanvas = new VideoCanvas(this, "master", getCurrentMasterPose);
     });
-    $("#feedbackVideo").on("canplay", function() {
-        feedbackVideoCanvas = new VideoCanvas(this, "feedback", getCurrentFeedbackPose);
-    });
+
 
     $("#video_form").submit(function(e) {
         console.log("SUBMIT")

@@ -27,7 +27,7 @@
                     <video id="masterVideo" controls></video>
                 </div>
                 <div id="leftPlot" style="display: none;">
-                    <video id="userPlotVideo" controls></video>
+                    <video id="feedbackVideo"></video>
                     <!--<canvas id="2d-canvas"></canvas>-->
                 </div>
             </div>
@@ -145,9 +145,14 @@
 
             <div id="animationSliderDiv" class="custom-control form-group justify-content-center" style="display: none;">
                 <div class="row w-100">
-                    <div><span id="slider_value_text">Animation: <span id="slider_value">0</span></span></div>
+                    <div><span id="slider_value_text">Timestamp: <span id="slider_value">0</span></span></div>
                     <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
                 </div>
+                <div class="row w-100">
+                     <label class="radio-inline"><input type="radio" name="optradio" id="masterRadioButton" checked>Master</label>
+                    <label class="radio-inline"><input type="radio" name="optradio">User</label>
+                </div>
+
             </div>
 
             <div class="custom-control form-group" style="text-align: center; display: none;">
@@ -216,6 +221,7 @@
 <script src="static/js/2d_plot.js"></script>
 <script src="static/js/pose.js"></script>
 <script src="static/js/video.js"></script>
+<script src="static/js/feedback.js"></script>
 <script src="static/js/main.js"></script>
 
 
