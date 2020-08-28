@@ -42,22 +42,26 @@ $(document).ready(function() {
      */
 
     $("#video_form").submit(function(e) {
-        console.log("[main.js] Uploading master video")
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         e.preventDefault();
-        var form = $("#video_form")[0]
+        var form = $("#video_form")[0];
         var formData = new FormData(form);
         $.ajax({
             type: "POST",
-            url: "/video",
+            url: "/master_video",
             processData: false,
             contentType: false,
             data: formData,
+            beforeSend: function(){
+                console.log("[main.js] Uploading master video");
+            },
             success: function(msg) {
                 master_results = JSON.parse(msg);
+                master_id = master_results["video_id"];
+                setMasterId(master_id);
 
-                updateMasterPoseList(master_results);
+                //updateMasterPoseList(master_results);
 
                 $("#loader").css("display", "none");
                 $("#loading_overlay").css("display", "none");
@@ -169,8 +173,8 @@ $(document).ready(function() {
         //stopWebRTC();
         masterVideoCanvas.stopVideo();
         userVideoCanvas.stopVideo();
-        $("#record").show();
-        $("#switch").show();
+        $("#loader").css("display", "block");
+        $("#loading_overlay").css("display", "block");
         //masterVideoCanvas.stopDrawing();
         //userVideoCanvas.stopDrawing();
     });
