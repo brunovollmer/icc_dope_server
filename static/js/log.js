@@ -30,6 +30,14 @@ class Log {
         this._messageLog.textContent += message + "\n";
     }
 
+    logMasterPoseList(masterPoseList) {
+
+    }
+
+    logUserPose(pose) {
+
+    }
+
     logPose(pose) {
         if(!pose) return;
         if(pose.body.length === 0) {

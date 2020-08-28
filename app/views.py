@@ -5,7 +5,7 @@ import json
 import os
 import sys
 
-from aiortc import RTCPeerConnection, RTCSessionDescription
+from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer
 from aiohttp_jinja2 import template
 from aiohttp import web
 
@@ -84,7 +84,20 @@ async def offer(request):
     params = await request.json()
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
-    pc = RTCPeerConnection()
+    if request.app["settings"].use_turn:
+        config = RTCConfiguration(
+            iceServers=[
+                RTCIceServer(
+                    urls='turn:turn.brunovollmer.com:3478',
+                    username="movement_coach",
+                    credential="PracticalSeriousApplication"
+                )
+            ]
+        )
+    else:
+        config = None
+
+    pc = RTCPeerConnection(configuration=config)
     pc_id = "PeerConnection(%s)" % uuid.uuid4()
     pcs.add(pc)
 
