@@ -69,8 +69,8 @@ function create_3d_plot(container_id) {
             title: null
         },
         xAxis: {
-            min: -1.0,
-            max: 1.0,
+            min: -2.0,
+            max: 2.0,
             gridLineWidth: 1
         },
         zAxis: {
@@ -135,7 +135,6 @@ function create_3d_plot(container_id) {
 
 
 var render3DPose = function (pose) {
-
     while (_chart.series.length > 0) {
         _chart.series[0].remove(true);
     }

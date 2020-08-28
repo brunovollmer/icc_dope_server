@@ -32,20 +32,19 @@ function updateData() {
 
     if (showMaster){
         feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['masterTimestamp']);
-        render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body'][0]['pose2d']);
+
+        if (poseSequence[timeStep].masterPose){
+            render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
+            feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['masterPose']['body'][0]['pose2d']);
+        }
     }else{
         feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['userTimestamp']);
-        render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
-        feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
+
+        if (poseSequence[timeStep].userPose) {
+            render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
+            feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
+        }
     }
-
-    feedbackVideoCanvas.drawPose2D(poseSequence[timeStep]['userPose']['body'][0]['pose2d']);
-
-    feedbackVideoCanvas.drawArrowBetweenPoses(
-        poseSequence[timeStep]['userPose']['body'][0]['pose2d'],
-        poseSequence[timeStep]['masterPose']['body'][0]['pose2d']
-    );
 }
 
 function visualizeFeedback(blobMaster, blobUser, data) {
