@@ -35,12 +35,16 @@ function updateData() {
 
         if (poseSequence[timeStep].masterPose){
             render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
+        } else {
+            clear3DPlot();
         }
     }else{
         feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['userTimestamp']);
 
         if (poseSequence[timeStep].userPose) {
             render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
+        } else {
+            clear3DPlot();
         }
     }
 }
@@ -76,12 +80,16 @@ function visualizeFeedback(blobMaster, blobUser, data) {
     create_3d_plot('container');
 
     if (showMaster){
-        if(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']) {
+        if(poseSequence[timeStep]['masterPose']) {
             render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
+        } else {
+            clear3DPlot();
         }
     }else{
-        if(poseSequence[timeStep]['userPose']['body'][0]['pose3d']) {
+        if(poseSequence[timeStep]['userPose']) {
             render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
+        } else {
+            clear3DPlot();
         }
     }
 }
