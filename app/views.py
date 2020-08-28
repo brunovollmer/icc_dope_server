@@ -10,6 +10,7 @@ from aiohttp import web
 
 from dope import DopeEstimator
 from compare import compare_poses
+from util import resize_image, NumpyEncoder
 from .main import input_queue
 
 @template('index.html')
