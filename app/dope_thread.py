@@ -56,7 +56,8 @@ class DopeThread(object):
 
                     frame = resize_image(frame, width=self.default_width)
 
-                    result.append(self.dope.run(frame, visualize=False))
+                    res,_ = self.dope.run(frame, visualize=False)
+                    result.append(res)
                     print(f"frame {counter} of {total_frames}")
 
                     counter += 1
