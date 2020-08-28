@@ -18,11 +18,6 @@ $(document).ready(function() {
         masterVideoCanvas = new VideoCanvas(masterVideo);
     }
 
-    // TODO: magic??? where is other part?
-    $('#stop').click(function () {
-        $('#start').show();
-    });
-
     $('#switch').click(function () {
         $('#leftVideo').toggle();
         $('#leftPlot').toggle();
@@ -30,14 +25,13 @@ $(document).ready(function() {
         $('#rightPlot').toggle();
         $('#animationSliderDiv').toggle();
         //adjustPlotSize();
-        visualizeFeedback(masterBlob, "", "");
-        showFooter(true);
+
+        visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
     });
 
-    $("#userVideo").on('play', function() {
+    $("#userVideo").on('canplay', function() {
         console.log("[main.js] Registering user video canvas")
         userVideoCanvas = new VideoCanvas(this, "user", getCurrentUserPose);
-        userVideoCanvas.startVideo();
     });
     $("#masterVideo").on("canplay", function() {
         masterVideoCanvas = new VideoCanvas(this, "master", getCurrentMasterPose);
@@ -66,8 +60,8 @@ $(document).ready(function() {
                 $("#loading_overlay").css("display", "none");
 
                 if(masterVideoCanvas) {
-                    console.log("[main.js] Starting master video")
-                    masterVideoCanvas.startVideo();
+                    console.log("[main.js] Drawing master poses")
+                    masterVideoCanvas.startDrawing();
                 }
             },
             error: function(msg) {
@@ -79,29 +73,6 @@ $(document).ready(function() {
             }
         });
     });
-
-    // TODO: class overlay vs. id overlay ?!?!?!
-    //used to set the height of the options overlay
-    $(".footer").hover(function(){
-        showFooter(true);
-    });
-
-    var overlay = $(".overlay");
-
-    overlay.hover(function(){
-    }, function(){
-        showFooter(false);
-    });
-
-    function showFooter($show) {
-        if($show){
-            overlayHeight = $("#overlay").get(0).scrollHeight;
-            overlay.css("height", overlayHeight + "px");
-        } else {
-            overlay.css("height", "0%");
-        }
-    }
-
 
     //both divs are visible
     var slideStatus = 0;
@@ -152,4 +123,25 @@ $(document).ready(function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
+    // Video capturing start/stop buttons
+    console.log("[main.js] Registering callbacks");
+    $('#record').on("click", function() {
+        startWebRTC();
+        var uv = document.getElementById("userVideo");
+        uv.oncanplay = function() {
+            startRecording();
+            uv.oncanplay = null;
+        }
+    });
+    $('#recordStop').on("click", function() {
+        stopRecording();
+        stopWebRTC();
+    });
+
+    // Switch between master & use video in feedback view
+    let radio = document.getElementById("masterRadioButton");
+    radio.onclick = function(_) {
+        showMaster = radio.checked;
+    }
 });
