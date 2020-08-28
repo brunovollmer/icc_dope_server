@@ -45,7 +45,9 @@ function visualizeFeedback(blobMaster, blobUser, data) {
     slider = $("#slider").slider({
         min: 0,
         max: data.length - 1,
-        value: 0
+        value: 0,
+        natural_arrow_keys: true,
+        focus: true
     }).on('slide', function(event){
         updateData();
     }).on('change', function(event){
