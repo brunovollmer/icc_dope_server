@@ -44,7 +44,7 @@ function startRecording() {
 
     console.log("[record.js] Recorder: Start recording");
     _mediaRecorder.start();
-    startPoseCapture();
+    //startPoseCapture();
 }
 
 function stopRecording() {
@@ -52,5 +52,5 @@ function stopRecording() {
     if(_mediaRecorder) {
         _mediaRecorder.stop();
     }
-    stopPoseCatpure();
+    //stopPoseCatpure();
 }
