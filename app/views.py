@@ -8,7 +8,7 @@ from aiohttp_jinja2 import template
 from aiohttp import web
 
 from dope import DopeEstimator
-from dope.compare import compare_poses
+from compare import compare_poses
 from .main import input_queue
 
 @template('index.html')
