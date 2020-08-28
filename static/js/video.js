@@ -38,6 +38,7 @@ function getFeedbackVideo() {
 
 class VideoCanvas {
     constructor(video, baseId, poseCallback) {
+        console.log("[video.js] Initializes VideoCanvas: " + baseId);
         this._baseId = baseId;
         var canvas = document.getElementById(baseId + "_canvas");
         if(canvas) {
