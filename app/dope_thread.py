@@ -4,13 +4,11 @@ import cv2
 import os
 import sys
 
-
 ROOT = os.path.dirname(__file__)
 sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
 
 from dope import DopeEstimator
 from util import resize_image, NumpyEncoder
-
 
 class DopeThread(object):
 
@@ -24,8 +22,6 @@ class DopeThread(object):
         # self.debug = debug
 
         self.dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
-
-        # self.counter = 0
 
         thread = threading.Thread(target=self.run, args=())
         thread.daemon = True
@@ -60,44 +56,11 @@ class DopeThread(object):
                     counter += 1
                 cap.release()
 
-                try:
-                    os.remove(filename)
-                except Exception as e:
-                    print(f"Could not delete {filename} due to exception:")
-                    print(e)
-
                 response = json.dumps(result, cls=NumpyEncoder)
                 with open(os.join("tmp_data", "{}.json".format(video_id)), "w") as f:
                     f.write(response)
 
                 print("finished")
-
-
-                # data['timestamps'].append({'time': time.time(), 'event': 'exit input queue'})
-
-                # img = data['img']
-
-                # img = resize_image(img, width=self.default_width)
-
-                # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-                # data['timestamps'].append({'time': time.time(), 'event': 'start dope'})
-
-                # results, result_img = self.dope.run(img, visualize=self.debug)
-
-                # data['timestamps'].append({'time': time.time(), 'event': 'end dope'})
-
-                # if self.debug:
-                #     #print(os.path.join(self.debug_folder), "{:05d}.png".format(self.counter))
-                #     cv2.imwrite(os.path.join(self.debug_folder, "{:05d}.png".format(self.counter)), result_img)
-
-                # data['timestamps'].append({'time': time.time(), 'event': 'entry output queue'})
-
-                # data['results'] = results
-
-                # self.output_queue.put(data)
-
-                # self.counter += 1
 
             else:
                 time.sleep(self.interval)
