@@ -58,7 +58,8 @@ async def user_video(request):
 
         frame = resize_image(frame, width=default_width)
 
-        user_results.append(dope.run(frame, visualize=False))
+        res, _ = dope.run(frame, visualize=False)
+        user_results.append(res)
         print(f"frame {counter} of {total_frames}")
 
         counter += 1
@@ -68,7 +69,10 @@ async def user_video(request):
     with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
 
-    scores = compare_poses(master_results, user_results)
+    master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
+    user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
+
+    scores = compare_poses(master_poses, user_poses)
 
     response = {
         "master_results": master_results,

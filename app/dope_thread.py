@@ -38,7 +38,7 @@ class DopeThread(object):
                 video_id = data['video_id']
                 filename = data['filename']
 
-                tmpfile = "tmp_data/0004.mp4.json"
+                tmpfile = "../input/0004.mp4.json"
                 if os.path.isfile(tmpfile):
                     shutil.copy(tmpfile, f"tmp_data/{video_id}.json")
                     continue

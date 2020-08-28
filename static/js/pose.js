@@ -1,11 +1,20 @@
 var _masterPoseList = null;
 var _userPoseList = null;
+var _comparisonScores = null;
 
 var _userPose = null;
 var _masterPose = null;
 
+function updateComparisonScores(scores) {
+    _comparisonScores = scores;
+}
+
 function hasMasterPoseList() {
     return _masterPoseList && _masterPoseList.length > 0;
+}
+
+function hasUserPoseList() {
+    return _userPoseList && _userPoseList.length > 0;
 }
 
 function updateMasterPoseList(poseList) {
