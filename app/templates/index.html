@@ -58,44 +58,51 @@
     </div>
 </div>
 
-<div class="header mx-auto">
-    <div class="m-1">
-        <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <input type="submit" class="btn btn-primary" value="Hochladen">
-                </div>
-                <div class="custom-file">
-                    <input id="videoUpload" type="file" class="custom-file-input" name="video"
-                           accept="video/mp4">
-                    <label class="custom-file-label" for="videoUpload">Master-Video</label>
+<div style="position: absolute; top: 0; z-index: 5000; width:100%;">
+    <div class="container w-100 p-3 rounded" style="background-color: #555555; opacity: 0.7;">
+        <div class="row">
+            <div class="col-8">
+                <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <input type="submit" class="btn btn-primary" value="Hochladen">
+                        </div>
+                        <div class="custom-file">
+                            <input id="videoUpload" type="file" class="custom-file-input" name="video"
+                                   accept="video/mp4">
+                            <label class="custom-file-label" for="videoUpload">Master-Video</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col" style="text-align: center;">
+                <button id="record" class="btn btn-info">Start recording</button>
+                <button id="recordStop" style="display: none;" class="btn btn-info">Stop recording</button>
+            </div>
+
+            <div class="col" style="text-align: center;">
+                <button id="switch" class="btn btn-info">Switch</button>
+            </div>
+        </div>
+
+        <div id="animationSliderDiv" class="row" style="display: none">
+            <div class="col">
+                <div class="justify-content-center">
+                    <div class="w-100 d-flex">
+                        <div><span id="slider_value_text">Timestamp: <span id="slider_value">0</span></span></div>
+                        <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
 
-
-    <div class="m-1" style="text-align: center;">
-        <button id="record" class="btn btn-info">Start recording</button>
-        <button id="recordStop" style="display: none;" class="btn btn-info">Stop recording</button>
-    </div>
-
-    <div class="m-1" style="text-align: center;">
-        <button id="switch" class="btn btn-info">Switch</button>
-    </div>
-</div>
-
-<div class="header" style="top: 38px">
-    <div id="animationSliderDiv" class="justify-content-center" style="display: none;">
-        <div class="row w-100">
-            <div><span id="slider_value_text">Timestamp: <span id="slider_value">0</span></span></div>
-            <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
+            <div class="col-2">
+                    <div class="w-100 d-flex">
+                        <label class="radio-inline"><input type="radio" name="optradio" id="masterRadioButton" checked>Master</label>
+                        <label class="radio-inline"><input type="radio" name="optradio">User</label>
+                    </div>
+                </div>
         </div>
-        <div class="row w-100">
-            <label class="radio-inline"><input type="radio" name="optradio" id="masterRadioButton" checked>Master</label>
-            <label class="radio-inline"><input type="radio" name="optradio">User</label>
-        </div>
-
     </div>
 </div>
 

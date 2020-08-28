@@ -27,7 +27,6 @@ $(document).ready(function() {
         //adjustPlotSize();
 
         visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
-        showFooter(true);
     });
 
     $("#userVideo").on('canplay', function() {
