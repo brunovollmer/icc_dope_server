@@ -83,6 +83,8 @@ function startRecording() {
                     console.log("[main.js]: Master Video response: ", msg);
                     $("#loader").css("display", "none");
                     $("#loading_overlay").css("display", "none");
+                    $("#switch").show();
+                    $("#record").show();
                 },
                 error: function(msg) {
                     console.log('[record.js] ajax user_video upload failure');
