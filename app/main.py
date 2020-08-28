@@ -11,7 +11,6 @@ from queue import Queue
 import aiohttp_jinja2
 import jinja2
 from aiohttp import web
-from aiojobs.aiohttp import setup
 
 from omegaconf import OmegaConf
 
