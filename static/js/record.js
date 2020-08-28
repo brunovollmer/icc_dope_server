@@ -1,5 +1,15 @@
 var _mediaRecorder = null;
 var _recordedUserBlob = null;
+var _master_id = -1;
+
+function setMasterId(value) {
+    console.log("[record.js] Master id is: " + value);
+    _master_id = value;
+}
+
+function getMasterId(){
+    return _master_id;
+}
 
 function getRecordedUserBlob() {
     if(!_recordedUserBlob) return "";
@@ -48,9 +58,42 @@ function startRecording() {
 }
 
 function stopRecording() {
-    console.log("[record.js] Recorder: Stop recording");
-    if(_mediaRecorder) {
-        _mediaRecorder.stop();
+        console.log("[record.js] Recorder: Stop recording");
+        if(_mediaRecorder) {
+            _mediaRecorder.stop();
+        }
+        //stopPoseCatpure();
+        if(_master_id === -1){
+            console.log("[record.js] Recorder: No master_id. Process aborted!");
+            $("#loader").css("display", "none");
+            $("#loading_overlay").css("display", "none");
+        } else {
+
+        $.ajax({
+            type: "POST",
+            url: "/user_video",
+            processData: false,
+            contentType: false,
+            data: {
+                master_id: _master_id,
+                user_video: getRecordedUserBlob()
+            },
+            beforeSend: function(){
+                console.log("[record.js] Uploading user video");
+            },
+            success: function(msg) {
+                master_results = JSON.parse(msg);
+
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
+            },
+            error: function(msg) {
+                console.log('[record.js] ajax user_video upload failure');
+
+                $("#loader").css("display", "none");
+                $("#loading_overlay").css("display", "none");
+                alert("Video upload failed")
+            }
+        });
     }
-    //stopPoseCatpure();
 }
