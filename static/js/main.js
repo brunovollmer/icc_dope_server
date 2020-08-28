@@ -29,14 +29,16 @@ $(document).ready(function() {
         visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
     });
 
-    $("#userVideo").on('canplay', function() {
+    let uv = document.getElementById("userVideo");
+    uv.oncanplay = function() {
         console.log("[main.js] Registering user video canvas")
-        userVideoCanvas = new VideoCanvas(this, "user", getCurrentUserPose);
-    });
-    $("#masterVideo").on("canplay", function() {
-        masterVideoCanvas = new VideoCanvas(this, "master", getCurrentMasterPose);
-    });
-
+        userVideoCanvas = new VideoCanvas(uv, "user", getCurrentUserPose);
+    }
+    let mv = document.getElementById("masterVideo");
+    mv.oncanplay = function() {
+        console.log("[main.js] Registering master video canvas")
+        masterVideoCanvas = new VideoCanvas(mv, "master", getCurrentMasterPose);
+    }
 
     $("#video_form").submit(function(e) {
         console.log("[main.js] Uploading master video")
@@ -128,20 +130,32 @@ $(document).ready(function() {
     console.log("[main.js] Registering callbacks");
     $('#record').on("click", function() {
         startWebRTC();
-        var uv = document.getElementById("userVideo");
-        uv.oncanplay = function() {
+        setTimeout(function() {
+            masterVideoCanvas.startVideo();
+            userVideoCanvas.startVideo();
+            userVideoCanvas.startDrawing();
             startRecording();
-            uv.oncanplay = null;
-        }
+        }, 2000);
     });
     $('#recordStop').on("click", function() {
         stopRecording();
         stopWebRTC();
+        userVideoCanvas.stopDrawing();
     });
 
     // Switch between master & use video in feedback view
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
-        showMaster = radio.checked;
+        showMaster = true;
+        updateData();
     }
+
+    // Switch between master & use video in feedback view
+    let radio2 = document.getElementById("userRadioButton");
+    radio2.onclick = function(_) {
+        showMaster = false;
+        updateData();
+    }
+
+
 });

@@ -161,8 +161,13 @@ var render3DPose = function (pose) {
     }
 
     _chart.redraw();
-
 };
+
+function clear3DPlot() {
+    while (_chart.series.length > 0) {
+        _chart.series[0].remove(true);
+    }
+}
 
 
 function adjustPlotSize() {

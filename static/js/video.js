@@ -62,12 +62,12 @@ class VideoCanvas {
 
     startVideo() {
         this._video.play();
-        this.startDrawing();
+        //this.startDrawing();
     }
 
     stopVideo() {
         this._video.pause();
-        this.stopDrawing();
+        //this.stopDrawing();
     }
 
     setVideoCurrentTime(timestamp) {
@@ -82,9 +82,8 @@ class VideoCanvas {
 
                 var currentPose = _self._poseCallback(_self._video);
                 if(currentPose) {
+                    _self.clearCanvas();
                     _self.drawPose2D(currentPose["body"][0]["pose2d"]);
-                } else {
-                    _self.clearCanvas()
                 }
             }, 1000/30);
         }

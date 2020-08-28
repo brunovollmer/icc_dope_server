@@ -43,8 +43,6 @@ function startRecording() {
     };
 
     console.log("[record.js] Recorder: Start recording");
-    masterVideoCanvas.startVideo();
-    userVideoCanvas.startVideo();
     _mediaRecorder.start();
     startPoseCapture();
 
