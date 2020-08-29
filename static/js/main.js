@@ -153,10 +153,12 @@ $(document).ready(function() {
     $('#record').on("click", function() {
         startWebcam();
         $("#record").hide();
+        $("#recordingInterface").hide();
+        $("#uiContainer").hide();
         //startWebRTC();
         $("#countdown").css("display", "block");
         //var counter = 5;
-        var counter = 1;
+        var counter = 3;
         $("#loader").css("display", "block");
         $("#countdown_value").text(counter);
 
@@ -214,6 +216,7 @@ $(document).ready(function() {
         showMaster = true;
         updateFeedbackVideoSource();
         updateData();
+        updateFeedbackVideo();
     }
 
     // Switch between master & use video in feedback view
@@ -223,6 +226,7 @@ $(document).ready(function() {
         showMaster = false;
         updateFeedbackVideoSource();
         updateData();
+        updateFeedbackVideo();
     }
 
     startWebcam();
@@ -261,6 +265,7 @@ function switchViews(){
     $('#rightPlot').toggle();
     $('#animationSliderDiv').toggle();
     $("#switch").hide();
+    $("#uiContainer").toggle();
     //adjustPlotSize();
 
     //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);

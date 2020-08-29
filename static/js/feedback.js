@@ -20,7 +20,6 @@ function updateFeedbackVideoSource() {
 
 function updateFeedbackVideo() {
     _feedbackVideo.currentTime = (timeStep / 30);
-    _feedbackVideo.seekToNextFrame();
 }
 
 function getCurrentFeedbackPose() {

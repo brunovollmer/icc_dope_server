@@ -38,11 +38,11 @@ async def user_video(request):
         print("[user_video] Loading computed master poses")
         master_results = json.load(json_file)
         if len(master_results) > 0:
-            print("ADDING POINTS")
             frame = 0
             while frame < len(master_results) and len(master_results[frame]["body"]) == 0:
                 frame += 1
             if len(master_results[frame]["body"]) == 13:
+                print("ADDING POINTS")
                 master_results = dope._compute_hip_neck(master_results)
 
     filename = os.path.join("tmp_data", "{}_user.mp4".format(master_video_id))
