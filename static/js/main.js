@@ -192,6 +192,7 @@ $(document).ready(function() {
     });
 
     let slider = document.getElementById("animationSlider");
+    slider.value = 0;
     slider.oninput = function() {
         updateData();
     }

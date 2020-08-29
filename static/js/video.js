@@ -81,9 +81,9 @@ class VideoCanvas {
                 _self.resizeCanvas();
 
                 var currentPose = _self._poseCallback(_self._video);
-                if(currentPose) {
+                if(currentPose && currentPose.body.length > 0) {
                     _self.clearCanvas();
-                    _self.drawPose2D(currentPose["body"][0]["pose2d"]);
+                    _self.drawPose2D(currentPose["body"][0]?.pose2d);
                 }
             }, 1000/30);
         }

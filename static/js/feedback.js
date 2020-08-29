@@ -38,7 +38,7 @@ function updateData() {
 
     feedbackVideoCanvas.clearCanvas();
 
-    render3DPose(_masterPoses[timeStep]['body'][0]['pose3d'], _userPoses[timeStep]['body'][0]['pose3d']);
+    render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d);
 }
 
 function visualizeFeedback(blobMaster, blobUser) {
@@ -60,7 +60,7 @@ function visualizeFeedback(blobMaster, blobUser) {
         return;
     }
 
-    slider.max = data.length - 1;
+    slider.max = Math.min(_masterPoses.length, _userPoses.length) - 1;
     console.log("[feedback.js] Change slider.max to " + slider.max);
 
     feedbackVideoCanvas = new VideoCanvas(_feedbackVideo, "feedback", getCurrentFeedbackPose);
@@ -68,7 +68,7 @@ function visualizeFeedback(blobMaster, blobUser) {
 
     create_3d_plot('container');
 
-    render3DPose(_masterPoses[timeStep]['body'][0]['pose3d'], _userPoses[timeStep]['body'][0]['pose3d']);
+    render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d);
 
     /*if (showMaster){
         if(poseSequence[timeStep]['masterPose']) {
