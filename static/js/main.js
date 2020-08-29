@@ -169,6 +169,12 @@ $(document).ready(function() {
         //stopWebRTC();
         masterVideoCanvas.stopVideo();
         userVideoCanvas.stopVideo();
+
+        stream = $("#userVideo")[0].srcObject;
+        stream.getTracks().forEach(function(track) {
+            track.stop();
+        });
+
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         //masterVideoCanvas.stopDrawing();
