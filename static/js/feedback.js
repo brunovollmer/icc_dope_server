@@ -33,14 +33,9 @@ function getCurrentFeedbackPose() {
 function updateData() {
     timeStep = slider.value;
     $("#animationTimestep").text(timeStep);
+}
 
-    //setFeedbackVideoSource();
-    if(!feedbackVideoCanvas) {
-        console.log("[feedback.js] Can't update data, feedbackVideoCanvas is null");
-        return;
-    }
-
-    //render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d);
+function update3DPlot() {
     render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d, _scores[timeStep]);
 }
 
