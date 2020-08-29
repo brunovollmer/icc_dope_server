@@ -133,6 +133,7 @@ $(document).ready(function() {
     // Video capturing start/stop buttons
     console.log("[main.js] Registering callbacks");
     $('#record').on("click", function() {
+        startWebcam();
         $("#record").hide();
         //startWebRTC();
         $("#countdown").css("display", "block");
@@ -166,14 +167,10 @@ $(document).ready(function() {
     $('#recordStop').on("click", function() {
         $("#recordStop").hide();
         stopRecording();
+        stopWebcam();
         //stopWebRTC();
         masterVideoCanvas.stopVideo();
         userVideoCanvas.stopVideo();
-
-        stream = $("#userVideo")[0].srcObject;
-        stream.getTracks().forEach(function(track) {
-            track.stop();
-        });
 
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
@@ -198,16 +195,29 @@ $(document).ready(function() {
     }
 
 
-    var video = document.querySelector("#userVideo");
+    startWebcam();
 
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-                video.srcObject = stream;
-            })
-            .catch(function (err0r) {
-                console.log("Something went wrong!");
-            });
+    function startWebcam() {
+        var video = document.querySelector("#userVideo");
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (err0r) {
+                    console.log("Something went wrong!");
+                });
+        }
     }
 
+    function stopWebcam() {
+        var video = $("#userVideo")[0];
+        if(video.srcObject){
+            stream = video.srcObject;
+            stream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+        }
+    }
 });
