@@ -79,8 +79,8 @@ function startRecording() {
                     updateComparisonScores(data.scores);
                     $("#loader").css("display", "none");
                     $("#loading_overlay").css("display", "none");
-                    $("#switch").show();
-                    $("#record").show();
+                    //$("#switch").show();
+                    switchViews();
                 },
                 error: function(msg) {
                     console.log('[record.js] ajax user_video upload failure');
