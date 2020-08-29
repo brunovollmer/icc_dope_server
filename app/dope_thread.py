@@ -37,10 +37,11 @@ class DopeThread(object):
 
                 video_id = data['video_id']
                 filename = data['filename']
+                video_name = data['video_name']
 
-                tmpfile = "../input/0004.mp4.json"
-                if os.path.isfile(tmpfile):
-                    shutil.copy(tmpfile, f"tmp_data/{video_id}.json")
+                if os.path.isfile(os.path.join('tmp_data', "{}.json".format(video_name))):
+                    shutil.copy(os.path.join('tmp_data', "{}.json".format(video_name)), f"tmp_data/{video_id}.json")
+                    print("copied cached results")
                     continue
 
                 cap = cv2.VideoCapture(filename)
@@ -65,6 +66,9 @@ class DopeThread(object):
 
                 response = json.dumps(result, cls=NumpyEncoder)
                 with open(os.path.join("tmp_data", "{}.json".format(video_id)), "w") as f:
+                    f.write(response)
+
+                with open(os.path.join("tmp_data", "{}.json".format(video_name)), "w") as f:
                     f.write(response)
 
                 print("finished")

@@ -92,8 +92,6 @@ async def user_video(request):
         if i < len(user_results) and user_results[i]['body']:
             user_poses[i] = np.array(user_results[i]['body'][0]['pose3d'])
 
-    # master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
-    # user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
 
     scores, best_offset, new_master_poses, new_user_poses = find_ideal_offset(
         master_poses,
@@ -121,12 +119,7 @@ async def master_video(request):
     post = await request.post()
     video = post.get("video")
     video_id = str(uuid.uuid4())
-
-    # tmpfile = "tmp_data/0004.mp4.json"
-    # if os.path.exists(tmpfile):
-    #     print("Responded with cached poses")
-    #     response = open(tmpfile).read()
-    #     return web.json_response(response)
+    video_name = post.get("video_name")
 
     filename = "tmp_data/{}.mp4".format(video_id)
 
@@ -135,6 +128,6 @@ async def master_video(request):
              video_content = video.file.read()
              fd.write(video_content)
 
-        input_queue.put({'video_id': video_id, 'filename': filename})
+        input_queue.put({'video_id': video_id, 'filename': filename, 'video_name': video_name})
 
     return web.json_response({'id': video_id})
