@@ -18,6 +18,10 @@ function updateFeedbackVideoSource() {
     }
 }
 
+function updateFeedbackVideo() {
+    _feedbackVideo.currentTime = (timeStep / 25);
+}
+
 function getCurrentFeedbackPose() {
     if (showMaster){
         return _masterPoses[timeStep];
@@ -29,7 +33,6 @@ function getCurrentFeedbackPose() {
 function updateData() {
     timeStep = slider.value;
     $("#animationTimestep").text(timeStep);
-    console.log("[feedback.js][v] Set timestep " + timeStep);
 
     //setFeedbackVideoSource();
     if(!feedbackVideoCanvas) {
@@ -37,8 +40,7 @@ function updateData() {
         return;
     }
 
-    feedbackVideoCanvas.clearCanvas();
-
+    //render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d);
     render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d, _scores[timeStep]);
 }
 
@@ -63,6 +65,7 @@ function visualizeFeedback(blobMaster, blobUser) {
     }
 
     slider.max = Math.min(_masterPoses.length, _userPoses.length) - 1;
+    slider.focus()
     console.log("[feedback.js] Change slider.max to " + slider.max);
 
     feedbackVideoCanvas = new VideoCanvas(_feedbackVideo, "feedback", getCurrentFeedbackPose);

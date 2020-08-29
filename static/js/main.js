@@ -192,9 +192,14 @@ $(document).ready(function() {
     });
 
     let slider = document.getElementById("animationSlider");
+    let feedbackVideo = document.getElementById("feedbackVideo");
     slider.value = 0;
     slider.oninput = function() {
         updateData();
+        updateFeedbackVideo();
+    }
+    slider.onchange = function() {
+        update3DPlot();
     }
 
     // Switch between master & use video in feedback view
