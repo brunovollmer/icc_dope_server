@@ -38,6 +38,7 @@ async def user_video(request):
         print("[user_video] Loading computed master poses")
         master_results = json.load(json_file)
         if len(master_results) > 0:
+            print("ADDING POINTS")
             frame = 0
             while frame < len(master_results) and len(master_results[frame]["body"]) == 0:
                 frame += 1
@@ -80,7 +81,6 @@ async def user_video(request):
     response = json.dumps(user_results, cls=NumpyEncoder)
     with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
-
 
     nr_master_poses = len(master_results)
     master_poses = np.zeros((nr_master_poses, 15, 3))

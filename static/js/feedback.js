@@ -19,7 +19,8 @@ function updateFeedbackVideoSource() {
 }
 
 function updateFeedbackVideo() {
-    _feedbackVideo.currentTime = (timeStep / 25);
+    _feedbackVideo.currentTime = (timeStep / 30);
+    _feedbackVideo.seekToNextFrame();
 }
 
 function getCurrentFeedbackPose() {
@@ -59,7 +60,7 @@ function visualizeFeedback(blobMaster, blobUser) {
         return;
     }
 
-    slider.max = Math.min(_masterPoses.length, _userPoses.length) - 1;
+    slider.max = Math.max(_masterPoses.length, _userPoses.length) - 1;
     slider.focus()
     console.log("[feedback.js] Change slider.max to " + slider.max);
 
