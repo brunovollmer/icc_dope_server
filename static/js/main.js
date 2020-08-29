@@ -196,6 +196,9 @@ $(document).ready(function() {
     slider.oninput = function() {
         updateData();
     }
+    slider.onchange = function() {
+        update3DPlot();
+    }
 
     // Switch between master & use video in feedback view
     let radio = document.getElementById("masterRadioButton");
