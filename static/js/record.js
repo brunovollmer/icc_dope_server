@@ -1,5 +1,5 @@
 var _mediaRecorder = null;
-var _recordedUserBlob = null;
+var _recordedUserBlobURL = "";
 var _master_id = -1;
 
 function setMasterId(value) {
@@ -11,9 +11,8 @@ function getMasterId(){
     return _master_id;
 }
 
-function getRecordedUserBlob() {
-    if(!_recordedUserBlob) return "";
-    return URL.createObjectURL(_recordedUserBlob);
+function getRecordedUserBlobURL() {
+    return _recordedUserBlobURL;
 }
 
 function startRecording() {
@@ -45,11 +44,9 @@ function startRecording() {
     _mediaRecorder.onstop = function(e) {
         console.log("[record.js] Recorder: Finalizing recording");
         var blob = new Blob(chunks, { 'type' : 'video/mp4' });
-        _recordedUserBlob = blob;
         chunks = [];
-        var videoURL = URL.createObjectURL(blob);
-        var video = document.getElementById('feedbackVideo');
-        video.src = videoURL;
+
+        _recordedUserBlobURL = URL.createObjectURL(blob);
 
         //_master_id = 1;
         if(_master_id === -1){

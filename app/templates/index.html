@@ -86,22 +86,49 @@
             </div>
         </div>
 
-        <div id="animationSliderDiv" class="row" style="display: none">
+        <div id="animationSliderDiv" class="pt-4" style="display: none">
+            <form class="text-light">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="form-group mb-0">
+                            <label for="animationSlider">
+                                Timestep: <span id="animationTimestep">0</span>
+                            </label>
+                            <input id="animationSlider" type="range" class="custom-range" min="0" max="100">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-check">
+                            <input type="radio" name="optradio" id="masterRadioButton" class="form-check-input" checked>
+                            <label class="form-check-label" for="masterRadioButton">Master</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="optradio" id="userRadioButton" class="form-check-input">
+                            <label class="form-check-label" for="userRadioButton">User</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!--
             <div class="col">
                 <div class="justify-content-center">
                     <div class="w-100 d-flex">
                         <div><span id="slider_value_text">Timestamp: <span id="slider_value">0</span></span></div>
-                        <div id="animationSlider"><input id="slider" data-slider-id='slider' type="text"/></div>
+                        <div id="animationSlider">
+                            <input id="slider" data-slider-id='slider' type="text"/>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-2">
                     <div class="w-100 d-flex">
-                        <label class="radio-inline"><input type="radio" name="optradio" id="masterRadioButton" checked>Master</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" id="userRadioButton">User</label>
+
                     </div>
                 </div>
+                -->
         </div>
     </div>
 </div>

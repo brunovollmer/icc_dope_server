@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var masterBlob;
+    var masterBlobURL;
 
     // create_3d_plot('container', '#slider', test_poses_3d)
 
@@ -12,11 +12,22 @@ $(document).ready(function() {
 
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
-        masterBlob = blobURL;
+        masterBlobURL = blobURL;
         masterVideo.src = blobURL;
 
         masterVideoCanvas = new VideoCanvas(masterVideo, "master", getCurrentMasterPose);
     }
+
+    $(document).keypress(function(e) {
+        if(e.originalEvent.key === "1") {
+            $('#leftVideo').toggle();
+            $('#leftPlot').toggle();
+            $('#rightVideo').toggle();
+            $('#rightPlot').toggle();
+            $('#animationSliderDiv').toggle();
+        }
+        console.log(e)
+    })
 
     $('#switch').click(function () {
         $('#leftVideo').toggle();
@@ -26,7 +37,7 @@ $(document).ready(function() {
         $('#animationSliderDiv').toggle();
         //adjustPlotSize();
 
-        visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
+        visualizeFeedback(masterBlobURL, getRecordedUserBlobURL(), recordedSequence);
     });
 
     let uv = document.getElementById("userVideo");
@@ -178,9 +189,15 @@ $(document).ready(function() {
         //userVideoCanvas.stopDrawing();
     });
 
+    let slider = document.getElementById("animationSlider");
+    slider.oninput = function() {
+        updateData();
+    }
+
     // Switch between master & use video in feedback view
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
+        console.log("[main.js] Showing master video in feedback screen")
         showMaster = true;
         updateFeedbackVideoSource();
         updateData();
@@ -189,11 +206,11 @@ $(document).ready(function() {
     // Switch between master & use video in feedback view
     let radio2 = document.getElementById("userRadioButton");
     radio2.onclick = function(_) {
+        console.log("[main.js] Showing user video in feedback screen")
         showMaster = false;
         updateFeedbackVideoSource();
         updateData();
     }
-
 
     startWebcam();
 
