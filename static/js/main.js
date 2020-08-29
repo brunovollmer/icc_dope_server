@@ -108,6 +108,7 @@ $(document).ready(function() {
         $("#loading_overlay").css("display", "block");
         var form = $("#video_form")[0];
         var formData = new FormData(form);
+        formData.append("video_name", fileName);
         $.ajax({
             type: "POST",
             url: "/master_video",
