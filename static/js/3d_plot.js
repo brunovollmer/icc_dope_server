@@ -72,7 +72,8 @@ function create_3d_plot(container_id) {
         xAxis: {
             min: -2.0,
             max: 2.0,
-            gridLineWidth: 1
+            gridLineWidth: 1,
+            reversed: true
         },
         zAxis: {
             min: -1.0,
@@ -173,7 +174,7 @@ var render3DPose = function (master, user) {
                     },
                     lineWidth: 2,
                     lineColor: "black",
-                    data: [shift3DPoint(master[c['start']],0,-_shiftPoses), shift3DPoint(master[c['end']],0,-_shiftPoses)]
+                    data: [shift3DPoint(master[c['start']],0,_shiftPoses), shift3DPoint(master[c['end']],0,_shiftPoses)]
                 };
                 _chart.addSeries(c_series, false);
             }
@@ -201,7 +202,7 @@ var render3DPose = function (master, user) {
                     },
                     lineWidth: 2,
                     lineColor: c['color'],
-                    data: [shift3DPoint(user[c['start']],0,_shiftPoses), shift3DPoint(user[c['end']],0,_shiftPoses)]
+                    data: [shift3DPoint(user[c['start']],0,-_shiftPoses), shift3DPoint(user[c['end']],0,-_shiftPoses)]
                 };
                 _chart.addSeries(c_series_user, false);
             }
