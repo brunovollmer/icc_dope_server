@@ -6,6 +6,7 @@ var _userBlobURL = "";
 var _masterBlobURL = "";
 var _masterPoses;
 var _userPoses;
+var _scores;
 
 function updateFeedbackVideoSource() {
     if (showMaster){
@@ -38,7 +39,7 @@ function updateData() {
 
     feedbackVideoCanvas.clearCanvas();
 
-    render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d);
+    render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d, _scores[timeStep]);
 }
 
 function visualizeFeedback(blobMaster, blobUser) {
@@ -48,6 +49,7 @@ function visualizeFeedback(blobMaster, blobUser) {
 
     _masterPoses = getMasterPoseList();
     _userPoses = getUserPoseList();
+    _scores = getComparisonScores();
 
     //data = [{'masterTimestamp': 0, 'masterPose': {'body': {'pose3d': test_poses_3d[0], 'pose2d': test_poses_2d[0]}}}, {'masterTimestamp': 1, 'masterPose': {'body': {'pose3d': test_poses_3d[1], 'pose2d': test_poses_2d[1]}}}]
     if(!_masterPoses || _masterPoses.length === 0) {
@@ -68,7 +70,7 @@ function visualizeFeedback(blobMaster, blobUser) {
 
     create_3d_plot('container');
 
-    render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d);
+    render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d, _scores[timeStep]);
 
     /*if (showMaster){
         if(poseSequence[timeStep]['masterPose']) {

@@ -149,7 +149,28 @@ function shift3DPoint(point, index, value) {
     return shiftedPoint;
 }
 
-var render3DPose = function (master, user) {
+function getScoreColor(score, index) {
+    switch (score[index]){
+        case 0:
+            return "lightgreen";
+        case 1:
+            return "green";
+        case 2:
+            return "yellow";
+        case 3:
+            return "orange";
+        case 4:
+            return "red"
+    }
+    return "white";
+}
+
+function getScoreColorLine(score, scoreA, scoreB) {
+    return getScoreColor(score, scoreB);
+}
+
+var render3DPose = function (master, user, score) {
+    console.log("[3d_plot.js] Scores", score);
 
     while (_chart.series.length > 0) {
         _chart.series[0].remove(true);
@@ -167,7 +188,8 @@ var render3DPose = function (master, user) {
                     colorByPoint: true,
                     marker: {
                         symbol: 'circle',
-                        enabled: true
+                        enabled: true,
+                        fillColor: "black"
                     },
                     accessibility: {
                         exposeAsGroupOnly: true
@@ -187,6 +209,9 @@ var render3DPose = function (master, user) {
         for (let i = 0; i < connections.length; i++) {
             const c = connections[i];
 
+            var shiftedStart = shift3DPoint(user[c['start']],0,-_shiftPoses);
+            var shiftedEnd = shift3DPoint(user[c['end']],0,-_shiftPoses);
+
             if(!user[c['start']] || !user[c['end']]){
                 console.log("[3d_plot.js] Skipping", i, "as at least one point is undefined", c);
             } else {
@@ -201,8 +226,8 @@ var render3DPose = function (master, user) {
                         exposeAsGroupOnly: true
                     },
                     lineWidth: 2,
-                    lineColor: c['color'],
-                    data: [shift3DPoint(user[c['start']],0,-_shiftPoses), shift3DPoint(user[c['end']],0,-_shiftPoses)]
+                    lineColor: getScoreColorLine(score, c['start'], c['end']),
+                    data: [{x: shiftedStart[0], y: shiftedStart[1], z: shiftedStart[2], color: getScoreColor(score, c['start'])}, {x: shiftedEnd[0], y: shiftedEnd[1], z: shiftedEnd[2], color: getScoreColor(score, c['end'])}]
                 };
                 _chart.addSeries(c_series_user, false);
             }

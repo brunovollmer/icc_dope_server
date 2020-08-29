@@ -13,6 +13,10 @@ function getMasterPoseList(){
     return _masterPoseList;
 }
 
+function getComparisonScores(){
+    return _comparisonScores;
+}
+
 function updateComparisonScores(scores) {
     _comparisonScores = scores;
     console.log("[pose.js] Comparison scores list updated", _comparisonScores);
