@@ -17,6 +17,10 @@ function updateFeedbackVideoSource() {
     }
 }
 
+function updateFeedbackVideo() {
+    _feedbackVideo.currentTime = (timeStep / 25);
+}
+
 function getCurrentFeedbackPose() {
     if (showMaster){
         return _masterPoses[timeStep];
