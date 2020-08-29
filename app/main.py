@@ -22,6 +22,12 @@ dope_debug: False
 use_turn: False
 tmp_data_path: tmp_data/
 clear_on_shutdown: True
+thresholds:
+  perfect: 0.12
+  good: 0.2
+  ok: 0.24
+  wrong: 0.0
+timeshift_percentage: 0.1
 """
 
 ROOT = os.path.dirname(__file__)

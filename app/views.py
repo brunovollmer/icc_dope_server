@@ -83,7 +83,12 @@ async def user_video(request):
     master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
     user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
 
-    scores = compare_poses(master_poses, user_poses)
+    scores = compare_poses(
+        master_poses,
+        user_poses,
+        timeshift_percentage=request.app["settings"].timeshift_percentage,
+        thresholds=request.app["settings"].thresholds
+    )
 
     response = {
         "master_results": master_results,
