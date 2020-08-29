@@ -10,7 +10,7 @@ from aiohttp_jinja2 import template
 from aiohttp import web
 
 from dope import DopeEstimator
-from compare import compare_poses
+from compare import find_ideal_offset
 from util import resize_image, NumpyEncoder
 from .main import input_queue
 
@@ -95,7 +95,7 @@ async def user_video(request):
     # master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
     # user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
 
-    scores, best_offset, new_master_poses, new_user_poses = compare_poses(
+    scores, best_offset, new_master_poses, new_user_poses = find_ideal_offset(
         master_poses,
         user_poses,
         timeshift_percentage=request.app["settings"].timeshift_percentage,
