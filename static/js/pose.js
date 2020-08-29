@@ -7,6 +7,7 @@ var _masterPose = null;
 
 function updateComparisonScores(scores) {
     _comparisonScores = scores;
+    console.log("[pose.js] Comparison scores list updated", _comparisonScores);
 }
 
 function hasMasterPoseList() {
@@ -21,6 +22,7 @@ function updateMasterPoseList(poseList) {
     if(poseList && poseList.length > 0) {
         _masterPoseList = poseList;
         _masterPose = _masterPoseList[0];
+        console.log("[pose.js] Master pose list updated", _masterPoseList);
         return true;
     } else {
         console.log("[pose.js] Master pose list is null/empty");
@@ -32,6 +34,7 @@ function updateUserPoseList(poseList) {
     if(poseList && poseList.length > 0) {
         _userPoseList = poseList;
         _userPose = _userPoseList[0];
+        console.log("[pose.js] User pose list updated", _userPoseList);
         return true;
     } else {
         console.log("[pose.js] User pose list is null/empty");
