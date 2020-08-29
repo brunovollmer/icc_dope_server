@@ -2,8 +2,6 @@ var _mediaRecorder = null;
 var _recordedUserBlob = null;
 var _master_id = -1;
 
-var _recordedUserVideo = null;
-
 function setMasterId(value) {
     console.log("[record.js] Master id is: " + value);
     _master_id = value;
@@ -52,8 +50,6 @@ function startRecording() {
         var videoURL = URL.createObjectURL(blob);
         var video = document.getElementById('feedbackVideo');
         video.src = videoURL;
-        //_recordedUserVideo = URL.createObjectURL(blob);
-        console.log("[record.js] URL:", _recordedUserVideo);
 
         //_master_id = 1;
         if(_master_id === -1){
@@ -80,11 +76,10 @@ function startRecording() {
                 },
                 success: function(msg) {
                     data = JSON.parse(msg);
+                    console.log("[record.js] User video upload response:", data);
                     updateMasterPoseList(data.master_results);
                     updateUserPoseList(data.user_results);
                     updateComparisonScores(data.scores);
-
-                    console.log("[main.js]: Master Video response: ", msg);
                     $("#loader").css("display", "none");
                     $("#loading_overlay").css("display", "none");
                     $("#switch").show();
