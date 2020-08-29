@@ -1,10 +1,11 @@
 var showMaster = document.getElementById('masterRadioButton').checked;
-var poseSequence;
 var timeStep = 0;
 var _feedbackVideo = document.getElementById('feedbackVideo');
 var slider = document.getElementById("animationSlider");
 var _userBlobURL = "";
 var _masterBlobURL = "";
+var _masterPoses;
+var _userPoses;
 
 function updateFeedbackVideoSource() {
     if (showMaster){
@@ -18,9 +19,9 @@ function updateFeedbackVideoSource() {
 
 function getCurrentFeedbackPose() {
     if (showMaster){
-        return poseSequence[timeStep]['masterPose'];
+        return _masterPoses[timeStep];
     }else{
-        return poseSequence[timeStep]['userPose'];
+        return _userPoses[timeStep];
     }
 }
 
@@ -37,37 +38,27 @@ function updateData() {
 
     feedbackVideoCanvas.clearCanvas();
 
-    if (showMaster){
-        feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['masterTimestamp']);
-
-        if (poseSequence[timeStep].masterPose){
-            render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
-        } else {
-            clear3DPlot();
-        }
-    }else{
-        feedbackVideoCanvas.setVideoCurrentTime(poseSequence[timeStep]['userTimestamp']);
-
-        if (poseSequence[timeStep].userPose) {
-            render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
-        } else {
-            clear3DPlot();
-        }
-    }
+    render3DPose(_masterPoses[timeStep]['body'][0]['pose3d'], _userPoses[timeStep]['body'][0]['pose3d']);
 }
 
-function visualizeFeedback(blobMaster, blobUser, data) {
+function visualizeFeedback(blobMaster, blobUser) {
     _userBlobURL = blobUser;
     _masterBlobURL = blobMaster;
     updateFeedbackVideoSource();
 
+    _masterPoses = getMasterPoseList();
+    _userPoses = getUserPoseList();
+
     //data = [{'masterTimestamp': 0, 'masterPose': {'body': {'pose3d': test_poses_3d[0], 'pose2d': test_poses_2d[0]}}}, {'masterTimestamp': 1, 'masterPose': {'body': {'pose3d': test_poses_3d[1], 'pose2d': test_poses_2d[1]}}}]
-    if(!data || data.length === 0) {
-        console.log("[feedback.js] Can't visualize feedback, no pose sequence given!");
+    if(!_masterPoses || _masterPoses.length === 0) {
+        console.log("[feedback.js] Can't visualize feedback, no master pose sequence given!");
         return;
     }
 
-    poseSequence = data;
+    if(!_userPoses || _userPoses.length === 0) {
+        console.log("[feedback.js] Can't visualize feedback, no user pose sequence given!");
+        return;
+    }
 
     slider.max = data.length - 1;
     console.log("[feedback.js] Change slider.max to " + slider.max);
@@ -77,7 +68,9 @@ function visualizeFeedback(blobMaster, blobUser, data) {
 
     create_3d_plot('container');
 
-    if (showMaster){
+    render3DPose(_masterPoses[timeStep]['body'][0]['pose3d'], _userPoses[timeStep]['body'][0]['pose3d']);
+
+    /*if (showMaster){
         if(poseSequence[timeStep]['masterPose']) {
             render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
         } else {
@@ -89,5 +82,5 @@ function visualizeFeedback(blobMaster, blobUser, data) {
         } else {
             clear3DPlot();
         }
-    }
+    }*/
 }

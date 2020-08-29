@@ -2,8 +2,8 @@ var _masterPoseList = null;
 var _userPoseList = null;
 var _comparisonScores = null;
 
-var _userPose = null;
-var _masterPose = null;
+var _currentUserPose = null;
+var _currentMasterPose = null;
 
 function getUserPoseList(){
     return _userPoseList;
@@ -29,7 +29,7 @@ function hasUserPoseList() {
 function updateMasterPoseList(poseList) {
     if(poseList && poseList.length > 0) {
         _masterPoseList = poseList;
-        _masterPose = _masterPoseList[0];
+        _currentMasterPose = _masterPoseList[0];
         console.log("[pose.js] Master pose list updated", _masterPoseList);
         return true;
     } else {
@@ -41,7 +41,7 @@ function updateMasterPoseList(poseList) {
 function updateUserPoseList(poseList) {
     if(poseList && poseList.length > 0) {
         _userPoseList = poseList;
-        _userPose = _userPoseList[0];
+        _currentUserPose = _userPoseList[0];
         console.log("[pose.js] User pose list updated", _userPoseList);
         return true;
     } else {
@@ -51,11 +51,11 @@ function updateUserPoseList(poseList) {
 }
 
 function updateUserPose(newPose) {
-    _userPose = newPose;
+    _currentUserPose = newPose;
 }
 
 function getCurrentUserPose(video) {
-    return _userPose;
+    return _currentUserPose;
 }
 
 function getCurrentMasterPose(video) {
@@ -71,9 +71,9 @@ function getCurrentMasterPose(video) {
     var fraction = video.currentTime / video.duration;
     var index = Math.round(fraction * _masterPoseList.length);
     if(index >= _masterPoseList.length) index = _masterPoseList.length - 1;
-    _masterPose = _masterPoseList[index];
+    _currentMasterPose = _masterPoseList[index];
 
-    return _masterPose[0];
+    return _currentMasterPose[0];
 }
 
 // getCurrentFeedbackPose = function (video) {

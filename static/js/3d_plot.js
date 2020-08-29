@@ -3,7 +3,7 @@ var _chart;
 function testRendering3D(masterPoseList, userPoseList, scoreList){
     create_3d_plot('container');
 
-    render3DPose(masterPoseList[0]["body"][0]["pose3d"], masterPoseList[1]["body"][0]["pose3d"]);
+    render3DPose(masterPoseList[0]["body"][0]["pose3d"], userPoseList[0]["body"][0]["pose3d"]);
 }
 
 function create_3d_plot(container_id) {
@@ -187,7 +187,7 @@ var render3DPose = function (master, user) {
 
     _chart.redraw();
 
-    var localUser = shift3DPose(user, 0, 2);
+    var localUser = shift3DPose(user, 0, 1);
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];
 

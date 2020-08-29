@@ -39,7 +39,7 @@ $(document).ready(function() {
 
         //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
         //testRendering3D(getMasterPoseList(), getUserPoseList());
-        visualizeFeedback(masterBlobURL, getRecordedUserBlobURL(), recordedSequence);
+        visualizeFeedback(masterBlobURL, getRecordedUserBlobURL());
     });
 
     let uv = document.getElementById("userVideo");
