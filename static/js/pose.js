@@ -5,6 +5,14 @@ var _comparisonScores = null;
 var _userPose = null;
 var _masterPose = null;
 
+function getUserPoseList(){
+    return _userPoseList;
+}
+
+function getMasterPoseList(){
+    return _masterPoseList;
+}
+
 function updateComparisonScores(scores) {
     _comparisonScores = scores;
     console.log("[pose.js] Comparison scores list updated", _comparisonScores);

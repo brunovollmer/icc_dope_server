@@ -26,7 +26,8 @@ $(document).ready(function() {
         $('#animationSliderDiv').toggle();
         //adjustPlotSize();
 
-        visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
+        //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
+        testRendering3D(getMasterPoseList(), getUserPoseList());
     });
 
     let uv = document.getElementById("userVideo");

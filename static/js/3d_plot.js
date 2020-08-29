@@ -1,5 +1,11 @@
 var _chart;
 
+function testRendering3D(masterPoseList, userPoseList, scoreList){
+    create_3d_plot('container');
+
+    render3DPose(masterPoseList[0]["body"][0]["pose3d"], masterPoseList[1]["body"][0]["pose3d"]);
+}
+
 function create_3d_plot(container_id) {
 
     Highcharts.setOptions({
@@ -133,8 +139,21 @@ function create_3d_plot(container_id) {
 
 }
 
+function shift3DPose(pose, index, value) {
+    var shiftedPose = pose.slice(0);
 
-var render3DPose = function (pose) {
+    for(i=0; i<pose.length; i++){
+        shiftedPose[i][index] = pose[i][index] + value;
+    }
+
+    return shiftedPose;
+}
+
+var render3DPose = function (master, user) {
+    //console.log("[3d_plot.js] Rendering master pose", master[0]);
+    var localMaster = shift3DPose(master, 0, -1);
+    //console.log("[3d_plot.js] Shifted master pose", localMaster[0]);
+
     while (_chart.series.length > 0) {
         _chart.series[0].remove(true);
     }
@@ -142,22 +161,59 @@ var render3DPose = function (pose) {
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];
 
-        var c_series = {
-            name: 'Data',
-            colorByPoint: true,
-            marker: {
-                symbol: 'circle',
-                enabled: true,
-            },
-            accessibility: {
-                exposeAsGroupOnly: true
-            },
-            lineWidth: 2,
-            lineColor: c['color'],
-            data: [pose[c['start']], pose[c['end']]]
-        }
+        if(!localMaster[c['start']] || !localMaster[c['end']]){
+            console.log("[3d_plot.js] Skipping", i, "as at least one point is undefined", c);
+        } else {
+            var c_series = {
+                name: 'Data',
+                colorByPoint: true,
+                marker: {
+                    symbol: 'circle',
+                    enabled: true
+                },
+                accessibility: {
+                    exposeAsGroupOnly: true
+                },
+                lineWidth: 2,
+                lineColor: c['color'],
+                data: [localMaster[c['start']], localMaster[c['end']]]
+            };
 
-        _chart.addSeries(c_series, false);
+            //console.log("Master at pos", i, [localMaster[c['start']], localMaster[c['end']]]);
+
+            _chart.addSeries(c_series, false);
+        }
+    }
+
+    _chart.redraw();
+
+    var localUser = shift3DPose(user, 0, 2);
+    for (let i = 0; i < connections.length; i++) {
+        const c = connections[i];
+
+        //console.log("[3d_plot.js] Rendering", c);
+
+        if(!user[c['start']] || !user[c['end']]){
+            console.log("[3d_plot.js] Skipping", i, "as at least one point is undefined", c);
+        } else {
+            var c_series_user = {
+                name: 'Data',
+                colorByPoint: true,
+                marker: {
+                    symbol: 'circle',
+                    enabled: true
+                },
+                accessibility: {
+                    exposeAsGroupOnly: true
+                },
+                lineWidth: 2,
+                lineColor: c['color'],
+                data: [localUser[c['start']], localUser[c['end']]]
+            };
+            //console.log("User at pos", i, [localUser[c['start']], localUser[c['end']]]);
+
+            _chart.addSeries(c_series_user, false);
+        }
     }
 
     _chart.redraw();
