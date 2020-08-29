@@ -27,8 +27,21 @@ async def user_video(request):
     while not os.path.isfile(master_results_path):
         time.sleep(1)
 
+    model_path = request.app['settings'].model_path
+    use_half_computation = request.app['settings'].use_half_computation
+    default_width = request.app['settings'].default_width
+
+    dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
+
     with open(master_results_path) as json_file:
+        print("[user_video] Loading computed master poses")
         master_results = json.load(json_file)
+        if len(master_results) > 0:
+            frame = 0
+            while frame < len(master_results) and len(master_results[frame]["body"]) == 0:
+                frame += 1
+            if len(master_results[frame]["body"]) == 13:
+                master_results = dope._compute_hip_neck(master_results)
 
     filename = os.path.join("tmp_data", "{}_user.mp4".format(master_video_id))
 
@@ -37,33 +50,31 @@ async def user_video(request):
              video_content = user_video.file.read()
              fd.write(video_content)
 
+    tmp_userfile = "../input/user.mp4.json"
+    if os.path.isfile(tmp_userfile):
+        print("[user_video] Loading cached user poses")
+        user_results = json.load(open(tmp_userfile))
+    else:
+        print("[user_video] Compute user poses")
+        cap = cv2.VideoCapture(filename)
+        user_results = []
 
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        counter = 1
 
-    cap = cv2.VideoCapture(filename)
-    user_results = []
+        while(cap.isOpened()):
+            ret, frame = cap.read()
+            if not ret:
+                break
 
-    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    counter = 1
+            frame = resize_image(frame, width=default_width)
 
-    model_path = request.app['settings'].model_path
-    use_half_computation = request.app['settings'].use_half_computation
-    default_width = request.app['settings'].default_width
+            res, _ = dope.run(frame, visualize=False)
+            user_results.append(res)
+            print(f"frame {counter} of {total_frames}")
 
-    dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
-
-    while(cap.isOpened()):
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        frame = resize_image(frame, width=default_width)
-
-        res, _ = dope.run(frame, visualize=False)
-        user_results.append(res)
-        print(f"frame {counter} of {total_frames}")
-
-        counter += 1
-    cap.release()
+            counter += 1
+        cap.release()
 
     response = json.dumps(user_results, cls=NumpyEncoder)
     with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
@@ -72,10 +83,12 @@ async def user_video(request):
     master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
     user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
 
-    thresholds = request.app['settings'].thresholds
-    offset_perc = request.app['settings'].offset_perc
-
-    scores = compare_poses(master_poses, user_poses, thresholds, offset_perc)
+    scores = compare_poses(
+        master_poses,
+        user_poses,
+        timeshift_percentage=request.app["settings"].timeshift_percentage,
+        thresholds=request.app["settings"].thresholds
+    )
 
     response = {
         "master_results": master_results,

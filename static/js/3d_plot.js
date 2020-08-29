@@ -1,4 +1,5 @@
 var _chart;
+var _shiftPoses = 0.8;
 
 function create_3d_plot(container_id) {
 
@@ -71,7 +72,8 @@ function create_3d_plot(container_id) {
         xAxis: {
             min: -2.0,
             max: 2.0,
-            gridLineWidth: 1
+            gridLineWidth: 1,
+            reversed: true
         },
         zAxis: {
             min: -1.0,
@@ -133,34 +135,106 @@ function create_3d_plot(container_id) {
 
 }
 
+function shift3DPoint(point, index, value) {
+    var shiftedPoint = [0,0,0];
 
-var render3DPose = function (pose) {
+    for(i=0; i<3; i++){
+        if(i===index){
+            shiftedPoint[i] = point[i] + value;
+        } else {
+            shiftedPoint[i] = point[i];
+        }
+    }
+
+    return shiftedPoint;
+}
+
+function getScoreColor(score, index) {
+    switch (score[index]){
+        case 0:
+            return "lightgreen";
+        case 1:
+            return "green";
+        case 2:
+            return "yellow";
+        case 3:
+            return "orange";
+        case 4:
+            return "red"
+    }
+    return "white";
+}
+
+function getScoreColorLine(score, scoreA, scoreB) {
+    return getScoreColor(score, scoreB);
+}
+
+var render3DPose = function (master, user, score) {
+    console.log("[3d_plot.js] Scores", score);
+
     while (_chart.series.length > 0) {
         _chart.series[0].remove(true);
     }
 
-    for (let i = 0; i < connections.length; i++) {
-        const c = connections[i];
+    if(master){
+        for (let i = 0; i < connections.length; i++) {
+            const c = connections[i];
 
-        var c_series = {
-            name: 'Data',
-            colorByPoint: true,
-            marker: {
-                symbol: 'circle',
-                enabled: true,
-            },
-            accessibility: {
-                exposeAsGroupOnly: true
-            },
-            lineWidth: 2,
-            lineColor: c['color'],
-            data: [pose[c['start']], pose[c['end']]]
+            if(!master[c['start']] || !master[c['end']]){
+                console.log("[3d_plot.js] Skipping", i, "as at least one point is undefined", c);
+            } else {
+                var c_series = {
+                    name: 'Data',
+                    colorByPoint: true,
+                    marker: {
+                        symbol: 'circle',
+                        enabled: true,
+                        fillColor: "black"
+                    },
+                    accessibility: {
+                        exposeAsGroupOnly: true
+                    },
+                    lineWidth: 2,
+                    lineColor: "black",
+                    data: [shift3DPoint(master[c['start']],0,_shiftPoses), shift3DPoint(master[c['end']],0,_shiftPoses)]
+                };
+                _chart.addSeries(c_series, false);
+            }
         }
 
-        _chart.addSeries(c_series, false);
+        _chart.redraw();
     }
 
-    _chart.redraw();
+    if(user){
+        for (let i = 0; i < connections.length; i++) {
+            const c = connections[i];
+
+            var shiftedStart = shift3DPoint(user[c['start']],0,-_shiftPoses);
+            var shiftedEnd = shift3DPoint(user[c['end']],0,-_shiftPoses);
+
+            if(!user[c['start']] || !user[c['end']]){
+                console.log("[3d_plot.js] Skipping", i, "as at least one point is undefined", c);
+            } else {
+                var c_series_user = {
+                    name: 'Data',
+                    colorByPoint: true,
+                    marker: {
+                        symbol: 'circle',
+                        enabled: true
+                    },
+                    accessibility: {
+                        exposeAsGroupOnly: true
+                    },
+                    lineWidth: 2,
+                    lineColor: getScoreColorLine(score, c['start'], c['end']),
+                    data: [{x: shiftedStart[0], y: shiftedStart[1], z: shiftedStart[2], color: getScoreColor(score, c['start'])}, {x: shiftedEnd[0], y: shiftedEnd[1], z: shiftedEnd[2], color: getScoreColor(score, c['end'])}]
+                };
+                _chart.addSeries(c_series_user, false);
+            }
+        }
+
+        _chart.redraw();
+    }
 };
 
 function clear3DPlot() {

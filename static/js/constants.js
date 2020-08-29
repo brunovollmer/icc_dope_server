@@ -15,28 +15,28 @@ var HIP = 13
 var NECK = 14
 
 var connections = [{
-        "start": FOOT_LEFT,
-        "end": KNEE_LEFT,
-        "color": 'black'
-    },
-    {
-        "start": FOOT_RIGHT,
-        "end": KNEE_RIGHT,
-        "color": 'red'
-    },
-    {
         "start": KNEE_LEFT,
-        "end": HIP_LEFT,
+        "end": FOOT_LEFT,
         "color": 'black'
     },
     {
         "start": KNEE_RIGHT,
-        "end": HIP_RIGHT,
+        "end": FOOT_RIGHT,
         "color": 'red'
     },
     {
         "start": HIP_LEFT,
-        "end": HIP,
+        "end": KNEE_LEFT,
+        "color": 'black'
+    },
+    {
+        "start": HIP_RIGHT,
+        "end": KNEE_RIGHT,
+        "color": 'red'
+    },
+    {
+        "start": HIP,
+        "end": HIP_LEFT,
         "color": 'black'
     },
     {
@@ -45,28 +45,28 @@ var connections = [{
         "color": 'red'
     },
     {
-        "start": HAND_LEFT,
-        "end": ELBOW_LEFT,
-        "color": 'black'
-    },
-    {
-        "start": HAND_RIGHT,
-        "end": ELBOW_RIGHT,
-        "color": 'red'
-    },
-    {
         "start": ELBOW_LEFT,
-        "end": SHOULDER_LEFT,
+        "end": HAND_LEFT,
         "color": 'black'
     },
     {
         "start": ELBOW_RIGHT,
-        "end": SHOULDER_RIGHT,
+        "end": HAND_RIGHT,
         "color": 'red'
     },
     {
         "start": SHOULDER_LEFT,
-        "end": NECK,
+        "end": ELBOW_LEFT,
+        "color": 'black'
+    },
+    {
+        "start": SHOULDER_RIGHT,
+        "end": ELBOW_RIGHT,
+        "color": 'red'
+    },
+    {
+        "start": NECK,
+        "end": SHOULDER_LEFT,
         "color": 'black'
     },
     {
@@ -75,8 +75,8 @@ var connections = [{
         "color": 'red'
     },
     {
-        "start": HIP,
-        "end": NECK,
+        "start": NECK,
+        "end": HIP,
         "color": 'black'
     },
     {

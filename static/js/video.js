@@ -81,9 +81,9 @@ class VideoCanvas {
                 _self.resizeCanvas();
 
                 var currentPose = _self._poseCallback(_self._video);
-                if(currentPose) {
+                if(currentPose && currentPose.body.length > 0) {
                     _self.clearCanvas();
-                    _self.drawPose2D(currentPose["body"][0]["pose2d"]);
+                    _self.drawPose2D(currentPose["body"][0]?.pose2d);
                 }
             }, 1000/30);
         }
@@ -111,7 +111,7 @@ class VideoCanvas {
     drawPose2D(pose) {
         if(pose) {
             this.resizeCanvas();
-            draw2dPose(this._canvas, pose);
+            draw2dPose(this._context, pose);
         }
     }
 
@@ -124,7 +124,7 @@ class VideoCanvas {
             let p1 = toPose[j];
             let x1 = p1[0];
             let y1 = p1[1];
-            drawLineWithArrows(this._canvas, x0, y0, x1, y1, 5, 5, false, true);
+            drawLineWithArrows(this._context, x0, y0, x1, y1, 5, 5, false, true);
         }
     }
 

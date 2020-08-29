@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var masterBlob;
+    var masterBlobURL;
 
     // create_3d_plot('container', '#slider', test_poses_3d)
 
@@ -12,11 +12,22 @@ $(document).ready(function() {
 
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
-        masterBlob = blobURL;
+        masterBlobURL = blobURL;
         masterVideo.src = blobURL;
 
         masterVideoCanvas = new VideoCanvas(masterVideo, "master", getCurrentMasterPose);
     }
+
+    $(document).keypress(function(e) {
+        if(e.originalEvent.key === "1") {
+            $('#leftVideo').toggle();
+            $('#leftPlot').toggle();
+            $('#rightVideo').toggle();
+            $('#rightPlot').toggle();
+            $('#animationSliderDiv').toggle();
+        }
+        console.log(e)
+    })
 
     $('#switch').click(function () {
         $('#leftVideo').toggle();
@@ -26,7 +37,9 @@ $(document).ready(function() {
         $('#animationSliderDiv').toggle();
         //adjustPlotSize();
 
-        visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
+        //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
+        //testRendering3D(getMasterPoseList(), getUserPoseList());
+        visualizeFeedback(masterBlobURL, getRecordedUserBlobURL());
     });
 
     let uv = document.getElementById("userVideo");
@@ -95,6 +108,7 @@ $(document).ready(function() {
         $("#loading_overlay").css("display", "block");
         var form = $("#video_form")[0];
         var formData = new FormData(form);
+        formData.append("video_name", fileName);
         $.ajax({
             type: "POST",
             url: "/master_video",
@@ -133,6 +147,7 @@ $(document).ready(function() {
     // Video capturing start/stop buttons
     console.log("[main.js] Registering callbacks");
     $('#record').on("click", function() {
+        startWebcam();
         $("#record").hide();
         //startWebRTC();
         $("#countdown").css("display", "block");
@@ -166,18 +181,32 @@ $(document).ready(function() {
     $('#recordStop').on("click", function() {
         $("#recordStop").hide();
         stopRecording();
+        stopWebcam();
         //stopWebRTC();
         masterVideoCanvas.stopVideo();
         userVideoCanvas.stopVideo();
+
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         //masterVideoCanvas.stopDrawing();
         //userVideoCanvas.stopDrawing();
     });
 
+    let slider = document.getElementById("animationSlider");
+    let feedbackVideo = document.getElementById("feedbackVideo");
+    slider.value = 0;
+    slider.oninput = function() {
+        updateData();
+        updateFeedbackVideo();
+    }
+    slider.onchange = function() {
+        update3DPlot();
+    }
+
     // Switch between master & use video in feedback view
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
+        console.log("[main.js] Showing master video in feedback screen")
         showMaster = true;
         updateFeedbackVideoSource();
         updateData();
@@ -186,22 +215,35 @@ $(document).ready(function() {
     // Switch between master & use video in feedback view
     let radio2 = document.getElementById("userRadioButton");
     radio2.onclick = function(_) {
+        console.log("[main.js] Showing user video in feedback screen")
         showMaster = false;
         updateFeedbackVideoSource();
         updateData();
     }
 
+    startWebcam();
 
-    var video = document.querySelector("#userVideo");
+    function startWebcam() {
+        var video = document.querySelector("#userVideo");
 
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-                video.srcObject = stream;
-            })
-            .catch(function (err0r) {
-                console.log("Something went wrong!");
-            });
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (err0r) {
+                    console.log("Something went wrong!");
+                });
+        }
     }
 
+    function stopWebcam() {
+        var video = $("#userVideo")[0];
+        if(video.srcObject){
+            stream = video.srcObject;
+            stream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+        }
+    }
 });
