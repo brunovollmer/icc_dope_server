@@ -175,7 +175,7 @@ var render3DPose = function (master, user) {
                     exposeAsGroupOnly: true
                 },
                 lineWidth: 2,
-                lineColor: c['color'],
+                lineColor: "black",
                 data: [localMaster[c['start']], localMaster[c['end']]]
             };
 
