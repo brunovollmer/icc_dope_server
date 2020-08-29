@@ -3,6 +3,7 @@ import uuid
 import cv2
 import json
 import time
+import numpy as np
 import asyncio
 
 from aiohttp_jinja2 import template
@@ -80,19 +81,38 @@ async def user_video(request):
     with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
         f.write(response)
 
-    master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
-    user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
 
-    scores = compare_poses(
+    nr_master_poses = len(master_results)
+    master_poses = np.zeros((nr_master_poses, 15, 3))
+    user_poses = np.zeros((nr_master_poses, 15, 3))
+
+    for i in range(nr_master_poses):
+        if master_results[i]['body']:
+            master_poses[i] = np.array(master_results[i]['body'][0]['pose3d'])
+        if i < len(user_results) and user_results[i]['body']:
+            user_poses[i] = np.array(user_results[i]['body'][0]['pose3d'])
+
+    # master_poses = [p["body"][0]["pose3d"] for p in master_results if len(p["body"]) > 0]
+    # user_poses = [p["body"][0]["pose3d"] for p in user_results if len(p["body"]) > 0]
+
+    scores, best_offset, new_master_poses, new_user_poses = compare_poses(
         master_poses,
         user_poses,
         timeshift_percentage=request.app["settings"].timeshift_percentage,
         thresholds=request.app["settings"].thresholds
     )
 
+    new_user_results = []
+
+    for i in range(new_master_poses.shape[0]):
+        if np.sum(new_user_poses[i]) == 0:
+            new_user_results.append({'body': []})
+        else:
+            new_user_results.append(user_results[(i + best_offset)])
+
     response = {
         "master_results": master_results,
-        "user_results": user_results,
+        "user_results": new_user_results,
         "scores": scores
     }
     return web.json_response(json.dumps(response, cls=NumpyEncoder))
