@@ -38,7 +38,7 @@ async def user_video(request):
         master_results = json.load(json_file)
         if len(master_results) > 0:
             frame = 0
-            while len(master_results[frame]["body"]) == 0:
+            while frame < len(master_results) and len(master_results[frame]["body"]) == 0:
                 frame += 1
             if len(master_results[frame]["body"]) == 13:
                 master_results = dope._compute_hip_neck(master_results)
