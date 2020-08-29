@@ -1,6 +1,8 @@
+var masterBlobURL = null;
+
 $(document).ready(function() {
 
-    var masterBlobURL;
+
 
     // create_3d_plot('container', '#slider', test_poses_3d)
 
@@ -9,6 +11,17 @@ $(document).ready(function() {
         document.getElementById('media').style.display = 'block';
 
         var masterVideo = document.getElementById("masterVideo");
+        masterVideo.onended = function(e) {
+            console.log("[main.js] Master video finished...stop recording");
+            $("#recordStop").hide();
+            stopRecording();
+            masterVideoCanvas.stopVideo();
+            userVideoCanvas.stopVideo();
+
+            $("#loader").css("display", "block");
+            $("#loading_overlay").css("display", "block");
+            stopWebcam();
+        };
 
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
@@ -30,17 +43,9 @@ $(document).ready(function() {
     })
 
     $('#switch').click(function () {
-        $('#leftVideo').toggle();
-        $('#leftPlot').toggle();
-        $('#rightVideo').toggle();
-        $('#rightPlot').toggle();
-        $('#animationSliderDiv').toggle();
-        //adjustPlotSize();
-
-        //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
-        //testRendering3D(getMasterPoseList(), getUserPoseList());
-        visualizeFeedback(masterBlobURL, getRecordedUserBlobURL());
+        switchViews();
     });
+
 
     let uv = document.getElementById("userVideo");
     console.log("[main.js] Registering user video canvas");
@@ -103,7 +108,6 @@ $(document).ready(function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 
-        //TODO Callback for Background rendering of MasterVideo
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         var form = $("#video_form")[0];
@@ -172,7 +176,7 @@ $(document).ready(function() {
             $("#countdown").css("display", "none");
             interval = null;
             $("#loader").css("display", "none");
-            $("#recordStop").show();
+            //$("#recordStop").show();
         };
 
 
@@ -246,4 +250,20 @@ $(document).ready(function() {
             });
         }
     }
+
+
 });
+
+function switchViews(){
+    $('#leftVideo').toggle();
+    $('#leftPlot').toggle();
+    $('#rightVideo').toggle();
+    $('#rightPlot').toggle();
+    $('#animationSliderDiv').toggle();
+    $("#switch").hide();
+    //adjustPlotSize();
+
+    //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
+    //testRendering3D(getMasterPoseList(), getUserPoseList());
+    visualizeFeedback(masterBlobURL, getRecordedUserBlobURL());
+}
