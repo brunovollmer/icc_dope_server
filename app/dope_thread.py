@@ -39,10 +39,15 @@ class DopeThread(object):
                 filename = data['filename']
                 video_name = data['video_name']
 
-                if os.path.isfile(os.path.join('tmp_data', "{}.json".format(video_name))):
-                    shutil.copy(os.path.join('tmp_data', "{}.json".format(video_name)), f"tmp_data/{video_id}.json")
-                    print("copied cached results")
+                video_path = os.path.join("tmp_data", "{}.json". format(video_id))
+                cache_path = os.path.join('tmp_data', "{}.json".format(video_name))
+                print(f"Searching for {cache_path}")
+                if os.path.isfile(cache_path):
+                    shutil.copy(cache_path, video_path)
+                    print(f"Copied cached results from {cache_path} to {video_path}")
                     continue
+                else:
+                    print(f"Could not find {cache_path} in cache")
 
                 cap = cv2.VideoCapture(filename)
                 result = []
@@ -64,11 +69,13 @@ class DopeThread(object):
                     counter += 1
                 cap.release()
 
+                print(f"Saving results as {video_path}")
                 response = json.dumps(result, cls=NumpyEncoder)
-                with open(os.path.join("tmp_data", "{}.json".format(video_id)), "w") as f:
+                with open(video_path, "w") as f:
                     f.write(response)
 
-                with open(os.path.join("tmp_data", "{}.json".format(video_name)), "w") as f:
+                print(f"Caching results as {cache_path}")
+                with open(cache_path, "w") as f:
                     f.write(response)
 
                 print("finished")
