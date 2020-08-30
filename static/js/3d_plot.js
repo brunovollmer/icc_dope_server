@@ -50,10 +50,7 @@ function create_3d_plot(container_id) {
             }
         },
         title: {
-            text: 'Movement Coach 3D Pose'
-        },
-        subtitle: {
-            text: 'Click and drag the plot area to rotate in space'
+            text: null
         },
         credits: false,
         exporting: false,
@@ -81,6 +78,9 @@ function create_3d_plot(container_id) {
             showFirstLabel: false
         },
         legend: {
+            enabled: false
+        },
+        tooltip: {
             enabled: false
         },
         series: []
