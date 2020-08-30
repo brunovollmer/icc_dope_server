@@ -64,18 +64,27 @@ function create_3d_plot(container_id) {
         yAxis: {
             min: -1.0,
             max: 1.0,
-            title: null
+            title: null,
+            labels: {
+                enabled: false
+            }
         },
         xAxis: {
             min: -2.0,
             max: 2.0,
             gridLineWidth: 1,
-            reversed: true
+            reversed: true,
+            labels: {
+                enabled: false
+            }
         },
         zAxis: {
             min: -1.0,
             max: 1.0,
-            showFirstLabel: false
+            showFirstLabel: false,
+            labels: {
+                enabled: false
+            }
         },
         legend: {
             enabled: false
@@ -145,7 +154,7 @@ function shift3DPoint(point, index, value) {
             shiftedPoint[i] = point[i];
         }
     }
-
+    
     return shiftedPoint;
 }
 
