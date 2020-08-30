@@ -4,7 +4,6 @@ import cv2
 import json
 import time
 import numpy as np
-import asyncio
 
 from aiohttp_jinja2 import template
 from aiohttp import web
@@ -23,8 +22,12 @@ async def user_video(request):
     user_video = post.get("video")
     master_video_id = post.get("video_id")
 
-    master_results_path = os.path.join(request.app['settings'].tmp_data_path, "{}.json".format(master_video_id))
+    master_results_path = os.path.join(
+        request.app['settings'].tmp_data_path,
+        "{}.json".format(master_video_id)
+    )
 
+    # TODO: don't do active waiting?
     while not os.path.isfile(master_results_path):
         time.sleep(1)
 
@@ -32,11 +35,14 @@ async def user_video(request):
     use_half_computation = request.app['settings'].use_half_computation
     default_width = request.app['settings'].default_width
 
+    # TODO: instantiate model only once
     dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
 
+    # Load corresponding master poses from file
     with open(master_results_path) as json_file:
         print("[user_video] Loading computed master poses")
         master_results = json.load(json_file)
+        # TODO: make sure backend returns poses with 15 points and remove below code
         if len(master_results) > 0:
             frame = 0
             while frame < len(master_results) and len(master_results[frame]["body"]) == 0:
@@ -45,18 +51,25 @@ async def user_video(request):
                 print("ADDING POINTS")
                 master_results = dope._compute_hip_neck(master_results)
 
-    filename = os.path.join("tmp_data", "{}_user.mp4".format(master_video_id))
+    filename = os.path.join(
+        request.app['settings'].tmp_data_path,
+        "{}_user.mp4".format(master_video_id)
+    )
 
     if user_video:
         with open(filename, 'wb') as fd:
              video_content = user_video.file.read()
              fd.write(video_content)
 
-    tmp_userfile = "../input/user.mp4.json"
-    if os.path.isfile(tmp_userfile):
+    cache_path = os.path.join(
+        request.app["settings"].tmp_data_path,
+        "user.json"
+    )
+    if os.path.isfile(cache_path):
         print("[user_video] Loading cached user poses")
-        user_results = json.load(open(tmp_userfile))
+        user_results = json.load(open(cache_path))
     else:
+        # TODO: merge with code that computes master poses
         print("[user_video] Compute user poses")
         cap = cv2.VideoCapture(filename)
         user_results = []
@@ -78,9 +91,12 @@ async def user_video(request):
             counter += 1
         cap.release()
 
-    response = json.dumps(user_results, cls=NumpyEncoder)
-    with open(os.path.join("tmp_data", "{}_user.json".format(master_video_id)), "w") as f:
-        f.write(response)
+    user_results_path = os.path.join(
+        request.app["settings"].tmp_data_path,
+        "{}_user.json".format(master_video_id)
+    )
+    with open(user_results_path, "w") as f:
+        f.write(json.dumps(user_results, cls=NumpyEncoder))
 
     nr_master_poses = len(master_results)
     master_poses = np.zeros((nr_master_poses, 15, 3))
@@ -91,7 +107,6 @@ async def user_video(request):
             master_poses[i] = np.array(master_results[i]['body'][0]['pose3d'])
         if i < len(user_results) and user_results[i]['body']:
             user_poses[i] = np.array(user_results[i]['body'][0]['pose3d'])
-
 
     scores, best_offset, new_master_poses, new_user_poses = find_ideal_offset(
         master_poses,
@@ -121,13 +136,20 @@ async def master_video(request):
     video_id = str(uuid.uuid4())
     video_name = post.get("video_name")
 
-    filename = "tmp_data/{}.mp4".format(video_id)
+    filename = os.path.join(
+        request.app["settings"].tmp_data_path,
+        "{}.mp4".format(video_id)
+    )
 
     if video:
         with open(filename, 'wb') as fd:
              video_content = video.file.read()
              fd.write(video_content)
 
-        input_queue.put({'video_id': video_id, 'filename': filename, 'video_name': video_name})
+        input_queue.put({
+            'video_id': video_id,
+            'filename': filename,
+            'video_name': video_name
+        })
 
     return web.json_response({'id': video_id})

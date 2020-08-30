@@ -19,10 +19,6 @@ class DopeThread(object):
         self.input_queue = input_queue
         self.default_width = default_width
 
-        # self.debug_folder = os.path.join(ROOT, "..", "tmp_data", str(time.time()))
-        # os.makedirs(self.debug_folder)
-        # self.debug = debug
-
         self.dope = DopeEstimator(model_path, use_half_comp=use_half_computation)
 
         thread = threading.Thread(target=self.run, args=())
@@ -37,14 +33,14 @@ class DopeThread(object):
 
                 video_id = data['video_id']
                 filename = data['filename']
-                video_name = data['video_name']
+                orig_video_name = data['video_name']
 
-                video_path = os.path.join("tmp_data", "{}.json". format(video_id))
-                cache_path = os.path.join('tmp_data', "{}.json".format(video_name))
-                print(f"Searching for {cache_path}")
+                output_path = os.path.join("tmp_data", "{}.json". format(video_id))
+                cache_path = os.path.join('tmp_data', "{}.json".format(orig_video_name))
+
                 if os.path.isfile(cache_path):
-                    shutil.copy(cache_path, video_path)
-                    print(f"Copied cached results from {cache_path} to {video_path}")
+                    shutil.copy(cache_path, output_path)
+                    print(f"Copied cached results from {cache_path} to {output_path}")
                     continue
                 else:
                     print(f"Could not find {cache_path} in cache")
@@ -69,9 +65,9 @@ class DopeThread(object):
                     counter += 1
                 cap.release()
 
-                print(f"Saving results as {video_path}")
+                print(f"Saving results as {output_path}")
                 response = json.dumps(result, cls=NumpyEncoder)
-                with open(video_path, "w") as f:
+                with open(output_path, "w") as f:
                     f.write(response)
 
                 print(f"Caching results as {cache_path}")
