@@ -108,6 +108,7 @@ $(document).ready(function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 
+        $("#fileDiv").hide();
         $("#loader").css("display", "block");
         $("#loading_overlay").css("display", "block");
         var form = $("#video_form")[0];

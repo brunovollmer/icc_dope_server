@@ -54,6 +54,12 @@ canvas {
     width: 100%;
 }
 
+#record {
+    width:50%;
+    -ms-transform: translateX(+50%);
+    transform: translateX(+50%);
+}
+
 h2 {
     color: white;
 }

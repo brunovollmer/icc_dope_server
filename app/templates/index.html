@@ -62,26 +62,29 @@
 </div>
 
 <div style="position: absolute; top: 0; z-index: 5000; width:100%;">
-    <div id="uiContainer" class="container w-100 p-3 rounded" style="background-color: #555555; opacity: 0.7;">
+    <div id="uiContainer" class="container w-100 p-3 rounded" style="background-color: #555555;">
         <div id="recordingInterface" class="row">
-            <div class="col-8">
-                <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input id="videoUpload" type="file" class="custom-file-input" name="video"
-                                   accept="video/mp4">
-                            <label class="custom-file-label" for="videoUpload">Master-Video</label>
+            <div class="col-12">
+                <div id="fileDiv">
+                    <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input id="videoUpload" type="file" class="custom-file-input" name="video"
+                                       accept="video/mp4">
+                                <label class="custom-file-label" for="videoUpload">Master-Video</label>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div id="recordDiv">
+                    <button id="record" class="btn btn-info" style="display: none">Start</button>
+                    <button id="recordStop" style="display: none;" class="btn btn-info">Fertig</button>
+                </div>
             </div>
 
-            <div class="col">
-                <button id="record" class="btn btn-info" style="display: none">Start</button>
-                <button id="recordStop" style="display: none;" class="btn btn-info">Fertig</button>
-            </div>
 
-            <div class="col">
+
+            <div class="col" style="display: none;">
                 <button id="switch" class="btn btn-info" style="display: none">Switch</button>
             </div>
         </div>
