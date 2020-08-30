@@ -196,7 +196,15 @@ var render3DPose = function (master, user, score) {
                     },
                     lineWidth: 2,
                     lineColor: "black",
-                    data: [shift3DPoint(master[c['start']],0,_shiftPoses), shift3DPoint(master[c['end']],0,_shiftPoses)]
+                    data: [shift3DPoint(master[c['start']],0,_shiftPoses), shift3DPoint(master[c['end']],0,_shiftPoses)],
+                    states: {
+                        inactive: {
+                            opacity: 1
+                        },
+                        hover: {
+                            enabled: false
+                        }
+                    }
                 };
                 _chart.addSeries(c_series, false);
             }
@@ -227,7 +235,15 @@ var render3DPose = function (master, user, score) {
                     },
                     lineWidth: 2,
                     lineColor: getScoreColorLine(score, c['start'], c['end']),
-                    data: [{x: shiftedStart[0], y: shiftedStart[1], z: shiftedStart[2], color: getScoreColor(score, c['start'])}, {x: shiftedEnd[0], y: shiftedEnd[1], z: shiftedEnd[2], color: getScoreColor(score, c['end'])}]
+                    data: [{x: shiftedStart[0], y: shiftedStart[1], z: shiftedStart[2], color: getScoreColor(score, c['start'])}, {x: shiftedEnd[0], y: shiftedEnd[1], z: shiftedEnd[2], color: getScoreColor(score, c['end'])}],
+                    states: {
+                        inactive: {
+                            opacity: 1
+                        },
+                        hover: {
+                            enabled: false
+                        }
+                    }
                 };
                 _chart.addSeries(c_series_user, false);
             }
