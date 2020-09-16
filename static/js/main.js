@@ -14,7 +14,7 @@ $(document).ready(function() {
         masterVideo.onended = function(e) {
             console.log("[main.js] Master video finished...stop recording");
             $("#recordStop").hide();
-            stopRecording();
+            RecordingManager.stopRecording();
             masterVideoCanvas.stopVideo();
             userVideoCanvas.stopVideo();
 
@@ -50,14 +50,6 @@ $(document).ready(function() {
     let uv = document.getElementById("userVideo");
     console.log("[main.js] Registering user video canvas");
     userVideoCanvas = new VideoCanvas(uv, "user", getCurrentUserPose);
-    /*
-    uv.oncanplay = function() {
-        if(!userVideoCanvas) {
-
-        }
-    }
-
-     */
 
     //both divs are visible
     var slideStatus = 0;
@@ -125,7 +117,7 @@ $(document).ready(function() {
             },
             success: function(msg) {
                 console.log("[main.js]: Master Video response: ", msg);
-                setMasterId(msg["id"]);
+                RecordingManager.setMasterId(msg["id"]);
 
                 //updateMasterPoseList(master_results);
 
@@ -174,7 +166,7 @@ $(document).ready(function() {
         var finishCounter = function(){
             masterVideoCanvas.startVideo();
             //userVideoCanvas.startVideo();
-            startRecording();
+            RecordingManager.startRecording();
             clearInterval(interval);
             $("#countdown").css("display", "none");
             interval = null;
@@ -187,7 +179,7 @@ $(document).ready(function() {
     });
     $('#recordStop').on("click", function() {
         $("#recordStop").hide();
-        stopRecording();
+        RecordingManager.stopRecording();
         stopWebcam();
         //stopWebRTC();
         masterVideoCanvas.stopVideo();
@@ -214,7 +206,7 @@ $(document).ready(function() {
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
         console.log("[main.js] Showing master video in feedback screen")
-        showMaster = true;
+        showMaster();
         updateFeedbackVideoSource();
         updateData();
         updateFeedbackVideo();
@@ -224,7 +216,7 @@ $(document).ready(function() {
     let radio2 = document.getElementById("userRadioButton");
     radio2.onclick = function(_) {
         console.log("[main.js] Showing user video in feedback screen")
-        showMaster = false;
+        showUser();
         updateFeedbackVideoSource();
         updateData();
         updateFeedbackVideo();
@@ -255,8 +247,6 @@ $(document).ready(function() {
             });
         }
     }
-
-
 });
 
 function switchViews(){
@@ -269,7 +259,5 @@ function switchViews(){
     $("#uiContainer").toggle();
     //adjustPlotSize();
 
-    //visualizeFeedback(masterBlob, getRecordedUserBlob(), recordedSequence);
-    //testRendering3D(getMasterPoseList(), getUserPoseList());
-    visualizeFeedback(masterBlobURL, getRecordedUserBlobURL());
+    visualizeFeedback(masterBlobURL, RecordingManager.getRecordedUserBlobURL());
 }
