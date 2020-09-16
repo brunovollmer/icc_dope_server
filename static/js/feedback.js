@@ -69,18 +69,4 @@ function visualizeFeedback(blobMaster, blobUser) {
     create_3d_plot('container');
 
     render3DPose(_masterPoses[timeStep]['body'][0]?.pose3d, _userPoses[timeStep]['body'][0]?.pose3d, _scores[timeStep]);
-
-    /*if (showMaster){
-        if(poseSequence[timeStep]['masterPose']) {
-            render3DPose(poseSequence[timeStep]['masterPose']['body'][0]['pose3d']);
-        } else {
-            clear3DPlot();
-        }
-    }else{
-        if(poseSequence[timeStep]['userPose']) {
-            render3DPose(poseSequence[timeStep]['userPose']['body'][0]['pose3d']);
-        } else {
-            clear3DPlot();
-        }
-    }*/
 }

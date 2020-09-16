@@ -79,7 +79,3 @@ function getCurrentMasterPose(video) {
 
     return _currentMasterPose[0];
 }
-
-// getCurrentFeedbackPose = function (video) {
-//     return null;
-// }
