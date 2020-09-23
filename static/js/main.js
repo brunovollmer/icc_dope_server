@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     // preview of uploaded video
     document.querySelector("input[type=file]").onchange = function(event) {
-        document.getElementById('media').style.display = 'block';
+        document.getElementById('media').style.display = 'grid';
 
         var masterVideo = document.getElementById("masterVideo");
         masterVideo.onended = function(e) {

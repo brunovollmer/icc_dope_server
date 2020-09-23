@@ -1,147 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="static/img/logo.jpeg">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="icon" href="static/img/logo.jpeg">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css"
-          integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w=="
-          crossorigin="anonymous" />
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/css/3d_plot.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css" integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w==" crossorigin="anonymous" />
+      <link rel="stylesheet" href="static/css/style.css">
+      <link rel="stylesheet" href="static/css/3d_plot.css">
 
-    <title>Movement Coach</title>
-</head>
-<body>
-<div id="loader"></div>
-<div id="loading_overlay"></div>
-<div id="countdown">
-    <span id="countdown_value">0</span>
-</div>
+      <title>Movement Coach</title>
+    </head>
 
-<div id="media">
-    <div class="main-wrapper">
-        <div class="row no-gutters h-100">
-            <div id="leftDiv" class="section left col w-50">
-                <div id="leftVideo">
-                    <video id="masterVideo"></video>
+    <body>
+    <!-- Helper -->
+    <div id="loader"></div>
+    <div id="loading_overlay"></div>
+    <div id="countdown"><span id="countdown_value">0</span></div>
+    <!-- END Helper -->
+
+    <!-- Mastervideo and Webcam -->
+    <main id="media">
+      <!-- Left side -->
+      <div id="leftDiv" class="left">
+          <!-- Mastervideo -->
+          <div id="leftVideo">
+              <video id="masterVideo"></video>
+          </div>
+          <!-- Feedbackvideo; visible for the analysis -->
+          <div id="leftPlot" style="display: none;">
+              <video id="feedbackVideo"></video>
+          </div>
+      </div>
+      <!-- END Left side -->
+      <!-- Right side -->
+      <div id="rightDiv" class="right">
+          <!-- Webcam -->
+          <div id="rightVideo">
+              <video autoplay="true" id="userVideo"></video>
+          </div>
+          <!-- Feedbackplot; visible for the analysis -->
+          <div id="rightPlot" class="section" style="display: none;">
+              <figure class="highcharts-figure">
+                  <div id="container"></div>
+              </figure>
+          </div>
+      </div>
+      <!-- END Right side -->
+    </main>
+    <!-- END Mastervideo and Webcam -->
+
+    <!-- File select and slider -->
+    <div style="position: absolute; top: 0; z-index: 5000; width:100%;">
+        <div id="uiContainer" class="container w-100 p-3 rounded" style="background-color: #555555;">
+            <div id="recordingInterface" class="row">
+                <div class="col-12">
+                    <div id="fileDiv">
+                        <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input id="videoUpload" type="file" class="custom-file-input" name="video"
+                                           accept="video/mp4">
+                                    <label class="custom-file-label" for="videoUpload">Master-Video</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="recordDiv">
+                        <button id="record" class="btn btn-info" style="display: none">Start</button>
+                    </div>
                 </div>
-                <div id="leftPlot" style="display: none;">
-                    <video id="feedbackVideo"></video>
+
+                <div class="col" style="display: none;">
+                    <button id="switch" class="btn btn-info" style="display: none">Switch</button>
                 </div>
             </div>
 
-            <div id="rightDiv" class="section right col w-50">
-                <div id="rightVideo">
-                    <video autoplay="true" id="userVideo"></video>
-                </div>
-                <div id="rightPlot" style="display: none;">
-                    <figure class="highcharts-figure">
-                        <div id="container"></div>
-                    </figure>
-                </div>
-            </div>
-        </div>
-
-        <div id="viewToggle" class="text-center slide-div">
-            <button id="slideLeft" class="btn btn-primary slide-btn"><</button>
-            <button id="slideRight" class="btn btn-primary slide-btn">></button>
-        </div>
-
-        <button
-            id="logging-toggle"
-            class="btn btn-primary btn-toggle"
-            style="position: absolute; left: 20px; top: 20px; z-index: 10000; display: none;"
-        >
-            Log
-        </button>
-    </div>
-</div>
-
-<div style="position: absolute; top: 0; z-index: 5000; width:100%;">
-    <div id="uiContainer" class="container w-100 p-3 rounded" style="background-color: #555555;">
-        <div id="recordingInterface" class="row">
-            <div class="col-12">
-                <div id="fileDiv">
-                    <form action="/video" method="POST" enctype="multipart/form-data" id="video_form">
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input id="videoUpload" type="file" class="custom-file-input" name="video"
-                                       accept="video/mp4">
-                                <label class="custom-file-label" for="videoUpload">Master-Video</label>
+            <div id="animationSliderDiv" class="" style="display: none">
+                <form class="text-light">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="form-group mb-0">
+                                <label for="animationSlider" style="display: none;">
+                                    Timestep: <span id="animationTimestep">0</span>
+                                </label>
+                                <input id="animationSlider" type="range" class="custom-range" min="0" max="100">
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div id="recordDiv">
-                    <button id="record" class="btn btn-info" style="width:50%;-ms-transform: translateX(+50%);transform: translateX(+50%);display: none">Start</button>
-                    <button id="recordStop" style="display: none;" class="btn btn-info">Fertig</button>
-                </div>
-            </div>
 
-
-
-            <div class="col" style="display: none;">
-                <button id="switch" class="btn btn-info" style="display: none">Switch</button>
-            </div>
-        </div>
-
-        <div id="animationSliderDiv" class="" style="display: none">
-            <form class="text-light">
-                <div class="row">
-                    <div class="col-10">
-                        <div class="form-group mb-0">
-                            <label for="animationSlider" style="display: none;">
-                                Timestep: <span id="animationTimestep">0</span>
-                            </label>
-                            <input id="animationSlider" type="range" class="custom-range" min="0" max="100">
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="radio" name="optradio" id="masterRadioButton" class="form-check-input" checked>
+                                <label class="form-check-label" for="masterRadioButton">Master</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="optradio" id="userRadioButton" class="form-check-input">
+                                <label class="form-check-label" for="userRadioButton">User</label>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col">
-                        <div class="form-check">
-                            <input type="radio" name="optradio" id="masterRadioButton" class="form-check-input" checked>
-                            <label class="form-check-label" for="masterRadioButton">Master</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" name="optradio" id="userRadioButton" class="form-check-input">
-                            <label class="form-check-label" for="userRadioButton">User</label>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    <!-- END File select and slider -->
 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-3d.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js"
-        integrity="sha512-tCkLWlSXiiMsUaDl5+8bqwpGXXh0zZsgzX6pB9IQCZH+8iwXRYfcCpdxl/owoM6U4ap7QZDW4kw7djQUiQ4G2A=="
-        crossorigin="anonymous"></script>
+    <!-- Highcharts; used for 3d plots  -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<script src="static/js/constants.js"></script>
-<script src="static/js/3d_plot.js"></script>
-<script src="static/js/2d_plot.js"></script>
-<script src="static/js/pose.js"></script>
+    <!-- Bootstrap sliders; used to select timesteps within the analysis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js" integrity="sha512-tCkLWlSXiiMsUaDl5+8bqwpGXXh0zZsgzX6pB9IQCZH+8iwXRYfcCpdxl/owoM6U4ap7QZDW4kw7djQUiQ4G2A==" crossorigin="anonymous"></script>
 
-<script src="static/js/video.js"></script>
-<script src="static/js/feedback.js"></script>
+    <!-- Custom scripts -->
+    <script src="static/js/constants.js"></script>
+    <script src="static/js/3d_plot.js"></script>
+    <script src="static/js/2d_plot.js"></script>
+    <script src="static/js/pose.js"></script>
+    <script src="static/js/video.js"></script>
+    <script src="static/js/feedback.js"></script>
+    <script src="static/js/main.js"></script>
+    <script src="static/js/record.js"></script>
 
-<script src="static/js/main.js"></script>
-
-<script src="static/js/record.js"></script>
-
-</body>
+  </body>
 </html>
