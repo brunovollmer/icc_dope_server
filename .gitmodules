@@ -1,0 +1,3 @@
+[submodule "lib/dope_estimator"]
+	path = lib/dope_estimator
+	url = git@github.com:brunovollmer/icc_dope_estimator.git

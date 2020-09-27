@@ -29,7 +29,7 @@ timeshift_percentage: 0.1
 
 ROOT = os.path.dirname(__file__)
 THIS_DIR = Path(__file__).parent
-sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
+sys.path.append(os.path.join(ROOT, '..', 'lib', 'dope_estimator'))
 
 input_queue = Queue()
 

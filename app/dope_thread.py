@@ -7,7 +7,7 @@ import json
 import shutil
 
 ROOT = os.path.dirname(__file__)
-sys.path.append(os.path.join(ROOT, '..', '..', 'dope'))
+sys.path.append(os.path.join(ROOT, '..', 'lib', 'dope_estimator'))
 
 from dope import DopeEstimator
 from util import resize_image, NumpyEncoder
