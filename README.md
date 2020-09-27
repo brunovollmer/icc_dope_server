@@ -1,6 +1,6 @@
 # Movement Coach Server
 
-Server repository for the [ICC 2020](https://www.createchallenge.org/) submission of the Movement Coach team. The first part of the final submission can be found in [this repository](https://github.com/brunovollmer/icc_dope_estimator).
+Server repository for the [ICC 2020](https://www.createchallenge.org/) submission of the Movement Coach team. The first part of the final submission can be found in [this repository](https://github.com/brunovollmer/icc_dope_estimator). More information can be found on [DevPost](https://devpost.com/software/movement-coach).
 
 Please consider that this prototype was created during a hackathon with the main focus on speed. Code and comment quality may vary :)
 
