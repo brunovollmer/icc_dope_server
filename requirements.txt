@@ -3,9 +3,4 @@ aiohttp-devtools
 aiohttp-jinja2
 aioice
 aiortc
-numpy
-scipy
-pytorch
-torchvision
-cudatoolkit
 omegaconf
