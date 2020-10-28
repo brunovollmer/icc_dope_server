@@ -23,13 +23,19 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-Next step is to load the required estimator code and follow the installation instructions [here](https://github.com/brunovollmer/icc_dope_estimator).
+Additionally `ffmpeg` should also be installed on your system.
+
+Clone the submodules with
 ```
 git submodule update --init --recursive
 ```
 
+Next step is to follow the installation instructions for the estimator submodule, especially setting up the model, [here](https://github.com/brunovollmer/icc_dope_estimator).
 
-Additionally `ffmpeg` should also be installed on your system.
+You can change the path to the model checkpoint in the settings in `main.py` or link the models directory of the submodule via
+```shell script
+ln -s lib/dope_estimator/models models
+```
 
 ## Using the code
 
