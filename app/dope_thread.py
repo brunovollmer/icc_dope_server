@@ -6,11 +6,8 @@ import sys
 import json
 import shutil
 
-ROOT = os.path.dirname(__file__)
-sys.path.append(os.path.join(ROOT, '..', 'lib', 'dope_estimator'))
-
-from dope import DopeEstimator
-from util import resize_image, NumpyEncoder
+from dope_estimator.dope import DopeEstimator
+from dope_estimator.util import resize_image, NumpyEncoder
 
 class DopeThread(object):
 

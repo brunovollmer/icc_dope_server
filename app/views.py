@@ -1,4 +1,5 @@
 import os
+import sys
 import uuid
 import cv2
 import json
@@ -8,9 +9,9 @@ import numpy as np
 from aiohttp_jinja2 import template
 from aiohttp import web
 
-from dope import DopeEstimator
-from compare import find_ideal_offset
-from util import resize_image, NumpyEncoder
+from dope_estimator.dope import DopeEstimator
+from dope_estimator.compare import find_ideal_offset
+from dope_estimator.util import resize_image, NumpyEncoder
 from .main import input_queue
 
 @template('index.html')

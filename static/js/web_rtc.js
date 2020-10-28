@@ -1,6 +1,6 @@
 // Callback to execute when receiving pose from server
 // updateUserPose from pose.js
-var rtcPoseCallback = updateUserPose;
+var rtcPoseCallback = PoseManager.updateUserPose;
 
 // get DOM elements
 var dataChannelLog = document.getElementById('data-channel'),

@@ -14,7 +14,7 @@ let FeedbackManager = (function() {
     function showUser() { _showMaster = false; }
 
     function updateFeedbackVideoSource() {
-        if (showMaster){
+        if (_showMaster){
             console.log("[feedback.js] Setting feedback video source to master")
             _feedbackVideo.src = _masterBlobURL;
         } else {
@@ -28,7 +28,7 @@ let FeedbackManager = (function() {
     }
 
     function getCurrentFeedbackPose() {
-        if (showMaster){
+        if (_showMaster){
             return _masterPoses[_timeStep];
         }else{
             return _userPoses[_timeStep];
@@ -49,9 +49,9 @@ let FeedbackManager = (function() {
         _masterBlobURL = blobMaster;
         updateFeedbackVideoSource();
 
-        _masterPoses = getMasterPoseList();
-        _userPoses = getUserPoseList();
-        _scores = getComparisonScores();
+        _masterPoses = PoseManager.getMasterPoseList();
+        _userPoses = PoseManager.getUserPoseList();
+        _scores = PoseManager.getComparisonScores();
 
         //data = [{'masterTimestamp': 0, 'masterPose': {'body': {'pose3d': test_poses_3d[0], 'pose2d': test_poses_2d[0]}}}, {'masterTimestamp': 1, 'masterPose': {'body': {'pose3d': test_poses_3d[1], 'pose2d': test_poses_2d[1]}}}]
         if(!_masterPoses || _masterPoses.length === 0) {
@@ -87,12 +87,3 @@ let FeedbackManager = (function() {
         visualizeFeedback: visualizeFeedback
     }
 })();
-
-let showMaster = FeedbackManager.showMaster;
-let showUser = FeedbackManager.showUser;
-let updateFeedbackVideoSource = FeedbackManager.updateFeedbackVideoSource;
-let updateFeedbackVideo = FeedbackManager.updateFeedbackVideo;
-let getCurrentFeedbackPose = FeedbackManager.getCurrentFeedbackPose;
-let updateData = FeedbackManager.updateData;
-let update3DPlot = FeedbackManager.update3DPlot;
-let visualizeFeedback = FeedbackManager.visualizeFeedback;

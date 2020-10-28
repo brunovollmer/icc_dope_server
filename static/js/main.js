@@ -1,11 +1,6 @@
 var masterBlobURL = null;
 
 $(document).ready(function() {
-
-
-
-    // create_3d_plot('container', '#slider', test_poses_3d)
-
     // preview of uploaded video
     document.querySelector("input[type=file]").onchange = function(event) {
         document.getElementById('media').style.display = 'grid';
@@ -28,7 +23,7 @@ $(document).ready(function() {
         masterBlobURL = blobURL;
         masterVideo.src = blobURL;
 
-        masterVideoCanvas = new VideoCanvas(masterVideo, "master", getCurrentMasterPose);
+        masterVideoCanvas = new VideoCanvas(masterVideo, "master", PoseManager.getCurrentMasterPos);
     }
 
     $(document).keypress(function(e) {
@@ -46,10 +41,9 @@ $(document).ready(function() {
         switchViews();
     });
 
-
     let uv = document.getElementById("userVideo");
     console.log("[main.js] Registering user video canvas");
-    userVideoCanvas = new VideoCanvas(uv, "user", getCurrentUserPose);
+    userVideoCanvas = new VideoCanvas(uv, "user", PoseManager.getCurrentUserPose);
 
     //both divs are visible
     var slideStatus = 0;
@@ -155,7 +149,6 @@ $(document).ready(function() {
         $("#loader").css("display", "block");
         $("#countdown_value").text(counter);
 
-
         var interval = setInterval(function(){
             counter--;
             $("#countdown_value").text(counter);
@@ -173,9 +166,6 @@ $(document).ready(function() {
             $("#loader").css("display", "none");
             //$("#recordStop").show();
         };
-
-
-
     });
     $('#recordStop').on("click", function() {
         $("#recordStop").hide();
@@ -195,31 +185,31 @@ $(document).ready(function() {
     let feedbackVideo = document.getElementById("feedbackVideo");
     slider.value = 0;
     slider.oninput = function() {
-        updateData();
-        updateFeedbackVideo();
+        FeedbackManager.updateData();
+        FeedbackManager.updateFeedbackVideo();
     }
     slider.onchange = function() {
-        update3DPlot();
+        FeedbackManager.update3DPlot();
     }
 
     // Switch between master & use video in feedback view
     let radio = document.getElementById("masterRadioButton");
     radio.onclick = function(_) {
         console.log("[main.js] Showing master video in feedback screen")
-        showMaster();
-        updateFeedbackVideoSource();
-        updateData();
-        updateFeedbackVideo();
+        FeedbackManager.showMaster();
+        FeedbackManager.updateFeedbackVideoSource();
+        FeedbackManager.updateData();
+        FeedbackManager.updateFeedbackVideo();
     }
 
     // Switch between master & use video in feedback view
     let radio2 = document.getElementById("userRadioButton");
     radio2.onclick = function(_) {
         console.log("[main.js] Showing user video in feedback screen")
-        showUser();
-        updateFeedbackVideoSource();
-        updateData();
-        updateFeedbackVideo();
+        FeedbackManager.showUser();
+        FeedbackManager.updateFeedbackVideoSource();
+        FeedbackManager.updateData();
+        FeedbackManager.updateFeedbackVideo();
     }
 
     startWebcam();
@@ -259,5 +249,5 @@ function switchViews(){
     $("#uiContainer").toggle();
     //adjustPlotSize();
 
-    visualizeFeedback(masterBlobURL, RecordingManager.getRecordedUserBlobURL());
+    FeedbackManager.visualizeFeedback(masterBlobURL, RecordingManager.getRecordedUserBlobURL());
 }

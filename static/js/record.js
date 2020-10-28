@@ -75,9 +75,9 @@ let RecordingManager = (function() {
                     success: function(msg) {
                         data = JSON.parse(msg);
                         console.log("[record.js] User video upload response:", data);
-                        updateMasterPoseList(data.master_results);
-                        updateUserPoseList(data.user_results);
-                        updateComparisonScores(data.scores);
+                        PoseManager.updateMasterPoseList(data.master_results);
+                        PoseManager.updateUserPoseList(data.user_results);
+                        PoseManager.updateComparisonScores(data.scores);
                         $("#loader").css("display", "none");
                         $("#loading_overlay").css("display", "none");
                         //$("#switch").show();

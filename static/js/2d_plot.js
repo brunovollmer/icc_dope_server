@@ -1,7 +1,4 @@
 function draw2dPose(ctx, pose){
-    //console.log("[2d_plot.js] Pose:", pose)
-
-
     for (let i = 0; i < connections.length; i++) {
         const c = connections[i];
 
@@ -11,7 +8,6 @@ function draw2dPose(ctx, pose){
         p1 = [p1[0] * ctx.canvas.width, p1[1] * ctx.canvas.height];
         p2 = [p2[0] * ctx.canvas.width, p2[1] * ctx.canvas.height];
 
-        //TODO: make into two paths, one black, one red
         ctx.beginPath();
         ctx.lineWidth = 5;
         ctx.strokeStyle = c.color;
@@ -19,8 +15,6 @@ function draw2dPose(ctx, pose){
         ctx.lineTo(p2[0], p2[1]);
         ctx.stroke()
     }
-
-
 
     ctx.beginPath();
     pose.forEach((p) => {

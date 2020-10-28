@@ -14,7 +14,7 @@ from omegaconf import OmegaConf
 default_config = """
 default_width: 500
 use_half_computation: False
-model_path: ../dope/models/DOPErealtime_v1_0_0.pth.tgz
+model_path: ../models/DOPErealtime_v1_0_0.pth.tgz
 dope_debug: False
 use_turn: False
 tmp_data_path: tmp_data/

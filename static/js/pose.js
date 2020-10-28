@@ -95,15 +95,3 @@ let PoseManager = (function() {
         getCurrentMasterPose: getCurrentMasterPose
     }
 })();
-
-let hasUserPoseList = PoseManager.hasUserPoseList;
-let getUserPoseList = PoseManager.getUserPoseList;
-let updateUserPoseList = PoseManager.updateUserPoseList;
-let hasMasterPoseList = PoseManager.hasMasterPoseList;
-let getMasterPoseList = PoseManager.getMasterPoseList;
-let updateMasterPoseList = PoseManager.updateMasterPoseList;
-let getComparisonScores = PoseManager.getComparisonScores;
-let updateComparisonScores = PoseManager.updateComparisonScores;
-let updateUserPose = PoseManager.updateUserPose;
-let getCurrentUserPose = PoseManager.getCurrentUserPose;
-let getCurrentMasterPose = PoseManager.getCurrentMasterPos;
